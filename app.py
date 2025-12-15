@@ -8,4 +8,9 @@ def create_main_surface():
 
     screen_size = (1024, 768)
 
-    pygame.display.set_mode(screen_size)
+    screen=pygame.display.set_mode(screen_size)
+    pygame.draw.circle(screen, (255,100,255), (10,10), 100)
+    pygame.display.flip()
+while True:
+    create_main_surface()
+
