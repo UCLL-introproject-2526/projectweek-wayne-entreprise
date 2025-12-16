@@ -52,7 +52,7 @@ def game_loop():
     background = pygame.transform.scale_by(background, 0.15625)
     screen = pygame.display.set_mode((320,320), pygame.FULLSCREEN | pygame.SCALED)
 
-    c1 = character.Character((0, 0), 10)
+    c1 = character.Character((0, 160), 10)
     move_left = False
     move_right = False
     while running:
