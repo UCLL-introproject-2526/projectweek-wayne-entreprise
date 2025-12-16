@@ -7,9 +7,14 @@ class Character:
         self.y = position[1]
         self.idle_pose = pygame.image.load("Assets/Character/14x23 Idle christmas.png").convert_alpha()
         self.idle_pose = self.idle_pose.subsurface(pygame.Rect(0,0,14,23))
+        self.speed_y = 0
         #self.idle_pose = pygame.transform.scale_by(self.idle_pose, 1)
 
-
+    def playerfalling(self, dt):
+        gravity = 0
+        self.speed_y += gravity * dt
+        increase = self.speed_y * dt
+        self.y  += increase
 
     def move_left(self):
         self.x -= 5

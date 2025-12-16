@@ -57,6 +57,7 @@ def game_loop():
     move_left = False
     move_right = False
     while running:
+        dt = klok.tick(60)  
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -87,9 +88,8 @@ def game_loop():
         rectangle = pygame.rect.Rect(150, 50, 32, 32)
         pygame.draw.rect(screen, (255, 0, 0), rectangle)
     
-
-
-        klok.tick(60)
+        c1.playerfalling(dt)
+        
         pygame.display.flip()
     pygame.quit()
 
