@@ -22,8 +22,6 @@ while running:
     target=pygame.Rect(300,santa.get_height()+200,160,200)
     #hitbox_target=pygame.Rect(300,)
 
-    text=font.render('Level 0!',True,(255,255,255))
-    screen.blit(text,(100,20))
 
     move_x=0
     move_y=0
