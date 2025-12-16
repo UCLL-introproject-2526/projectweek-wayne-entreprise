@@ -1,8 +1,6 @@
 import pygame
-def main():
-    ...
-
-
+import character
+"""
 def create_main_surface():
     pygame.init()
     klok = pygame.time.Clock()
@@ -37,7 +35,60 @@ def create_main_surface():
         if position > 1024:
             position = 1024
     pygame.quit()
+"""
+
+def main():
+    ...
+
+def game_loop():
+    pygame.init()
+    klok = pygame.time.Clock()
+    pygame.display.set_caption("Kerst")
+    background = pygame.image.load('Concepten/background.png')
+    screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
+    running = True
+    move_left = False
+    move_right = False
+    c1 = character.Character((0, 0), 10)
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+                if event.key == pygame.K_LEFT:
+                    move_left = True
+                if event.key == pygame.K_RIGHT:
+                    move_right = True
+                if event.key == pygame.K_SPACE:
+                    move_y +=2
+
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT:
+                    move_left = False
+                if event.key == pygame.K_RIGHT:
+                    move_right = False
+
+        if move_left:
+            c1.move_left()
+        elif move_right:
+            c1.move_right()
+        else:
+            ...
+
+        screen.blit(background, (0, 0))
+        screen.blit(c1.idle_pose, (c1.x, c1.y))
+    
 
 
-create_main_surface()
 
+
+
+
+        klok.tick(60)
+        pygame.display.flip()
+    pygame.quit()
+
+game_loop()

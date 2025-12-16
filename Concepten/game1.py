@@ -2,9 +2,9 @@ import pygame
 pygame.init()
 screen=pygame.display.set_mode((0,0), pygame.FULLSCREEN)
 running=True
-santa=pygame.image.load('santa_claus_improved.png').convert_alpha()
+santa=pygame.image.load('Concepten/santa_claus_improved.png').convert_alpha()
 santa=pygame.transform.scale(santa,(santa.get_width()//10,santa.get_height()//10))
-background=pygame.image.load('background.png')
+background=pygame.image.load('Concepten/background.png')
 background=pygame.transform.scale(background,(background.get_width()/2,background.get_height()/2))
 
 positionx_santax=0
@@ -13,6 +13,7 @@ horizontal_axis=screen.get_height()/2
 clock=pygame.time.Clock()
 delta_time=0.1
 font=pygame.font.Font(None,size=30)
+
 while running:
     screen.fill((255,255,255))
     screen.blit(background,(0,0))

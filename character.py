@@ -1,6 +1,25 @@
+import pygame
+
 class Character:
-    def __init__(self):
-        self.__packages = 0
-        self.position = 
-        
+    def __init__(self, position, amount_of_packages):
+        self.__packages = []
+        self.x = position[0]
+        self.y = position[1]
+        self.idle_pose = pygame.image.load("Assets/Character/14x23 Idle christmas.png")
+        self.idle_pose = self.idle_pose.subsurface(pygame.Rect(0,0,14,23))
+        self.idle_pose = pygame.transform.scale_by(self.idle_pose, 5)
+
     def move_left(self):
+        self.x -= 5
+
+    def move_right(self):
+        self.x += 5
+        
+    def move_up(self):
+        self.y -= 5
+        
+    def move_down(self):
+        self.y += 5
+
+    def place_package(self):
+        ...
