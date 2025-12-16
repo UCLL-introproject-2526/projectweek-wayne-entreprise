@@ -45,7 +45,7 @@ def game_loop():
     klok = pygame.time.Clock()
     pygame.display.set_caption("Kerst")
     background = pygame.image.load('Concepten/background.png')
-    screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((320,180), pygame.FULLSCREEN | pygame.SCALED)
     running = True
     move_left = False
     move_right = False
