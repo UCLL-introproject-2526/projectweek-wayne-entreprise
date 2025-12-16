@@ -9,7 +9,7 @@ def game_tuto():
     pygame.display.set_caption("Kerst") 
     running = True
 
-    background = pygame.image.load('Concepten/background.png')
+    background = pygame.image.load('Assets/dak.png')
     background = pygame.transform.scale_by(background, 0.15625)
     screen = pygame.display.set_mode((320,320), pygame.FULLSCREEN | pygame.SCALED)
 
@@ -42,7 +42,7 @@ def game_tuto():
                     move_left = False
                 if event.key == pygame.K_RIGHT:
                     move_right = False
-        
+        screen.blit(background,(0,0))
         screen.blit(text,(100,20))
         screen.blit(text_explain,(100,100))
 

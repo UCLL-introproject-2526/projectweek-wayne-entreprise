@@ -53,6 +53,7 @@ def game_loop():
     screen = pygame.display.set_mode((320,320), pygame.FULLSCREEN | pygame.SCALED)
 
     c1 = character.Character((0, 160), 10)
+    g1 = goal.Goal(screen)
     move_left = False
     move_right = False
     while running:
@@ -67,8 +68,6 @@ def game_loop():
                     move_left = True
                 if event.key == pygame.K_RIGHT:
                     move_right = True
-                if event.key == pygame.K_SPACE:
-                    move_y +=2
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
@@ -82,9 +81,11 @@ def game_loop():
             c1.move_right()
         else:
             ...
-
-        screen.blit(background, (0, 0))
+            
+        screen.blit(background, (0,0))
         screen.blit(c1.idle_pose, (c1.x, c1.y))
+        rectangle = pygame.rect.Rect(150, 50, 32, 32)
+        pygame.draw.rect(screen, (255, 0, 0), rectangle)
     
 
 
