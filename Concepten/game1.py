@@ -2,9 +2,9 @@ import pygame
 pygame.init()
 screen=pygame.display.set_mode((1024,768))
 running=True
-santa=pygame.image.load('assets/santa_claus_improved.png').convert_alpha()
+santa=pygame.image.load('santa_claus_improved.png').convert_alpha()
 santa=pygame.transform.scale(santa,(santa.get_width()//10,santa.get_height()//10))
-background=pygame.image.load('assets/background.png')
+background=pygame.image.load('background.png')
 background=pygame.transform.scale(background,(background.get_width()/2,background.get_height()/2))
 
 positionx_santax=0
