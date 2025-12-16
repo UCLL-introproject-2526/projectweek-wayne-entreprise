@@ -78,8 +78,8 @@ def game_loop():
 
     while running: 
 
-         break
-         
+        break
+        
     pygame.quit()
 
 game_loop()
