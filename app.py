@@ -49,8 +49,8 @@ def game_loop():
     running = True
 
     background = pygame.image.load('Assets/dak.png')
-    background = pygame.transform.scale_by(background, 0.15625)
-    screen = pygame.display.set_mode((320,320), pygame.FULLSCREEN | pygame.SCALED)
+    background = pygame.transform.scale_by(background, 0.35156)
+    screen = pygame.display.set_mode((720,720), pygame.FULLSCREEN | pygame.SCALED)
 
     c1 = character.Character((0, 160), 10)
     
@@ -58,11 +58,8 @@ def game_loop():
     move_left = False
     move_right = False
     while running:
-<<<<<<< HEAD
-        c1_hitbox = pygame.Rect(c1.x, c1.y, c1.idle_pose.get_width(), c1.idle_pose.get_height())
-=======
         dt = klok.tick(60)  
->>>>>>> 2bf5a37edc6bbf0dba9d0b9bcfc117cf687fe234
+        c1_hitbox = pygame.Rect(c1.x, c1.y, c1.idle_pose.get_width(), c1.idle_pose.get_height())
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -74,6 +71,8 @@ def game_loop():
                     move_left = True
                 if event.key == pygame.K_RIGHT:
                     move_right = True
+                if event.key == pygame.K_SPACE:
+                    c1.y = 0
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
