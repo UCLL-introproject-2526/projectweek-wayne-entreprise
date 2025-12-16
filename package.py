@@ -6,7 +6,7 @@ class Package:
     def __init__(self):
         self.x = 0
         self.y = -100
-        set_color()
+        self.set_color()
 
     
     def set_color(self):
