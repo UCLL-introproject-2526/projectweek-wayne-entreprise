@@ -23,11 +23,10 @@ def game_loop():
     move_left = False
     move_right = False
     move_up = False
-    move_down = False
 
     while running:
         dt = klok.tick(60)  
-        c1_hitbox = pygame.Rect(c1.x, c1.y, c1.idle_pose.get_width(), c1.idle_pose.get_height())
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -59,25 +58,29 @@ def game_loop():
             c1.move_right()
         if move_up:
             c1.move_up()
-        if move_down:
-            c1.move_down()
         else:
             ...
+        c1.playerfalling(dt)
+        c1_hitbox = pygame.Rect(c1.x, c1.y, c1.idle_pose.get_width(), c1.idle_pose.get_height())
 
         screen.blit(background, (0,0))
-        screen.blit(c1.idle_pose, (c1.x, c1.y))
         win_rectangle = pygame.rect.Rect(150, 160, 32, 32)
         pygame.draw.rect(screen, (255, 0, 0), win_rectangle)
         hitbox_floor=pygame.Rect(0,screen.get_height()*3/4,screen.get_width(),screen.get_height()*1/4)
+        print(hitbox_floor.top)
 
         if c1_hitbox.colliderect(win_rectangle):
             running = g1.win()
         if c1_hitbox.colliderect(hitbox_floor):
-            c1.speed_y=0
+            c1.y = hitbox_floor.top - c1.idle_pose.get_height()
+            #c1.set_height((screen.get_height()*3/4) - c1.idle_pose.get_height())
+            #c1_hitbox = pygame.Rect(c1.x, c1.y, c1.idle_pose.get_width(), c1.idle_pose.get_height())
+        screen.blit(c1.idle_pose, (c1.x, c1.y))
+        #print(c1.y)
 
             
                
-        c1.playerfalling(dt)
+        
         
         pygame.display.flip()
 
