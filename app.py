@@ -1,5 +1,7 @@
 import pygame
 import character
+import package
+import goal
 """
 def create_main_surface():
     pygame.init()
@@ -43,13 +45,16 @@ def main():
 def game_loop():
     pygame.init()
     klok = pygame.time.Clock()
-    pygame.display.set_caption("Kerst")
-    background = pygame.image.load('Concepten/background.png')
-    screen = pygame.display.set_mode((320,180), pygame.FULLSCREEN | pygame.SCALED)
+    pygame.display.set_caption("Kerst") 
     running = True
+
+    background = pygame.image.load('Concepten/background.png')
+    background = pygame.transform.scale_by(background, 0.15625)
+    screen = pygame.display.set_mode((320,320), pygame.FULLSCREEN | pygame.SCALED)
+
+    c1 = character.Character((0, 0), 10)
     move_left = False
     move_right = False
-    c1 = character.Character((0, 0), 10)
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -81,10 +86,6 @@ def game_loop():
         screen.blit(background, (0, 0))
         screen.blit(c1.idle_pose, (c1.x, c1.y))
     
-
-
-
-
 
 
         klok.tick(60)
