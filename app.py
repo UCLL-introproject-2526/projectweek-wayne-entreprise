@@ -82,7 +82,6 @@ def game_loop():
             c1.move_right()
         else:
             ...
-
         screen.blit(background, (0, 0))
         screen.blit(c1.idle_pose, (c1.x, c1.y))
     

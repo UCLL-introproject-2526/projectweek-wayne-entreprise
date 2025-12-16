@@ -2,9 +2,9 @@ import pygame
 pygame.init()
 screen=pygame.display.set_mode((0,0), pygame.FULLSCREEN)
 running=True
-santa=pygame.image.load('Concepten/santa_claus_improved.png').convert_alpha()
+santa=pygame.image.load('santa_claus_improved.png').convert_alpha()
 santa=pygame.transform.scale(santa,(santa.get_width()//10,santa.get_height()//10))
-background=pygame.image.load('Concepten/background.png')
+background=pygame.image.load('background.png')
 background=pygame.transform.scale(background,(background.get_width()/2,background.get_height()/2))
 
 positionx_santax=0
@@ -21,7 +21,8 @@ while running:
     hitbox_santa=pygame.Rect(positionx_santax,positiony_santax,santa.get_width()-5,santa.get_height()-5)
     target=pygame.Rect(300,santa.get_height()+200,160,200)
     #hitbox_target=pygame.Rect(300,)
-
+    text=font.render('Level 0!',True,(255,255,255))
+    screen.blit(text,(100,20))
 
     move_x=0
     move_y=0
