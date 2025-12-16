@@ -41,8 +41,6 @@ def game_loop(level):
                     move_right = True
                 if event.key == pygame.K_SPACE:
                     c1.y = 0
-                if event.key == pygame.K_DOWN:
-                    move_down = True
                 if event.key == pygame.K_UP:
                     move_up = True
 
@@ -52,18 +50,16 @@ def game_loop(level):
                     move_left = False
                 if event.key == pygame.K_RIGHT:
                     move_right = False
-                if event.key == pygame.K_DOWN:
-                    move_down = False
                 if event.key == pygame.K_UP:
                     move_up = False
 
         if move_left:
             c1.move_left()
-        elif move_right:
+        if move_right:
             c1.move_right()
-        elif move_up:
+        if move_up:
             c1.move_up()
-        elif move_down:
+        if move_down:
             c1.move_down()
         else:
             ...
@@ -72,12 +68,13 @@ def game_loop(level):
         screen.blit(c1.idle_pose, (c1.x, c1.y))
         win_rectangle = pygame.rect.Rect(150, 160, 32, 32)
         pygame.draw.rect(screen, (255, 0, 0), win_rectangle)
-        hitbox_floor=pygame.Rect(0,screen.get_height()*3/4,screen.get_width(),screen.get_height()*(1/4)+24)
+        hitbox_floor=pygame.Rect(0,screen.get_height()*3/4,screen.get_width(),screen.get_height()*1/4)
 
         if c1_hitbox.colliderect(win_rectangle):
             running = g1.win()
         if c1_hitbox.colliderect(hitbox_floor):
             c1.speed_y=0
+
             
                
         c1.playerfalling(dt)
