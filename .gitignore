@@ -193,11 +193,11 @@ pyrightconfig.json
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode
-*.jpg
-*.jpeg
-*.png
+#*.jpg
+#*.jpeg
+#*.png
 *.wav
-*.mp3
+#*.mp3
 *.ogg
 *.midi
 *.zip
