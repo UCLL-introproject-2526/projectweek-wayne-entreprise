@@ -80,8 +80,8 @@ def game_loop():
 
             
                
-        
-        
+        c1.playerfalling(dt)
+
         pygame.display.flip()
 
     running = True
