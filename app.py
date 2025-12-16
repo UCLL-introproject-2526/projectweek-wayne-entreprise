@@ -71,11 +71,9 @@ def game_loop():
 
         if c1_hitbox.colliderect(win_rectangle):
             running = g1.win()
-        touching = False
         if c1_hitbox.colliderect(hitbox_floor):
             c1.y = hitbox_floor.top - c1.idle_pose.get_height()
             c1.speed_y = 0
-            touching = True
             #c1.set_height((screen.get_height()*3/4) - c1.idle_pose.get_height())
             #c1_hitbox = pygame.Rect(c1.x, c1.y, c1.idle_pose.get_width(), c1.idle_pose.get_height())
         screen.blit(c1.idle_pose, (c1.x, c1.y))
