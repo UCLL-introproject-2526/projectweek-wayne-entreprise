@@ -10,9 +10,8 @@ def game_tuto():
     running = True
 
     background = pygame.image.load('Assets/dak.png')
-    background = pygame.image.load('Assets/dak.png')
-    background = pygame.transform.scale_by(background, 0.15625)
-    screen = pygame.display.set_mode((320,320), pygame.FULLSCREEN | pygame.SCALED)
+    background = pygame.transform.scale_by(background, 0.351568)
+    screen = pygame.display.set_mode((720,720), pygame.FULLSCREEN | pygame.SCALED)
 
     c1 = character.Character((0, 160), 10)
     move_left = False
@@ -25,6 +24,7 @@ def game_tuto():
     text_explain=font_expl.render(f'Press RIGHTARROW key: -> to go right',True,(255,255,255))
     text_explain2=font_expl.render(f'Press LEFTARROW key: <- to go left',True,(255,255,255))
     while running:
+        dt = klok.tick(60)  
         screen.blit(background,(0,0))
         screen.blit(text,(100,20))
         screen.blit(text_explain,(20,50))
@@ -65,8 +65,13 @@ def game_tuto():
             c1.move_up()
         else:
             ...
+        c1_hitbox = pygame.Rect(c1.x, c1.y, c1.idle_pose.get_width(), c1.idle_pose.get_height())
+        hitbox_floor=pygame.Rect(0,screen.get_height()*3/4,screen.get_width(),screen.get_height()*1/4)
+        if c1_hitbox.colliderect(hitbox_floor):
+            c1.y = hitbox_floor.top - c1.idle_pose.get_height()
+            c1.speed_y = 0
 
-
+        c1.playerfalling(dt)
 
         klok.tick(60)
         pygame.display.flip()
