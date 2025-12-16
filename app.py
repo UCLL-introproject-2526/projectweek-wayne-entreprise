@@ -58,7 +58,11 @@ def game_loop():
     move_left = False
     move_right = False
     while running:
+<<<<<<< HEAD
         c1_hitbox = pygame.Rect(c1.x, c1.y, c1.idle_pose.get_width(), c1.idle_pose.get_height())
+=======
+        dt = klok.tick(60)  
+>>>>>>> 2bf5a37edc6bbf0dba9d0b9bcfc117cf687fe234
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -92,9 +96,8 @@ def game_loop():
             running = g1.win()
 
     
-
-
-        klok.tick(60)
+        c1.playerfalling(dt)
+        
         pygame.display.flip()
     running = True
     while running:
