@@ -10,8 +10,11 @@ class Character:
         self.speed_y = 0
         self.idle_pose = pygame.transform.scale_by(self.idle_pose, 2.333333333)
 
+    def set_height(self, position_y_platform):
+        self.y = position_y_platform
+
     def playerfalling(self, dt):
-        gravity = 0.0000
+        gravity = 0.0005
         self.speed_y += gravity * dt
         increase = self.speed_y * dt
         self.y  += increase
