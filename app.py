@@ -7,7 +7,7 @@ import goal
 def main():
     ...
 
-def game_loop(level):
+def game_loop():
     pygame.init()
     klok = pygame.time.Clock()
     pygame.display.set_caption("Kerst") 
