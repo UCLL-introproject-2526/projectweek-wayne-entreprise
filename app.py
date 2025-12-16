@@ -14,9 +14,9 @@ def game_loop():
     running = True
 
     background = pygame.image.load('Assets/dak.png')
-    background = pygame.transform.scale_by(background, 0.35156)
+    background = pygame.transform.scale_by(background, 0.351568)
     screen = pygame.display.set_mode((720,720), pygame.FULLSCREEN | pygame.SCALED)
-
+    
     c1 = character.Character((0, 160), 10)
     
     g1 = goal.Goal(screen)
@@ -72,12 +72,18 @@ def game_loop():
         screen.blit(c1.idle_pose, (c1.x, c1.y))
         win_rectangle = pygame.rect.Rect(150, 160, 32, 32)
         pygame.draw.rect(screen, (255, 0, 0), win_rectangle)
+        hitbox_floor=pygame.Rect(0,screen.get_height()*3/4,screen.get_width(),screen.get_height()*(1/4)+24)
+
         if c1_hitbox.colliderect(win_rectangle):
             running = g1.win()
+        if c1_hitbox.colliderect(hitbox_floor):
+            c1.speed_y=0
+            
                
         c1.playerfalling(dt)
         
         pygame.display.flip()
+
     running = True
     while running:
         for event in pygame.event.get():
