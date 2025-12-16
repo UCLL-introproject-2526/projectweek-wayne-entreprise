@@ -7,7 +7,7 @@ import goal
 def main():
     ...
 
-def game_loop():
+def game_loop(level):
     pygame.init()
     klok = pygame.time.Clock()
     pygame.display.set_caption("Kerst") 
@@ -59,7 +59,7 @@ def game_loop():
 
     
         c1.playerfalling(dt)
-        
+
         pygame.display.flip()
     running = True
     while running:
