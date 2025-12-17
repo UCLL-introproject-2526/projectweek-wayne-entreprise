@@ -84,6 +84,7 @@ def game_loop():
 
         win_rectangle = pygame.rect.Rect(150, 160, 32, 32)
         pygame.draw.rect(screen, (255, 0, 0), win_rectangle)
+
         hitbox_floor=pygame.Rect(0,screen.get_height()*3/4,screen.get_width(),screen.get_height()*1/4)
         print(hitbox_floor.top)
 
