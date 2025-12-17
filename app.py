@@ -96,10 +96,6 @@ def game_loop():
         pygame.draw.rect(screen, (0, 255, 0), win_rectangle)
 
 
-
-
-        
-
         if c1_hitbox.colliderect(win_rectangle):
             loop2 = g1.win()
         
