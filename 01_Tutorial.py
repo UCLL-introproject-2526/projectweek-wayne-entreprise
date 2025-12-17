@@ -13,10 +13,10 @@ def game_tuto():
     start = pygame.transform.scale_by(start, 0.5357142857)
     background = pygame.image.load('Assets/dak.png')
     background = pygame.transform.scale_by(background, 0.351568)
-    shimney1=pygame.image.load('Assets/shimney.png')
-    shimney1=pygame.transform.scale_by(shimney1,0.04)
-    shimney2=pygame.image.load('Assets/shimney.png')
-    shimney2=pygame.transform.scale_by(shimney2,0.04)
+    shimney1=pygame.image.load('Assets/Chimney/chimney_26x31.png')
+    shimney1=pygame.transform.scale_by(shimney1,1.5)
+    shimney2=pygame.image.load('Assets/Chimney/chimney_26x31.png')
+    shimney2=pygame.transform.scale_by(shimney2,1.5)
     flag=pygame.image.load('Assets/flag/Flag_18x32.png')
     flag=pygame.transform.scale_by(flag,1.5)
     screen = pygame.display.set_mode((720,720), pygame.FULLSCREEN | pygame.SCALED)
@@ -105,7 +105,7 @@ def game_tuto():
         elif move_right and c1.x<background.get_width() and (not collision1 and not before):
             c1.move_right()
         elif move_up:
-            c1.move_up()
+            c1.jump()
         else:
             ...
         #hitboxen
@@ -120,7 +120,16 @@ def game_tuto():
             c1.speed_y = 0
         elif collision1==True and above:
             c1.y=shimney1_hitbox.top
+        char_height = c1.idle_pose.get_height()
+        char_width = c1.idle_pose.get_width()
+        floor_y = screen.get_height() * 3/4
         ###
+        if c1.y + char_height >= floor_y:
+            c1.y = floor_y - char_height  
+            c1.speed_y = 0                
+            c1.on_ground = True           
+        else:
+            c1.on_ground = False
         tollerance=10
         if collision1:
             if abs(c1_hitbox.right-shimney1_hitbox.left)<tollerance:

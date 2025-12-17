@@ -36,7 +36,11 @@ class Character:
     def get_pos_y(self):
         return self.y
             
-    def place_package(self):
-        if package_amount > 0:
-            package
+    # def place_package(self):
+    #     placed_packages = 0
+    #     if placed_packages < total_packages:
+    #         if facing_right:
+    #             packages.append(Package((self.get_pos_x() + 11, self.get_pos_y)))
+    #         else:
+    #             packages.append(Package((self. get_pos_x() - 11, self.get_pos_y)))
         
