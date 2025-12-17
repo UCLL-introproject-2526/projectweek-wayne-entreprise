@@ -8,8 +8,9 @@ def game_tuto():
     klok = pygame.time.Clock()
     pygame.display.set_caption("Kerst") 
     running = True
-    startscreen=True
+    startscreen=True 
     start=pygame.image.load('Assets/affiche.webp')
+    start = pygame.transform.scale_by(start, 0.5357142857)
     background = pygame.image.load('Assets/dak.png')
     background = pygame.transform.scale_by(background, 0.351568)
     shimney1=pygame.image.load('Assets/shimney.png')
@@ -37,10 +38,11 @@ def game_tuto():
     move_left = False
     move_right = False
     move_up=False
-
+    aantal_packages=1
     font=pygame.font.Font(None,size=30)
     font_expl=pygame.font.Font(None,size=50)
     text=font.render('Level 0: Tutorial',True,(255,255,255))
+    packages_left=font.render(f'Total amount of packages:{aantal_packages}',True,(255,255,255))
     text_explain=font_expl.render(f'Press RIGHTARROW key: -> to go right',True,(255,255,255))
     text_explain2=font_expl.render(f'Press LEFTARROW key: <- to go left',True,(255,255,255))
     
@@ -53,11 +55,11 @@ def game_tuto():
     while running:
         dt = klok.tick(60)  
         screen.blit(background,(0,0))
-
         screen.blit(shimney1,(350,screen.get_height()*3/4-60))
         screen.blit(shimney2,(600,screen.get_height()*3/4-60))
         screen.blit(flag,(630,screen.get_height()*3/4-100))
         screen.blit(text,(100,20))
+        screen.blit(packages_left,(300,20))
         screen.blit(text_explain,(20,50))
         screen.blit(text_explain2,(20,80))
         screen.blit(c1.idle_pose, (c1.x, c1.y))

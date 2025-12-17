@@ -4,7 +4,7 @@ class Character:
     def __init__(self, position, amount_of_packages):
         self.x = position[0]
         self.y = position[1]
-        self.idle_pose = pygame.image.load("Assets/Character/14x23 Idle christmas.png").convert_alpha()
+        self.idle_pose = pygame.image.load("../Assets/Character/14x23 Idle christmas.png").convert_alpha()
         self.idle_pose = self.idle_pose.subsurface(pygame.Rect(0,0,14,23))
         self.idle_pose = pygame.transform.scale_by(self.idle_pose, 2.333333333)
         
