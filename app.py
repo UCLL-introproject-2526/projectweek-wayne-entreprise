@@ -104,6 +104,15 @@ def game_loop():
         
         char_height = c1.idle_pose.get_height()
         char_width = c1.idle_pose.get_width()
+        for pkg in c1.package_list:
+            pkg_hitbox = pygame.Rect(pkg.x, pkg.y + pkg.image.get_height(), pkg.image.get_width(), 1)
+            if pkg_hitbox.colliderect(hitbox_floor):
+                c1.package_list.remove(pkg)
+            else:
+                screen.blit(pkg.image, (pkg.x, pkg.y))
+                pkg.package_falling(dt)
+                
+
 
         for p in platforms:
             if c1_hitbox.colliderect(p.rect):

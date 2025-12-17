@@ -47,13 +47,16 @@ class Character:
                 
     def clean_packages(self):
         self.package_list = []
+    
+    def get_total_packages(self):
+        return self.total_packages
 
     def place_package(self):
         placed_packages = len(self.package_list)
         if placed_packages < self.total_packages:
             if self.facing_right:
-                self.package_list.append(package.Package([self.get_pos_x() + 11, self.get_pos_y()]))
+                self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y()+30]))
             else:
-                self.package_list.append(package.Package([self. get_pos_x() - 11, self.get_pos_y()]))
+                self.package_list.append(package.Package([self.get_pos_x() - 30, self.get_pos_y()+30]))
         print(len(self.package_list))
         print((self.package_list))
