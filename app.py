@@ -47,16 +47,13 @@ def game_loop():
     background = pygame.transform.scale_by(background, 0.351568)
     
     
-    c1 = character.Character((0, 160), 10)
+    c1 = character.Character((0, 400), 10)
     
     g1 = goal.Goal(screen)
     move_left = False
     move_right = False
 
     facing_right = True
-
-    ##TEMP
-    total_packages = 30
 
     while running and loop2:
         dt = klok.tick(60)  
@@ -70,10 +67,10 @@ def game_loop():
                     running = False
                 if event.key == pygame.K_LEFT:
                     move_left = True
-                    facing_right = False
+                    c1.set_direction(False)
                 if event.key == pygame.K_RIGHT:
                     move_right = True
-                    facing_right = True
+                    c1.set_direction(True)
                 if event.key == pygame.K_SPACE:
                     c1.place_package()
                 if event.key == pygame.K_UP:
