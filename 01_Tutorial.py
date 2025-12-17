@@ -54,9 +54,8 @@ def game_tuto():
     floor=screen.get_height()*3/4
     messageshow1=True
     messageshow2=True
-    before=False
-    after=False
-    above=False
+
+    g1 = goal.Goal(screen)
 
     while running:
         dt = klok.tick(60)  
@@ -123,6 +122,7 @@ def game_tuto():
         hitboxen.append(shimney2_hitbox)
         hitboxen.append(shimney3_hitbox)
         obstacles.append(shimney1_hitbox)
+        flag_hitbox=pygame.Rect(630,floor-shimney3.get_height()-flag.get_height(),flag.get_width(),flag.get_height())
         c1_hitbox = pygame.Rect(c1.x, c1.y, c1.idle_pose.get_width(), c1.idle_pose.get_height())
         collision1=c1_hitbox.colliderect(shimney1_hitbox)
         hitbox_floor=pygame.Rect(0,screen.get_height()*3/4,screen.get_width(),screen.get_height()*1/4)
@@ -158,6 +158,9 @@ def game_tuto():
                 elif c1_hitbox.left<hitbox.right  and c1_hitbox.left>hitbox.left:
                     print("check2")
                     c1.x = hitbox.right
+        
+        if c1_hitbox.colliderect(flag_hitbox):
+            running = g1.win()
 
         
 
