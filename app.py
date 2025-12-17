@@ -46,7 +46,7 @@ def game_loop():
     background = pygame.transform.scale_by(background, 0.351568)
     
     screen_height = screen.get_height()
-    c1 = character.Character((0, 400), 10, screen_height)
+    c1 = character.Character((0, 400), 5)
     
     g1 = goal.Goal(screen)
     move_left = False
@@ -126,7 +126,7 @@ def game_loop():
             #     if c1.speed_y > 0 and c1_hitbox.bottom < pkg_rect.bottom:
             #         c1.y = pkg_rect.top - char_height
             #         c1.speed_y = 0
-            #         c1.on_ground = True
+            #         c1.on_ground = True2
 
         if c1.y + char_height >= floor_y:
             c1.y = floor_y - char_height  

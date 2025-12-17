@@ -2,12 +2,11 @@ import pygame
 import package
 
 class Character:
-    def __init__(self, position, amount_of_packages, screen_height=720):
+    def __init__(self, position, amount_of_packages):
         self.set_total_packages(amount_of_packages)
         self.package_list = []
         self.x = position[0]
         self.y = position[1]
-        self.screen_height = screen_height
 
         sprite_sheet = pygame.image.load("Assets/Character/14x23 Idle christmas.png").convert_alpha()
         
@@ -88,8 +87,8 @@ class Character:
         placed_packages = len(self.package_list)
         if placed_packages < self.total_packages:
             if self.facing_right:
-                self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y()], self.screen_height))
+                self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y()]))
             else:
-                self.package_list.append(package.Package([self.get_pos_x() - 30, self.get_pos_y()], self.screen_height))
+                self.package_list.append(package.Package([self.get_pos_x() - 30, self.get_pos_y()]))
         print(len(self.package_list))
         print((self.package_list))

@@ -16,7 +16,7 @@ class Package:
         return f"Package(x={self.x}, y={self.y})"
     
     def set_image(self):
-        rand = randint(1,2)
+        rand = randint(1,3)
         
         if rand == 1:
             self.image = pygame.image.load("Assets/Presents/present_blue_25x24.png").convert_alpha()
