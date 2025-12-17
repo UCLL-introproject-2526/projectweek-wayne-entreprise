@@ -45,8 +45,8 @@ def game_loop():
     background = pygame.image.load('Assets/dak.png')
     background = pygame.transform.scale_by(background, 0.351568)
     
-    
-    c1 = character.Character((0, 400), 10)
+    screen_height = screen.get_height()
+    c1 = character.Character((0, 400), 10, screen_height)
     
     g1 = goal.Goal(screen)
     move_left = False
@@ -95,20 +95,16 @@ def game_loop():
         win_rectangle = pygame.rect.Rect(600, 160, 32, 32)
         pygame.draw.rect(screen, (0, 255, 0), win_rectangle)
 
-
+        floor_y = screen.get_height() * 3//4 - 30
         if c1_hitbox.colliderect(win_rectangle):
             loop2 = g1.win()
         
         char_height = c1.idle_pose.get_height()
         char_width = c1.idle_pose.get_width()
         for pkg in c1.package_list:
-            pkg_hitbox = pygame.Rect(pkg.x, pkg.y + pkg.image.get_height(), pkg.image.get_width(), 1)
-            if pkg_hitbox.colliderect(hitbox_floor):
-                c1.package_list.remove(pkg)
-            else:
-                screen.blit(pkg.image, (pkg.x, pkg.y))
-                pkg.package_falling(dt)
-                
+            screen.blit(pkg.image, (pkg.x, pkg.y))
+            pkg.package_falling(dt)
+            
 
 
         for p in platforms:
@@ -116,9 +112,21 @@ def game_loop():
                 if c1.speed_y > 0 and c1_hitbox.bottom < p.rect.bottom:
                     c1.y = p.rect.top - char_height 
                     c1.speed_y = 0                  
-                    c1.on_ground = True            
-
-        floor_y = screen.get_height() * 3//4 - 30
+                    c1.on_ground = True
+        
+        # Package collision detection
+        for pkg in c1.package_list:
+            pkg_rect = pkg.get_rect()
+            if c1_hitbox.colliderect(pkg_rect):
+                if c1.speed_y > 0 and c1_hitbox.bottom < pkg_rect.bottom:
+                    c1.y = pkg_rect.top - char_height
+                    c1.speed_y = 0
+                    c1.on_ground = True
+            if pkg.cogitlliderect(pkg_rect):
+                if c1.speed_y > 0 and c1_hitbox.bottom < pkg_rect.bottom:
+                    c1.y = pkg_rect.top - char_height
+                    c1.speed_y = 0
+                    c1.on_ground = True
 
         if c1.y + char_height >= floor_y:
             c1.y = floor_y - char_height  
