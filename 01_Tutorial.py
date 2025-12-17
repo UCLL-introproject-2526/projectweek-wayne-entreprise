@@ -104,6 +104,7 @@ def game_tuto():
             c1.move_right()
         else:
             ...
+        c1.playerfalling(dt)
         #hitboxen
         shimney1_hitbox=pygame.Rect(350,screen.get_height()*3/4-60,shimney1.get_width(),shimney1.get_height())
         obstacles.append(shimney1_hitbox)
@@ -123,7 +124,7 @@ def game_tuto():
             c1.on_ground = False
 
 
-        c1.playerfalling(dt)
+        
 
         klok.tick(60)
         pygame.display.flip()
