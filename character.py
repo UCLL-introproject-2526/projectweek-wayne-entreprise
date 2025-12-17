@@ -39,3 +39,4 @@ class Character:
     def place_package(self):
         if package_amount > 0:
             package
+        
