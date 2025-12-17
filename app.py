@@ -119,6 +119,7 @@ def game_loop():
         for p in platforms:
             screen.blit(p.image, p.rect)
 
+        c1.update_animation(dt)
         screen.blit(c1.idle_pose, (c1.x, c1.y))
         #print(c1.y)
 
