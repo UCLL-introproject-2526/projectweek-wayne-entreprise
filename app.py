@@ -22,7 +22,12 @@ def game_loop():
     start_image = pygame.image.load('Assets/affiche.webp')
     start_image = pygame.transform.scale_by(start_image, 0.5357142857)
 
-    p1 = Platform.Platform(200, 450, 64, 32)
+    platforms = [
+    Platform.Platform(200, 450, 64, 32),
+    Platform.Platform(400, 450, 64, 32)
+    ]
+
+
 
     while running and loop1:
         screen.blit(start_image, (0,154))
@@ -106,11 +111,12 @@ def game_loop():
         char_height = c1.idle_pose.get_height()
         char_width = c1.idle_pose.get_width()
 
-        if c1_hitbox.colliderect(p1.rect):
-            if c1.speed_y > 0 and c1_hitbox.bottom < p1.rect.bottom:
-                c1.y = p1.rect.top - char_height 
-                c1.speed_y = 0                   
-                c1.on_ground = True            
+        for p in platforms:
+            if c1_hitbox.colliderect(p.rect):
+                if c1.speed_y > 0 and c1_hitbox.bottom < p.rect.bottom:
+                    c1.y = p.rect.top - char_height 
+                    c1.speed_y = 0                  
+                    c1.on_ground = True            
 
         floor_y = screen.get_height() * 3/4 
 
@@ -119,7 +125,8 @@ def game_loop():
             c1.speed_y = 0                
             c1.on_ground = True           
         
-        screen.blit(p1.image, p1.rect)
+        for p in platforms:
+            screen.blit(p.image, p.rect)
 
         screen.blit(c1.idle_pose, (c1.x, c1.y))
         #print(c1.y)
