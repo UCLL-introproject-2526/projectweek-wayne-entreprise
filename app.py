@@ -9,7 +9,6 @@ def main():
     ...
 
 def game_loop():
-    packages = []
     pygame.init()
     klok = pygame.time.Clock()
     pygame.display.set_caption("Kerst") 
@@ -52,8 +51,6 @@ def game_loop():
     g1 = goal.Goal(screen)
     move_left = False
     move_right = False
-
-    facing_right = True
 
     while running and loop2:
         dt = klok.tick(60)  
@@ -100,6 +97,8 @@ def game_loop():
 
 
 
+
+        
 
         if c1_hitbox.colliderect(win_rectangle):
             loop2 = g1.win()
