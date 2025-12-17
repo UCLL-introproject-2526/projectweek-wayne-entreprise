@@ -26,8 +26,6 @@ def game_loop():
     Platform.Platform(270, 450, 64, 32)
     ]
 
-
-
     while running and loop1:
         screen.blit(start_image, (0,154))
         for event in pygame.event.get():
@@ -54,7 +52,6 @@ def game_loop():
 
     while running and loop2:
         dt = klok.tick(60)  
-        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -88,9 +85,9 @@ def game_loop():
             c1.move_right()
         else:
             ...
-
+        c1.on_ground = False
         c1.playerfalling(dt)
-        c1_hitbox = pygame.Rect(c1.x+6, c1.y + c1.idle_pose.get_height(), 18, 1)
+        c1_hitbox = pygame.Rect(c1.x+6, c1.y + c1.idle_pose.get_height()-3 , 18, 8)
 
         screen.blit(background, (0,0))
 
@@ -102,7 +99,6 @@ def game_loop():
             loop2 = g1.win()
         
         char_height = c1.idle_pose.get_height()
-        char_width = c1.idle_pose.get_width()
             
         for p in platforms:
             if c1_hitbox.colliderect(p.rect):
@@ -110,48 +106,51 @@ def game_loop():
                     c1.y = p.rect.top - char_height 
                     c1.speed_y = 0                  
                     c1.on_ground = True
-        
+        print(f"{c1.speed_y} 1")
+
         # Package collision detection
         for pkg in c1.package_list:
             screen.blit(pkg.image, (pkg.x, pkg.y))
             if not pkg.freeze:
                 pkg.package_falling(dt)
+        
+        package_platforms = []
 
         for pkg1 in c1.package_list:
             pkg_rect_lower_own = pkg1.get_rect_lower()
             pkg_rect_upper_own = pkg1.get_rect_upper()
 
-            for pkg2 in c1.package_list: 
-                # pkg_rect_platform = (0,0,0,0)
+            for pkg2 in c1.package_list:
+                if pkg1 is pkg2:
+                    continue 
                 pkg_rect_upper = pkg2.get_rect_upper()
                 if pkg_rect_lower_own.colliderect(pkg_rect_upper):
                     pkg1.y = pkg_rect_upper.top - 48
                     pkg1.freeze = True
-                if pkg1.freeze:
-                    pkg_rect_platform = pkg1.get_rect_upper()
-                    # print("Platform made!!!!")
+            if pkg1.freeze:
+                package_platforms.append(pkg_rect_upper_own)
 
-            if pkg1.freeze and c1_hitbox.colliderect(pkg_rect_upper_own):
-                print("WERKT")
-                if c1.speed_y > 0 and c1_hitbox.bottom < pkg_rect_upper_own.bottom:
-                    c1.y = pkg_rect_platform.top - char_height
+        for platform in package_platforms:
+            if c1_hitbox.colliderect(platform):
+                if c1.speed_y > 0 and c1_hitbox.bottom <= platform.top + 5:
+                    c1.y = platform.top - char_height
                     c1.speed_y = 0
                     c1.on_ground = True
-                    print("Staat op package")
+    
+        print(f"{c1.speed_y} 2")
 
         if c1.y + char_height >= floor_y:
             c1.y = floor_y - char_height  
             c1.speed_y = 0                
-            c1.on_ground = True           
-        
+            c1.on_ground = True
+        print(f"{c1.speed_y} 3")
         for p in platforms:
             screen.blit(p.image, p.rect)
 
         c1.update_animation(dt)
         screen.blit(c1.idle_pose, (c1.x, c1.y))
         #print(c1.y)
-
-
+        print(package_platforms)
         pygame.display.flip()
 
     while running and loop3:

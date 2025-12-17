@@ -47,10 +47,11 @@ class Character:
         self.y = position_y_platform
 
     def playerfalling(self, dt):
-        gravity = 0.001
-        self.speed_y += gravity * dt
-        increase = self.speed_y * dt
-        self.y  += increase
+        if not self.on_ground:
+            gravity = 0.001
+            self.speed_y += gravity * dt
+            increase = self.speed_y * dt
+            self.y  += increase
 
     def move_left(self):
         self.x -= 5
@@ -91,4 +92,4 @@ class Character:
             else:
                 self.package_list.append(package.Package([self.get_pos_x() - 30, self.get_pos_y()]))
         print(len(self.package_list))
-        print((self.package_list))
+        # print((self.package_list))
