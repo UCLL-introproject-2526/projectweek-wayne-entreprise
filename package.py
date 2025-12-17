@@ -3,7 +3,7 @@ import pygame
 from random import randint
 
 class Package:
-    def __init__(self):
+    def __init__(self, position):
         self.x = 0
         self.y = -100
         self.set_image()
@@ -22,4 +22,3 @@ class Package:
     def place():
         ...
 
-p = Package()

@@ -8,6 +8,7 @@ def main():
     ...
 
 def game_loop():
+    packages = []
     pygame.init()
     klok = pygame.time.Clock()
     pygame.display.set_caption("Kerst") 
@@ -44,6 +45,11 @@ def game_loop():
     move_left = False
     move_right = False
 
+    facing_right = True
+
+    ##TEMP
+    total_packages = 30
+
     while running and loop2:
         dt = klok.tick(60)  
         
@@ -56,13 +62,15 @@ def game_loop():
                     running = False
                 if event.key == pygame.K_LEFT:
                     move_left = True
+                    facing_right = False
                 if event.key == pygame.K_RIGHT:
                     move_right = True
+                    facing_right = True
                 if event.key == pygame.K_SPACE:
-                    c1.y = 0
+                    c1.place_package()
                 if event.key == pygame.K_UP:
                     c1.jump()
-
+                
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
@@ -83,7 +91,8 @@ def game_loop():
         screen.blit(background, (0,0))
 
         win_rectangle = pygame.rect.Rect(150, 160, 32, 32)
-        pygame.draw.rect(screen, (255, 0, 0), win_rectangle)
+        screen.blit(g1.image, (250, 50))
+
 
         hitbox_floor=pygame.Rect(0,screen.get_height()*3/4,screen.get_width(),screen.get_height()*1/4)
         print(hitbox_floor.top)
