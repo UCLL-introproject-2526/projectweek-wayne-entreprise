@@ -24,7 +24,7 @@ def game_loop():
 
     platforms = [
     Platform.Platform(200, 450, 64, 32),
-    Platform.Platform(400, 450, 64, 32)
+    Platform.Platform(400, 350, 64, 32)
     ]
 
 
