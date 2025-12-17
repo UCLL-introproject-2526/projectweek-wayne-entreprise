@@ -8,11 +8,11 @@ def game_tuto():
     klok = pygame.time.Clock()
     pygame.display.set_caption("Kerst") 
     running = True
-    startscreen=True 
+    startscreen=True
     start=pygame.image.load('Assets/affiche.webp')
-    start = pygame.transform.scale_by(start, 0.5357142857)
     background = pygame.image.load('Assets/dak.png')
     background = pygame.transform.scale_by(background, 0.351568)
+    shimney1=pygame.image.load('Assets/shimney.png')
     shimney1=pygame.image.load('Assets/Chimney/chimney_26x31.png')
     shimney1=pygame.transform.scale_by(shimney1,1.5)
     shimney2=pygame.image.load('Assets/Chimney/chimney_26x31.png')
@@ -100,9 +100,9 @@ def game_tuto():
                 if event.key==pygame.K_UP:
                     move_up = False
         
-        if move_left and c1.x>0 and (not collision1 and not after):
+        if move_left and c1.x>0:
             c1.move_left()
-        elif move_right and c1.x<background.get_width() and (not collision1 and not before):
+        elif move_right and c1.x<background.get_width():
             c1.move_right()
         elif move_up:
             c1.jump()
@@ -130,23 +130,9 @@ def game_tuto():
             c1.on_ground = True           
         else:
             c1.on_ground = False
-        tollerance=10
-        if collision1:
-            if abs(c1_hitbox.right-shimney1_hitbox.left)<tollerance:
                 print(1)
                 before=True
-            else:
-                before=False
-            if abs(c1_hitbox.left-shimney1_hitbox.right)<tollerance:
-                print(2)
-                after=True
-            else:
-                after=False
-            if abs(c1_hitbox.top-shimney1_hitbox.bottom)<tollerance:
-                print(3)
-                above=True
-            else:
-                above=False
+
                 
 
         c1.playerfalling(dt)
