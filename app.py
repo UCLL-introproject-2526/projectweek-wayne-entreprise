@@ -22,7 +22,7 @@ def game_loop():
     start_image = pygame.transform.scale_by(start_image, 0.5357142857)
 
     platforms = [
-    Platform.Platform(200, 500, 64, 32),
+    Platform.Platform(200, 450, 64, 32),
     Platform.Platform(270, 450, 64, 32)
     ]
 
@@ -96,8 +96,6 @@ def game_loop():
         pygame.draw.rect(screen, (0, 255, 0), win_rectangle)
 
 
-        hitbox_floor=pygame.Rect(0,screen.get_height()*3/4,screen.get_width(),screen.get_height()*1/4)
-
         if c1_hitbox.colliderect(win_rectangle):
             loop2 = g1.win()
         
@@ -111,7 +109,7 @@ def game_loop():
                     c1.speed_y = 0                  
                     c1.on_ground = True            
 
-        floor_y = screen.get_height() * 3/4 
+        floor_y = screen.get_height() * 3//4 - 30
 
         if c1.y + char_height >= floor_y:
             c1.y = floor_y - char_height  
@@ -121,6 +119,7 @@ def game_loop():
         for p in platforms:
             screen.blit(p.image, p.rect)
 
+        c1.update_animation(dt)
         screen.blit(c1.idle_pose, (c1.x, c1.y))
         #print(c1.y)
 
