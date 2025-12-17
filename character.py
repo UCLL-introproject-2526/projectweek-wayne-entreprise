@@ -7,11 +7,41 @@ class Character:
         self.package_list = []
         self.x = position[0]
         self.y = position[1]
-        self.idle_pose = pygame.image.load("Assets/Character/14x23 Idle christmas.png").convert_alpha()
-        self.idle_pose = self.idle_pose.subsurface(pygame.Rect(0,0,14,23))
+
+        sprite_sheet = pygame.image.load("Assets/Character/14x23 Idle christmas.png").convert_alpha()
+        
+        self.frames = [] 
+        for i in range(4):
+            frame = sprite_sheet.subsurface(pygame.Rect(i * 14, 0, 14, 23))
+            frame = pygame.transform.scale_by(frame, 2.333333333)
+            self.frames.append(frame)
+
+        self.current_frame = 0
+        self.timer = 0
+        
+        self.idle_pose = self.frames[0]
+        
+
+
         self.speed_y = 0
-        self.idle_pose = pygame.transform.scale_by(self.idle_pose, 2.333333333)
         self.facing_right = True
+
+    def update_animation(self, dt):
+        self.timer += dt
+        if self.timer > 150:
+            self.timer = 0
+            self.current_frame += 1                
+            if self.current_frame >= 4:
+                self.current_frame = 0
+            
+        image = self.frames[self.current_frame]
+            
+        if not self.facing_right:
+            image = pygame.transform.flip(image, True, False)
+                
+        self.idle_pose = image
+
+
 
     def set_height(self, position_y_platform):
         self.y = position_y_platform
@@ -24,9 +54,11 @@ class Character:
 
     def move_left(self):
         self.x -= 5
+        self.facing_right = False
 
     def move_right(self):
         self.x += 5
+        self.facing_right = True
         
     def jump(self):
         if self.on_ground:
