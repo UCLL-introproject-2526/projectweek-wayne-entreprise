@@ -25,11 +25,10 @@ class Character:
     def move_right(self):
         self.x += 5
         
-    def move_up(self):
-        self.y -= 5
-        
-    def move_down(self):
-        self.y += 5
-
+    def jump(self):
+        if self.on_ground:
+            self.speed_y = -0.35
+            self.on_ground = False
+            
     def place_package(self):
         ...
