@@ -2,7 +2,8 @@ import pygame
 
 class Goal:
     def __init__(self, scherm):
-        self.image = None
+        self.image = pygame.image.load('Assets/goal.png')
+        self.image = pygame.transform.scale_by(self.image, 0.1)
         self.screen = scherm
         
     def win(self):

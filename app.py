@@ -18,10 +18,10 @@ def game_loop():
     loop3 = True
 
     start_image = pygame.image.load('Assets/enhanced_image_20251216124252_1.webp')
-    start_image = pygame.transform.scale_by(start_image, 0.5)
+    start_image = pygame.transform.scale_by(start_image, 0.5357142857)
 
     while running and loop1:
-        screen.blit(start_image, (0,180))
+        screen.blit(start_image, (0,154))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
