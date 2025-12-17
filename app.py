@@ -9,7 +9,6 @@ def main():
     ...
 
 def game_loop():
-    packages = []
     pygame.init()
     klok = pygame.time.Clock()
     pygame.display.set_caption("Kerst") 
@@ -23,8 +22,8 @@ def game_loop():
     start_image = pygame.transform.scale_by(start_image, 0.5357142857)
 
     platforms = [
-    Platform.Platform(200, 450, 64, 32),
-    Platform.Platform(400, 450, 64, 32)
+    Platform.Platform(200, 500, 64, 32),
+    Platform.Platform(270, 450, 64, 32)
     ]
 
 
@@ -52,8 +51,6 @@ def game_loop():
     g1 = goal.Goal(screen)
     move_left = False
     move_right = False
-
-    facing_right = True
 
     while running and loop2:
         dt = klok.tick(60)  
@@ -91,7 +88,7 @@ def game_loop():
             ...
 
         c1.playerfalling(dt)
-        c1_hitbox = pygame.Rect(c1.x, c1.y, c1.idle_pose.get_width(), c1.idle_pose.get_height())
+        c1_hitbox = pygame.Rect(c1.x, c1.y + c1.idle_pose.get_height(), c1.idle_pose.get_width(), 1)
 
         screen.blit(background, (0,0))
 

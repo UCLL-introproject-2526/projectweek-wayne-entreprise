@@ -8,11 +8,10 @@ def game_tuto():
     klok = pygame.time.Clock()
     pygame.display.set_caption("Kerst") 
     running = True
-    startscreen=True
     start=pygame.image.load('Assets/affiche.webp')
+    start = pygame.transform.scale_by(start, 0.5357142857)
     background = pygame.image.load('Assets/dak.png')
     background = pygame.transform.scale_by(background, 0.351568)
-    shimney1=pygame.image.load('Assets/shimney.png')
     shimney1=pygame.image.load('Assets/Chimney/chimney_26x31.png')
     shimney1=pygame.transform.scale_by(shimney1,1.5)
     shimney2=pygame.image.load('Assets/Chimney/chimney_26x31.png')
@@ -37,7 +36,6 @@ def game_tuto():
     c1 = character.Character((0, 160), 10)
     move_left = False
     move_right = False
-    move_up=False
     aantal_packages=1
     font=pygame.font.Font(None,size=30)
     font_expl=pygame.font.Font(None,size=50)
@@ -85,7 +83,7 @@ def game_tuto():
                         text_explain2=font_expl.render('',True,(255,255,255))
                         messageshow1=False
                 if event.key == pygame.K_UP:
-                    move_up = True
+                    c1.jump()
                     if messageshow2:
                         text_explain=font_expl.render('The Goal of this game is simple',True,(255,255,255))
                         text_explain2=font_expl.render('Try to deliver the package to the flag',True,(255,255,255))
@@ -97,17 +95,15 @@ def game_tuto():
                     move_left = False
                 if event.key == pygame.K_RIGHT:
                     move_right = False
-                if event.key==pygame.K_UP:
-                    move_up = False
+
         
         if move_left and c1.x>0:
             c1.move_left()
         elif move_right and c1.x<background.get_width():
             c1.move_right()
-        elif move_up:
-            c1.jump()
         else:
             ...
+        c1.playerfalling(dt)
         #hitboxen
         shimney1_hitbox=pygame.Rect(350,screen.get_height()*3/4-60,shimney1.get_width(),shimney1.get_height())
         obstacles.append(shimney1_hitbox)
@@ -115,11 +111,6 @@ def game_tuto():
         collision1=c1_hitbox.colliderect(shimney1_hitbox)
         hitbox_floor=pygame.Rect(0,screen.get_height()*3/4,screen.get_width(),screen.get_height()*1/4)
         ###""
-        if c1_hitbox.colliderect(hitbox_floor) and collision1!=True:
-            c1.y = hitbox_floor.top - c1.idle_pose.get_height()
-            c1.speed_y = 0
-        elif collision1==True and above:
-            c1.y=shimney1_hitbox.top
         char_height = c1.idle_pose.get_height()
         char_width = c1.idle_pose.get_width()
         floor_y = screen.get_height() * 3/4
@@ -130,12 +121,9 @@ def game_tuto():
             c1.on_ground = True           
         else:
             c1.on_ground = False
-                print(1)
-                before=True
+        
 
-                
-
-        c1.playerfalling(dt)
+        
 
         klok.tick(60)
         pygame.display.flip()

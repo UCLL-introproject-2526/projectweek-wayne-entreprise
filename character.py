@@ -17,7 +17,7 @@ class Character:
         self.y = position_y_platform
 
     def playerfalling(self, dt):
-        gravity = 0.0005
+        gravity = 0.001
         self.speed_y += gravity * dt
         increase = self.speed_y * dt
         self.y  += increase
@@ -45,11 +45,15 @@ class Character:
     def set_total_packages(self,amount):
         self.total_packages = amount
                 
+    def clean_packages(self):
+        self.package_list = []
+
     def place_package(self):
         placed_packages = len(self.package_list)
         if placed_packages < self.total_packages:
             if self.facing_right:
-                self.package_list.append(package.Package((self.get_pos_x() + 11, self.get_pos_y)))
+                self.package_list.append(package.Package([self.get_pos_x() + 11, self.get_pos_y()]))
             else:
-                self.package_list.append(package.Package((self. get_pos_x() - 11, self.get_pos_y)))
+                self.package_list.append(package.Package([self. get_pos_x() - 11, self.get_pos_y()]))
         print(len(self.package_list))
+        print((self.package_list))
