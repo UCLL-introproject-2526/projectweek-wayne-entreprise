@@ -26,6 +26,7 @@ def game_loop():
     Platform.Platform(270, 450, 64, 32)
     ]
 
+
     while running and loop1:
         screen.blit(start_image, (0,154))
         for event in pygame.event.get():
@@ -45,17 +46,18 @@ def game_loop():
     
     screen_height = screen.get_height()
     c1 = character.Character((0, 400), 40)
+    c1.on_ground = False
     
     g1 = goal.Goal(screen)
     move_left = False
     move_right = False
 
     while running and loop2:
-        dt = klok.tick(60)  
+        dt = klok.tick(60) 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
+        
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
@@ -85,9 +87,12 @@ def game_loop():
             c1.move_right()
         else:
             ...
-        c1.on_ground = False
+        
         c1.playerfalling(dt)
+        if not c1.on_ground:
+            c1.on_ground = False
         c1_hitbox = pygame.Rect(c1.x+6, c1.y + c1.idle_pose.get_height()-3 , 18, 8)
+
 
         screen.blit(background, (0,0))
 
@@ -106,7 +111,6 @@ def game_loop():
                     c1.y = p.rect.top - char_height 
                     c1.speed_y = 0                  
                     c1.on_ground = True
-        print(f"{c1.speed_y} 1")
 
         # Package collision detection
         for pkg in c1.package_list:
@@ -129,30 +133,42 @@ def game_loop():
                     pkg1.freeze = True
             if pkg1.freeze:
                 package_platforms.append(pkg_rect_upper_own)
-
+        
+        
+        all_objects = [*package_platforms,*platforms]
+        
         for platform in package_platforms:
             if c1_hitbox.colliderect(platform):
                 if c1.speed_y > 0 and c1_hitbox.bottom <= platform.top + 5:
-                    c1.y = platform.top - char_height
+                    c1.y = platform.top - char_height +1
                     c1.speed_y = 0
                     c1.on_ground = True
-    
-        print(f"{c1.speed_y} 2")
+                # print("touching")
+        
+        touching_object = None
+        for obj in all_objects:
+            if c1_hitbox.colliderect(obj):
+                touching_object = True
+        if not touching_object:
+            c1.on_ground = False
+        
+        
+            
 
         if c1.y + char_height >= floor_y:
             c1.y = floor_y - char_height  
             c1.speed_y = 0                
             c1.on_ground = True
-        print(f"{c1.speed_y} 3")
         for p in platforms:
             screen.blit(p.image, p.rect)
 
         c1.update_animation(dt)
         screen.blit(c1.idle_pose, (c1.x, c1.y))
         #print(c1.y)
-        print(package_platforms)
+        # print(package_platforms)
         pygame.display.flip()
-
+        
+        print(c1.on_ground)
     while running and loop3:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

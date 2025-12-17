@@ -33,12 +33,17 @@ class Package:
     
     def get_rect_lower(self):
         #Return the collision rectangle for this package
-        return pygame.Rect(self.x, self.y+24, self.image.get_width(), self.image.get_height()/2)
+        h = self.image.get_height()
+        w = self.image.get_width()
+        return pygame.Rect(int(self.x), int(self.y + h//2), int(w), int(h - h//2))
     
     
     def get_rect_upper(self):
         #Return the collision rectangle for this package
-        return pygame.Rect(self.x, self.y, self.image.get_width(), 3)
+        h = self.image.get_height()
+        w = self.image.get_width()
+        upper_h = max(3, h//6)
+        return pygame.Rect(int(self.x), int(self.y), int(w), int(upper_h))
     
     
     
