@@ -17,7 +17,7 @@ class Character:
         self.y = position_y_platform
 
     def playerfalling(self, dt):
-        gravity = 0.0005
+        gravity = 0.001
         self.speed_y += gravity * dt
         increase = self.speed_y * dt
         self.y  += increase
