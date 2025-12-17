@@ -27,7 +27,7 @@ class Character:
         self.facing_right = True
 
     def update_animation(self, dt):
-        self.timer += dt            
+        self.timer += dt
         if self.timer > 150:
             self.timer = 0
             self.current_frame += 1                
