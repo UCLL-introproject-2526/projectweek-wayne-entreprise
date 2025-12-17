@@ -65,8 +65,10 @@ def game_loop():
                 if event.key == pygame.K_LEFT:
                     move_left = True
                     c1.set_direction(False)
+                    c1.set_direction(False)
                 if event.key == pygame.K_RIGHT:
                     move_right = True
+                    c1.set_direction(True)
                     c1.set_direction(True)
                 if event.key == pygame.K_SPACE:
                     c1.place_package()
