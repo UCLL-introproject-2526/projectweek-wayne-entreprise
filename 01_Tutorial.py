@@ -16,7 +16,9 @@ def game_tuto():
     shimney1=pygame.image.load('Assets/Chimney/chimney_26x31.png')
     shimney1=pygame.transform.scale_by(shimney1,2)
     shimney2=pygame.image.load('Assets/Chimney/chimney_26x31.png')
-    shimney2=pygame.transform.scale_by(shimney2,2)
+    shimney2=pygame.transform.scale_by(shimney2,4)
+    shimney3=pygame.image.load('Assets/Chimney/chimney_26x31.png')
+    shimney3=pygame.transform.scale_by(shimney3,4)
     flag=pygame.image.load('Assets/flag/Flag_18x32.png')
     flag=pygame.transform.scale_by(flag,1.5)
     screen = pygame.display.set_mode((720,720), pygame.FULLSCREEN | pygame.SCALED)
@@ -25,13 +27,18 @@ def game_tuto():
 
     ###
     while startscreen:
-        screen.blit(start,(0,0))
+        screen.blit(start, (0,154))
         for event in pygame.event.get():
-            if event.type==pygame.KEYDOWN:
-                if event.key==pygame.K_SPACE:
-                    startscreen=False
+            if event.type == pygame.QUIT:
+                running = False
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    startscreen = False
+                if event.key == pygame.K_SPACE:
+                    startscreen = False
         klok.tick(60)
-        pygame.display.flip() 
+        pygame.display.flip()
         
 
     c1 = character.Character((0, 160), 10)
@@ -44,7 +51,7 @@ def game_tuto():
     packages_left=font.render(f'Total amount of packages left:{aantal_packages}',True,(255,255,255))
     text_explain=font_expl.render(f'Press RIGHTARROW key: -> to go right',True,(255,255,255))
     text_explain2=font_expl.render(f'Press LEFTARROW key: <- to go left',True,(255,255,255))
-    
+    floor=screen.get_height()*3/4
     messageshow1=True
     messageshow2=True
     before=False
@@ -54,13 +61,15 @@ def game_tuto():
     while running:
         dt = klok.tick(60)  
         screen.blit(background,(0,0))
-        screen.blit(shimney1,(350,screen.get_height()*3/4-50))
-        screen.blit(shimney2,(600,screen.get_height()*3/4-50))
-        screen.blit(flag,(630,screen.get_height()*3/4-100))
+        screen.blit(shimney1,(350,floor-shimney1.get_height()))
+        screen.blit(shimney2,(400,floor-shimney2.get_height()))
+        screen.blit(shimney3,(610,floor-shimney3.get_height()))
+        screen.blit(flag,(630,floor-shimney3.get_height()-flag.get_height()))
         screen.blit(text,(100,20))
         screen.blit(packages_left,(300,20))
         screen.blit(text_explain,(20,50))
         screen.blit(text_explain2,(20,80))
+        c1.update_animation(dt)
         screen.blit(c1.idle_pose, (c1.x, c1.y))
 
         for event in pygame.event.get():
@@ -107,10 +116,12 @@ def game_tuto():
         c1.playerfalling(dt)
         #hitboxen
         hitboxen=[]
-        shimney1_hitbox=pygame.Rect(350,screen.get_height()*3/4-50,shimney1.get_width(),shimney1.get_height())
-        shimney2_hitbox=pygame.Rect(600,screen.get_height()*3/4-50,shimney2.get_width(),shimney2.get_height())
+        shimney1_hitbox=pygame.Rect(350,floor-shimney1.get_height(),shimney1.get_width(),shimney1.get_height())
+        shimney2_hitbox=pygame.Rect(400,floor-shimney2.get_height(),shimney2.get_width(),shimney2.get_height())
+        shimney3_hitbox=pygame.Rect(610,floor-shimney3.get_height(),shimney3.get_width(),shimney3.get_height())
         hitboxen.append(shimney1_hitbox)
         hitboxen.append(shimney2_hitbox)
+        hitboxen.append(shimney3_hitbox)
         obstacles.append(shimney1_hitbox)
         c1_hitbox = pygame.Rect(c1.x, c1.y, c1.idle_pose.get_width(), c1.idle_pose.get_height())
         collision1=c1_hitbox.colliderect(shimney1_hitbox)
@@ -129,8 +140,6 @@ def game_tuto():
             c1.y = floor_y - char_height  
             c1.speed_y = 0                
             c1.on_ground = True           
-        else:
-            c1.on_ground = False
         
         #
         for hitbox in hitboxen:
