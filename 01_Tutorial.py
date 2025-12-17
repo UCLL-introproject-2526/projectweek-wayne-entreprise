@@ -8,14 +8,15 @@ def game_tuto():
     klok = pygame.time.Clock()
     pygame.display.set_caption("Kerst") 
     running = True
+    startscreen=True
     start=pygame.image.load('Assets/affiche.webp')
     start = pygame.transform.scale_by(start, 0.5357142857)
     background = pygame.image.load('Assets/dak.png')
     background = pygame.transform.scale_by(background, 0.351568)
     shimney1=pygame.image.load('Assets/Chimney/chimney_26x31.png')
-    shimney1=pygame.transform.scale_by(shimney1,1.5)
+    shimney1=pygame.transform.scale_by(shimney1,2)
     shimney2=pygame.image.load('Assets/Chimney/chimney_26x31.png')
-    shimney2=pygame.transform.scale_by(shimney2,1.5)
+    shimney2=pygame.transform.scale_by(shimney2,2)
     flag=pygame.image.load('Assets/flag/Flag_18x32.png')
     flag=pygame.transform.scale_by(flag,1.5)
     screen = pygame.display.set_mode((720,720), pygame.FULLSCREEN | pygame.SCALED)
@@ -40,7 +41,7 @@ def game_tuto():
     font=pygame.font.Font(None,size=30)
     font_expl=pygame.font.Font(None,size=50)
     text=font.render('Level 0: Tutorial',True,(255,255,255))
-    packages_left=font.render(f'Total amount of packages:{aantal_packages}',True,(255,255,255))
+    packages_left=font.render(f'Total amount of packages left:{aantal_packages}',True,(255,255,255))
     text_explain=font_expl.render(f'Press RIGHTARROW key: -> to go right',True,(255,255,255))
     text_explain2=font_expl.render(f'Press LEFTARROW key: <- to go left',True,(255,255,255))
     
@@ -53,8 +54,8 @@ def game_tuto():
     while running:
         dt = klok.tick(60)  
         screen.blit(background,(0,0))
-        screen.blit(shimney1,(350,screen.get_height()*3/4-60))
-        screen.blit(shimney2,(600,screen.get_height()*3/4-60))
+        screen.blit(shimney1,(350,screen.get_height()*3/4-50))
+        screen.blit(shimney2,(600,screen.get_height()*3/4-50))
         screen.blit(flag,(630,screen.get_height()*3/4-100))
         screen.blit(text,(100,20))
         screen.blit(packages_left,(300,20))
@@ -105,7 +106,11 @@ def game_tuto():
             ...
         c1.playerfalling(dt)
         #hitboxen
-        shimney1_hitbox=pygame.Rect(350,screen.get_height()*3/4-60,shimney1.get_width(),shimney1.get_height())
+        hitboxen=[]
+        shimney1_hitbox=pygame.Rect(350,screen.get_height()*3/4-50,shimney1.get_width(),shimney1.get_height())
+        shimney2_hitbox=pygame.Rect(600,screen.get_height()*3/4-50,shimney2.get_width(),shimney2.get_height())
+        hitboxen.append(shimney1_hitbox)
+        hitboxen.append(shimney2_hitbox)
         obstacles.append(shimney1_hitbox)
         c1_hitbox = pygame.Rect(c1.x, c1.y, c1.idle_pose.get_width(), c1.idle_pose.get_height())
         collision1=c1_hitbox.colliderect(shimney1_hitbox)
@@ -114,6 +119,11 @@ def game_tuto():
         char_height = c1.idle_pose.get_height()
         char_width = c1.idle_pose.get_width()
         floor_y = screen.get_height() * 3/4
+        if c1.x>500:
+            messageshow2=False
+            text_explain=font_expl.render('When close to the flag press space',True,(255,255,255))
+            text_explain2=font_expl.render('to drop a package',True,(255,255,255))
+
         ###
         if c1.y + char_height >= floor_y:
             c1.y = floor_y - char_height  
@@ -121,6 +131,25 @@ def game_tuto():
             c1.on_ground = True           
         else:
             c1.on_ground = False
+        
+        #
+        for hitbox in hitboxen:
+            if c1_hitbox.colliderect(hitbox):
+                #print(f"c1:{c1_hitbox.right}")
+                #print(f"hitbox:{hitbox.left}")
+                if c1.speed_y > 0 and c1_hitbox.bottom < hitbox.bottom:
+                    c1.y = hitbox.top - char_height 
+                    c1.speed_y = 0                  
+                    c1.on_ground = True
+                elif c1_hitbox.right>hitbox.left and c1_hitbox.right<hitbox.right-char_width:
+                    print("check1")
+                    c1.x = hitbox.left-char_width
+                    print(hitbox.right-char_width)
+                    print(c1.x)
+                elif c1_hitbox.left<hitbox.right  and c1_hitbox.left>hitbox.left:
+                    print("check2")
+                    c1.x = hitbox.right
+
         
 
         
