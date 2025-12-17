@@ -10,7 +10,7 @@ class Character:
         self.idle_pose = self.idle_pose.subsurface(pygame.Rect(0,0,14,23))
         self.speed_y = 0
         self.idle_pose = pygame.transform.scale_by(self.idle_pose, 2.333333333)
-        self.facing_left = True
+        self.facing_right = True
 
     def set_height(self, position_y_platform):
         self.y = position_y_platform
@@ -39,7 +39,7 @@ class Character:
         return self.y
     
     def set_direction(self, boolean):
-        self.facing_left = boolean
+        self.facing_right = boolean
 
     def set_total_packages(self,amount):
         self.total_packages = amount
