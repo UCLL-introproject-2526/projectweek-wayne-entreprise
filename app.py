@@ -100,7 +100,7 @@ def game_loop():
 
 
         hitbox_floor=pygame.Rect(0,screen.get_height()*3/4,screen.get_width(),screen.get_height()*1/4)
-        print(hitbox_floor.top)
+        
 
         if c1_hitbox.colliderect(win_rectangle):
             loop2 = g1.win()
