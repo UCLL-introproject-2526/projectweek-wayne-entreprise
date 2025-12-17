@@ -42,7 +42,7 @@ def game_loop():
     background = pygame.transform.scale_by(background, 0.351568)
     
     
-    c1 = character.Character((0, 160), 10)
+    c1 = character.Character((0, 400), 10)
     
     g1 = goal.Goal(screen)
     move_left = False
