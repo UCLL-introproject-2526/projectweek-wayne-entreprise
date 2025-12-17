@@ -130,8 +130,8 @@ def game_tuto():
             c1.on_ground = True           
         else:
             c1.on_ground = False
-                print(1)
-                before=True
+            print(1)
+            before=True
 
                 
 
