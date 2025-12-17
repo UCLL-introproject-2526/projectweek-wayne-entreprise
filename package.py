@@ -11,6 +11,7 @@ class Package:
         self.set_image()
         self.speed_y = 0
         self.stopped = False
+        self.freeze = False
 
     def __repr__(self):
         return f"Package(x={self.x}, y={self.y})"
@@ -30,18 +31,26 @@ class Package:
     def check_for_collission(self, place_coördinates):
         ...
     
-    def get_rect(self):
-        """Return the collision rectangle for this package"""
-        return pygame.Rect(self.x, self.y, self.image.get_width(), self.image.get_height())
+    def get_rect_lower(self):
+        #Return the collision rectangle for this package
+        return pygame.Rect(self.x, self.y+24, self.image.get_width(), self.image.get_height()/2)
+    
+    
+    def get_rect_upper(self):
+        #Return the collision rectangle for this package
+        return pygame.Rect(self.x, self.y, self.image.get_width(), 3)
+    
+    
     
     def package_falling(self, dt):
         gravity = 0.001
         self.speed_y += gravity * dt
         increase = self.speed_y * dt
-        self.y += increase
         # Stop packages at floor level (above 1/4 of screen)
-        if self.y >= self.floor_y - 48 or self.stopped:
-            self.y = self.floor_y - 48
-            self.stopped = True
-            self.speed_y = 0
-
+        if not self.freeze:
+            self.y += increase
+            if self.y >= self.floor_y - 48 or self.stopped:
+                self.y = self.floor_y - 48
+                self.freeze = True
+                self.stopped = True
+                self.speed_y = 0

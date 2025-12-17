@@ -46,7 +46,7 @@ def game_loop():
     background = pygame.transform.scale_by(background, 0.351568)
     
     screen_height = screen.get_height()
-    c1 = character.Character((0, 400), 5)
+    c1 = character.Character((0, 400), 40)
     
     g1 = goal.Goal(screen)
     move_left = False
@@ -101,12 +101,7 @@ def game_loop():
         
         char_height = c1.idle_pose.get_height()
         char_width = c1.idle_pose.get_width()
-        for pkg in c1.package_list:
-            screen.blit(pkg.image, (pkg.x, pkg.y))
-            pkg.package_falling(dt)
             
-
-
         for p in platforms:
             if c1_hitbox.colliderect(p.rect):
                 if c1.speed_y > 0 and c1_hitbox.bottom < p.rect.bottom:
@@ -116,17 +111,31 @@ def game_loop():
         
         # Package collision detection
         for pkg in c1.package_list:
-            pkg_rect = pkg.get_rect()
-            if c1_hitbox.colliderect(pkg_rect):
-                if c1.speed_y > 0 and c1_hitbox.bottom < pkg_rect.bottom:
-                    c1.y = pkg_rect.top - char_height
+            screen.blit(pkg.image, (pkg.x, pkg.y))
+            if not pkg.freeze:
+                pkg.package_falling(dt)
+
+        for pkg1 in c1.package_list:
+            pkg_rect_lower_own = pkg1.get_rect_lower()
+            pkg_rect_upper_own = pkg1.get_rect_upper()
+
+            for pkg2 in c1.package_list: 
+                # pkg_rect_platform = (0,0,0,0)
+                pkg_rect_upper = pkg2.get_rect_upper()
+                if pkg_rect_lower_own.colliderect(pkg_rect_upper):
+                    pkg1.y = pkg_rect_upper.top - 48
+                    pkg1.freeze = True
+                if pkg1.freeze:
+                    pkg_rect_platform = pkg1.get_rect_upper()
+                    # print("Platform made!!!!")
+
+            if pkg1.freeze and c1_hitbox.colliderect(pkg_rect_upper_own):
+                print("WERKT")
+                if c1.speed_y > 0 and c1_hitbox.bottom < pkg_rect_upper_own.bottom:
+                    c1.y = pkg_rect_platform.top - char_height
                     c1.speed_y = 0
                     c1.on_ground = True
-            # if pkg.colliderect(pkg_rect):
-            #     if c1.speed_y > 0 and c1_hitbox.bottom < pkg_rect.bottom:
-            #         c1.y = pkg_rect.top - char_height
-            #         c1.speed_y = 0
-            #         c1.on_ground = True2
+                    print("Staat op package")
 
         if c1.y + char_height >= floor_y:
             c1.y = floor_y - char_height  
