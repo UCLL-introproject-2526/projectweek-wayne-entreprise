@@ -17,7 +17,7 @@ def game_loop():
     loop2 = True
     loop3 = True
 
-    start_image = pygame.image.load('Assets/enhanced_image_20251216124252_1.webp')
+    start_image = pygame.image.load('Assets/affiche.webp')
     start_image = pygame.transform.scale_by(start_image, 0.5357142857)
 
     while running and loop1:
