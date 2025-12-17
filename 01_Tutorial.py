@@ -9,7 +9,7 @@ def game_tuto():
     pygame.display.set_caption("Kerst") 
     running = True
     startscreen=True
-
+    start=pygame.image.load('Assets/affiche.webp')
     background = pygame.image.load('Assets/dak.png')
     background = pygame.transform.scale_by(background, 0.351568)
     shimney1=pygame.image.load('Assets/shimney.png')
@@ -24,11 +24,13 @@ def game_tuto():
 
     ###
     while startscreen:
+        screen.blit(start,(0,0))
         for event in pygame.event.get():
             if event.type==pygame.KEYDOWN:
                 if event.key==pygame.K_SPACE:
                     startscreen=False
         klok.tick(60)
+        pygame.display.flip() 
         
 
     c1 = character.Character((0, 160), 10)
