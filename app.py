@@ -122,11 +122,11 @@ def game_loop():
                     c1.y = pkg_rect.top - char_height
                     c1.speed_y = 0
                     c1.on_ground = True
-            if pkg.cogitlliderect(pkg_rect):
-                if c1.speed_y > 0 and c1_hitbox.bottom < pkg_rect.bottom:
-                    c1.y = pkg_rect.top - char_height
-                    c1.speed_y = 0
-                    c1.on_ground = True
+            # if pkg.colliderect(pkg_rect):
+            #     if c1.speed_y > 0 and c1_hitbox.bottom < pkg_rect.bottom:
+            #         c1.y = pkg_rect.top - char_height
+            #         c1.speed_y = 0
+            #         c1.on_ground = True
 
         if c1.y + char_height >= floor_y:
             c1.y = floor_y - char_height  
