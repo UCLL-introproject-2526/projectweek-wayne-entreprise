@@ -27,8 +27,8 @@ class Character:
         
     def jump(self):
         if self.on_ground:
-            self.speed_y = -0.35
+            self.speed_y = -0.3
             self.on_ground = False
-            
+
     def place_package(self):
         ...

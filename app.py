@@ -21,7 +21,7 @@ def game_loop():
     start_image = pygame.transform.scale_by(start_image, 0.5)
 
     while running and loop1:
-        screen.blit(start_image, (0,0))
+        screen.blit(start_image, (0,180))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
