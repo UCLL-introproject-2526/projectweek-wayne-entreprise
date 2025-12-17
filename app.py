@@ -95,7 +95,7 @@ def game_loop():
 
         screen.blit(background, (0,0))
 
-        win_rectangle = pygame.rect.Rect(150, 160, 32, 32)
+        win_rectangle = pygame.rect.Rect(600, 160, 32, 32)
         pygame.draw.rect(screen, (0, 255, 0), win_rectangle)
 
 

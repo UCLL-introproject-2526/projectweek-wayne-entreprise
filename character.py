@@ -2,8 +2,8 @@ import pygame
 
 class Character:
     def __init__(self, position, amount_of_packages):
-        self.total_packages = amount_of_packages
-        self.__packages = []
+        self.set_total_packages(amount_of_packages)
+        self.package_list = []
         self.x = position[0]
         self.y = position[1]
         self.idle_pose = pygame.image.load("Assets/Character/14x23 Idle christmas.png").convert_alpha()
@@ -40,12 +40,15 @@ class Character:
     
     def set_direction(self, boolean):
         self.facing_left = boolean
-            
+
+    def set_total_packages(self,amount):
+        self.total_packages = amount
+                
     def place_package(self):
-        placed_packages = 0
+        placed_packages = len(self.package_list)
         if placed_packages < self.total_packages:
             if self.facing_right:
-                packages.append(Package((self.get_pos_x() + 11, self.get_pos_y)))
+                self.package_list.append(Package((self.get_pos_x() + 11, self.get_pos_y)))
             else:
-                packages.append(Package((self. get_pos_x() - 11, self.get_pos_y)))
-        
+                self.package_list.append(Package((self. get_pos_x() - 11, self.get_pos_y)))
+        print(len(self.package_list))
