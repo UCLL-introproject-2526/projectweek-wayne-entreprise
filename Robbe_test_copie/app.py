@@ -8,7 +8,7 @@ def game_loop():
     pygame.display.set_caption("Kerst") 
     running = True
 
-    background = pygame.image.load('Assets/dak.png')
+    background = pygame.image.load('../Assets/dak.png')
     background = pygame.transform.scale_by(background, 0.351568)
     screen = pygame.display.set_mode((720,720), pygame.FULLSCREEN | pygame.SCALED)
     
