@@ -16,11 +16,9 @@ class Character:
             frame = pygame.transform.scale_by(frame, 2.333333333)
             self.frames.append(frame)
 
-        # Animatie variabelen
         self.current_frame = 0
         self.timer = 0
         
-        # Dit is het plaatje dat getekend wordt (begin bij frame 0)
         self.idle_pose = self.frames[0]
         
 
