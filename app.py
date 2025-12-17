@@ -2,12 +2,14 @@ import pygame
 import character
 import package
 import goal
+import Platform
 
 
 def main():
     ...
 
 def game_loop():
+    packages = []
     pygame.init()
     klok = pygame.time.Clock()
     pygame.display.set_caption("Kerst") 
@@ -19,6 +21,13 @@ def game_loop():
 
     start_image = pygame.image.load('Assets/affiche.webp')
     start_image = pygame.transform.scale_by(start_image, 0.5357142857)
+
+    platforms = [
+    Platform.Platform(200, 450, 64, 32),
+    Platform.Platform(400, 450, 64, 32)
+    ]
+
+
 
     while running and loop1:
         screen.blit(start_image, (0,154))
@@ -38,11 +47,13 @@ def game_loop():
     background = pygame.transform.scale_by(background, 0.351568)
     
     
-    c1 = character.Character((0, 160), 10)
+    c1 = character.Character((0, 400), 10)
     
     g1 = goal.Goal(screen)
     move_left = False
     move_right = False
+
+    facing_right = True
 
     while running and loop2:
         dt = klok.tick(60)  
@@ -56,13 +67,15 @@ def game_loop():
                     running = False
                 if event.key == pygame.K_LEFT:
                     move_left = True
+                    c1.set_direction(False)
                 if event.key == pygame.K_RIGHT:
                     move_right = True
+                    c1.set_direction(True)
                 if event.key == pygame.K_SPACE:
-                    c1.y = 0
+                    c1.place_package()
                 if event.key == pygame.K_UP:
                     c1.jump()
-
+                
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
@@ -82,8 +95,9 @@ def game_loop():
 
         screen.blit(background, (0,0))
 
-        win_rectangle = pygame.rect.Rect(150, 160, 32, 32)
-        pygame.draw.rect(screen, (255, 0, 0), win_rectangle)
+        win_rectangle = pygame.rect.Rect(600, 160, 32, 32)
+        pygame.draw.rect(screen, (0, 255, 0), win_rectangle)
+
 
         hitbox_floor=pygame.Rect(0,screen.get_height()*3/4,screen.get_width(),screen.get_height()*1/4)
         print(hitbox_floor.top)
@@ -94,15 +108,23 @@ def game_loop():
         char_height = c1.idle_pose.get_height()
         char_width = c1.idle_pose.get_width()
 
+        for p in platforms:
+            if c1_hitbox.colliderect(p.rect):
+                if c1.speed_y > 0 and c1_hitbox.bottom < p.rect.bottom:
+                    c1.y = p.rect.top - char_height 
+                    c1.speed_y = 0                  
+                    c1.on_ground = True            
+
         floor_y = screen.get_height() * 3/4 
 
         if c1.y + char_height >= floor_y:
             c1.y = floor_y - char_height  
             c1.speed_y = 0                
             c1.on_ground = True           
-        else:
-            c1.on_ground = False
         
+        for p in platforms:
+            screen.blit(p.image, p.rect)
+
         screen.blit(c1.idle_pose, (c1.x, c1.y))
         #print(c1.y)
 

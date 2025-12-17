@@ -8,11 +8,11 @@ def game_tuto():
     klok = pygame.time.Clock()
     pygame.display.set_caption("Kerst") 
     running = True
-    startscreen=True 
+    startscreen=True
     start=pygame.image.load('Assets/affiche.webp')
-    start = pygame.transform.scale_by(start, 0.5357142857)
     background = pygame.image.load('Assets/dak.png')
     background = pygame.transform.scale_by(background, 0.351568)
+    shimney1=pygame.image.load('Assets/shimney.png')
     shimney1=pygame.image.load('Assets/Chimney/chimney_26x31.png')
     shimney1=pygame.transform.scale_by(shimney1,1.5)
     shimney2=pygame.image.load('Assets/Chimney/chimney_26x31.png')
@@ -122,6 +122,13 @@ def game_tuto():
             c1.on_ground = True           
         else:
             c1.on_ground = False
+<<<<<<< HEAD
+=======
+                print(1)
+                before=True
+
+                
+>>>>>>> 3cfaddf3b57a618735013151b05256d914d9ad8b
 
 
         
