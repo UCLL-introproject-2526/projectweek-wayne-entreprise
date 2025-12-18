@@ -88,7 +88,6 @@ def game_tuto():
                         text_explain2=font_expl.render('Try to deliver the package to the flag',True,(255,255,255))
                 if event.key == pygame.K_SPACE:
                     c1.place_package(all_objects)
-                    c1.amount_left()
                     if c1.get_total_packages()>0:
                         packages_left=font.render(f'Total amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
                     else:
@@ -169,13 +168,13 @@ def game_tuto():
 
         for pkg in c1.package_list:
             screen.blit(pkg.image, (pkg.x, pkg.y))
-            pkg.package_falling(dt)
+            pkg.package_falling(dt, chimneys)
         
         # Package collision detection
         for pkg in c1.package_list:
             screen.blit(pkg.image, (pkg.x, pkg.y))
             if not pkg.freeze:
-                pkg.package_falling(dt)
+                pkg.package_falling(dt, chimneys)
         
         package_platforms = []
 
