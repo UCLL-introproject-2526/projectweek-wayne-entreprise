@@ -157,8 +157,9 @@ def game_loop(start_level):
                         print(c1.get_total_packages())
                         if c1_hitbox.colliderect(flag_hitbox) and c1.get_total_packages()>0:
                                 loop2 = g1.win()
-                        text=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
                         c1.place_package(all_objects)
+                        text=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
+                        
                     if event.key == pygame.K_UP:
                         c1.jump()
                     if event.key == pygame.K_r:
