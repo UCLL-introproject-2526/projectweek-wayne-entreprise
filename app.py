@@ -65,7 +65,7 @@ def game_loop(level):
         ]
     if level == 2:
         start_coordinates = start_x, start_y = (20, 400)
-        packages = 10
+        packages = 40
         platforms = [
         Platform.Platform(150, 500, 64, 32),
         Platform.Platform(220, 500, 64, 32),
@@ -103,7 +103,7 @@ def game_loop(level):
                     c1.set_direction(True)
                     c1.set_direction(True)
                 if event.key == pygame.K_SPACE:
-                    c1.place_package()
+                    c1.place_package(all_objects)
                 if event.key == pygame.K_UP:
                     c1.jump()
                 if event.key == pygame.K_r:
@@ -184,7 +184,7 @@ def game_loop(level):
                     c1.y = platform.top - char_height +1
                     c1.speed_y = 0
                     c1.on_ground = True
-                    print("touching")
+                    # print("touching")
         
         touching_object = None
         for obj in all_objects:
@@ -206,7 +206,10 @@ def game_loop(level):
         # print(package_platforms)
         pygame.display.flip()
         
-        print(c1.on_ground)
+
+        print(f"{c1.y} {c1.x} ,  {c1.package_list}")
+        # print(c1.on_ground)
+
     while running and loop3:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

@@ -124,16 +124,65 @@ class Character:
         return self.total_packages_left
     
 
-    def place_package(self):
-        for pkg in self.package_list:
-            if not pkg.position[1] < self.get_pos_x() + 31 and pkg.position[1] > self.get_pos_x():
-                placed_packages = len(self.package_list)
-                if placed_packages < self.total_packages:
-                    self.box_place_sound.play()
-                    if self.facing_right:
-                        self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y()]))
-                    else:
-                        self.package_list.append(package.Package([self.get_pos_x() - 30, self.get_pos_y()]))
-                else:
-                    self.error_sound.play()
+    # def place_package(self):
+    #     placed_packages = len(self.package_list)
+    #     if placed_packages > 0:
+    #         print("we zitte hier")
+    #         package_check_pass_right = 0
+    #         package_check_pass_left = 0
+    #         for pkg in self.package_list:
+    #             if self.facing_right and (pkg.x > self.get_pos_x() + 70 or pkg.x + 50 < self.get_pos_x() + 44) and (pkg.y > self.get_pos_y()+49 or pkg.y < self.get_pos_y()):
+    #                 package_check_pass_right +=1
+    #             if  not self.facing_right and (pkg.x < self.get_pos_x() - 50 or pkg.x > self.get_pos_x() -2 ) and (pkg.y < self.get_pos_y() + 48 or pkg.y > self.get_pos_y() -1):
+    #                 package_check_pass_left +=1
+    #         if package_check_pass_right == (placed_packages) or package_check_pass_left == (placed_packages):
+    #             if placed_packages < self.total_packages:
+    #                 self.box_place_sound.play()
+    #                 if package_check_pass_right == placed_packages:
+    #                     self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y()]))
+    #                 if package_check_pass_left == placed_packages:
+    #                     self.package_list.append(package.Package([self.get_pos_x() - 50, self.get_pos_y()]))
+    #             else:
+    #                 self.error_sound.play()
+    #     else:
+    #         self.box_place_sound.play()
+    #         if self.facing_right:
+    #             self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y()]))
+    #         else:
+    #             self.package_list.append(package.Package([self.get_pos_x() - 50, self.get_pos_y()]))
+
         # print(len(self.package_list))
+    def place_package(self, object_list):
+        space_check_rect_right = pygame.rect.Rect(self.get_pos_x() + 30 , self.get_pos_y(), 50, 48)    
+        space_check_rect_left = pygame.rect.Rect(self.get_pos_x() - 50 , self.get_pos_y(), 50, 48)
+        placeable_left = True
+        placeable_right = True  
+        placed_packages = len(self.package_list)
+
+        for objects in object_list: 
+            if space_check_rect_right.colliderect(objects):
+                placeable_right = False
+            if space_check_rect_left.colliderect(objects):
+                placeable_left= False
+        
+        
+        if placeable_right and self.facing_right:
+            if placed_packages < self.total_packages:
+                self.box_place_sound.play()
+                self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y()]))
+            else:
+                self.error_sound.play()
+        if not placeable_right and self.facing_right:
+            self.error_sound.play()
+        
+        if placeable_left and not self.facing_right:
+            if placed_packages < self.total_packages:
+                self.box_place_sound.play()
+                self.package_list.append(package.Package([self.get_pos_x() - 50, self.get_pos_y()]))
+            else:
+                 self.error_sound.play()
+        if not placeable_left and not self.facing_right:
+            self.error_sound.play()
+
+
+            
