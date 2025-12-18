@@ -77,9 +77,11 @@ def game_loop(start_level):
         if level == 3:
             start_coordinates = start_x, start_y = (20, 400)
             packages = 3
-            chimneys=[Chimney.Chimney(200,screen.get_height()*3/4-170,100,140),
+            chimneys=[
+                Chimney.Chimney(200,screen.get_height()*3/4-170,100,140),
                 Chimney.Chimney(400,screen.get_height()*3/4-180,100,150),
-              Chimney.Chimney(610,screen.get_height()*3/4-180,100,150)]
+                Chimney.Chimney(610,screen.get_height()*3/4-180,100,150)
+                ]
             platforms = [
             Platform.Platform(350, 100, 64, 32),
             Platform.Platform(450, 200, 64, 32),
