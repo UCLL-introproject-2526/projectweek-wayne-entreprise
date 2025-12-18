@@ -47,15 +47,38 @@ class Package:
     
     
     
-    def package_falling(self, dt):
+    def package_falling(self, dt, platforms=None, Chimneys=None):
+        if platforms is None:
+            platforms = []
+        if Chimneys is None:
+            Chimneys = []
+
         gravity = 0.001
         self.speed_y += gravity * dt
         increase = self.speed_y * dt
+        
         # Stop packages at floor level (above 1/4 of screen)
         if not self.freeze:
             self.y += increase
+            
+            # Check collision met platforms TERWIJL we vallen
+            full_rect = pygame.Rect((self.x), (self.y), 50, 48)
+            for p in platforms:
+                if full_rect.colliderect(p.rect):
+                    # pakket landt op platform
+                    self.y = p.rect.top - 48
+                    self.freeze = True
+                    self.speed_y = 0
+                    return
+            
             if self.y >= self.floor_y - 48 or self.stopped:
                 self.y = self.floor_y - 48
                 self.freeze = True
                 self.stopped = True
                 self.speed_y = 0
+            for c in Chimneys:
+                if full_rect.colliderect(c.rect):
+                    self.y = c.rect.top - 48
+                    self.freeze = True
+                    self.speed_y = 0
+                    return

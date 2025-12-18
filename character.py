@@ -119,9 +119,15 @@ class Character:
                 
     def clean_packages(self):
         self.package_list = []
-    
+        
+    def amount_left(self):
+        self.total_packages_left-=1
+
     def get_total_packages(self):
         return self.total_packages_left
+    
+    def set_total_packages_left(self, amount):
+        self.total_packages_left = amount
     
 
     # def place_package(self):
