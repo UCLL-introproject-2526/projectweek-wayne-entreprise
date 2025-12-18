@@ -16,6 +16,13 @@ class Character:
             frame = pygame.transform.scale_by(frame, 2.333333333)
             self.frames.append(frame)
 
+        run_sheet = pygame.image.load("Assets/Character/14x24 Walk christmas.png").convert_alpha()
+        self.run_frames = []
+        for i in range(4):
+            frame = run_sheet.subsurface(pygame.Rect(i * 14, 0, 14, 24)) 
+            frame = pygame.transform.scale_by(frame, 2.333333333)
+            self.run_frames.append(frame)
+
         self.current_frame = 0
         self.timer = 0
         
@@ -25,6 +32,7 @@ class Character:
 
         self.speed_y = 0
         self.facing_right = True
+        self.is_moving = False
 
     def update_animation(self, dt):
         self.timer += dt
@@ -33,13 +41,22 @@ class Character:
             self.current_frame += 1                
             if self.current_frame >= 4:
                 self.current_frame = 0
+
+        if self.is_moving:
+            animation_list = self.run_frames
+        else:
+            animation_list = self.frames
+
+        if self.current_frame >= len(animation_list):
+            self.current_frame = 0
             
-        image = self.frames[self.current_frame]
+        image = animation_list[self.current_frame]
             
         if not self.facing_right:
             image = pygame.transform.flip(image, True, False)
                 
         self.idle_pose = image
+        self.is_moving = False 
 
 
 
@@ -56,10 +73,12 @@ class Character:
     def move_left(self):
         self.x -= 5
         self.facing_right = False
+        self.is_moving = True
 
     def move_right(self):
         self.x += 5
         self.facing_right = True
+        self.is_moving = True
         
     def jump(self):
         if self.on_ground:
