@@ -120,7 +120,7 @@ class Character:
         self.package_list = []
     
     def get_total_packages(self):
-        return self.total_packages_left
+        return self.total_packages
     
 
     def place_package(self):

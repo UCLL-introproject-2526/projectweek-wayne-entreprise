@@ -6,6 +6,8 @@ import Chimney
 
 
 def game_tuto():
+    again=False
+    print("from here")
     pygame.init()
     klok = pygame.time.Clock()
     pygame.display.set_caption("Kerst") 
@@ -76,6 +78,8 @@ def game_tuto():
                 if event.key == pygame.K_ESCAPE:
                     running = False
                 if event.key == pygame.K_LEFT:
+                    c1.set_direction(False)
+                    c1.set_direction(False)
                     if c1.x>0:
                         move_left = True
                     if messageshow1:
@@ -83,6 +87,8 @@ def game_tuto():
                         text_explain2=font_expl.render('',True,(255,255,255))
                         messageshow1=False
                 if event.key == pygame.K_RIGHT:
+                    c1.set_direction(True)
+                    c1.set_direction(True)
                     if c1.x<screen.get_width():
                         move_right = True
                     if messageshow1:
@@ -102,18 +108,19 @@ def game_tuto():
                     else:
                         packages_left=font.render(f'Not enough packages left',True,(255,255,255))
                         text_explain=font_expl.render('',True,(255,255,255))
-                        text_explain2=font_expl.render('Press R to restart',True,(255,255,255))
+                        text_explain2=font_expl.render('You failed press R to restart',True,(255,255,255))
 
                     if c1_hitbox.colliderect(flag_hitbox) and c1.get_total_packages()>0:
                         text_explain=font_expl.render('',True,(255,255,255))
                         text_explain2=font_expl.render('',True,(255,255,255))
                         screen.blit(text_explain,(20,50))
                         screen.blit(text_explain2,(20,80))
-                        print("check this")
+                        #print("check this")
                         running = g1.win()
                 if event.key == pygame.K_r:
                     running=False
-                    game_tuto()
+                    endscreen=False
+                    again=True
 
 
 
@@ -138,11 +145,12 @@ def game_tuto():
             c1.on_ground = False
         #hitboxen
         flag_hitbox=pygame.Rect(655,320,flag.get_width(),flag.get_height())
-        c1_hitbox = pygame.Rect(c1.x, c1.y, c1.idle_pose.get_width(), c1.idle_pose.get_height())
+        #c1_hitbox = pygame.Rect(c1.x, c1.y, 15, 24)
+        c1_hitbox = pygame.Rect(c1.x+6, c1.y + c1.idle_pose.get_height()-3 , 18, 8)
         #collision1=c1_hitbox.colliderect(shimney1_hitbox)
         hitbox_floor=pygame.Rect(0,screen.get_height()*3/4,screen.get_width(),screen.get_height()*1/4)
         ###""
-        floor_y = screen.get_height() * 3/4-30
+        floor_y = screen.get_height() * 3//4-30
         if c1.x>300 and c1.x<500 and running:
             messageshow2=False
             text_explain=font_expl.render('Place packages by pressing space to go up',True,(255,255,255))
@@ -155,6 +163,7 @@ def game_tuto():
         
         #
         for hitbox in chimneys:
+            print(f"for c:{c1_hitbox.bottom} en for rect:{hitbox.rect.top}")
             if c1_hitbox.colliderect(hitbox.rect):
                 #print(f"c1:{c1_hitbox.right}")
                 #print(f"hitbox:{hitbox.left}")
@@ -162,16 +171,16 @@ def game_tuto():
                     c1.y = hitbox.rect.top - char_height 
                     c1.speed_y = 0                  
                     c1.on_ground = True
-                    print("check3")
-                elif c1_hitbox.bottom > hitbox.rect.top + 10:
-                    if c1_hitbox.centerx < hitbox.rect.centerx:
-                        print("check1")
-                        c1.x = hitbox.rect.left-char_width
-                        #print(hitbox.right-char_width)
-                        #print(c1.x)
-                    elif c1_hitbox.centerx > hitbox.rect.centerx:
-                        print("check2")
-                        c1.x = hitbox.rect.right
+                    print("check1")
+
+                elif c1_hitbox.centerx < hitbox.rect.centerx:
+                    c1.x = hitbox.rect.left-char_width
+                    #print(hitbox.right-char_width)
+                    #print(c1.x)
+                    print("check2")
+                elif c1_hitbox.centerx > hitbox.rect.centerx:
+                    c1.x = hitbox.rect.right
+                    print("check")
 
         for pkg in c1.package_list:
             screen.blit(pkg.image, (pkg.x, pkg.y))
@@ -217,14 +226,18 @@ def game_tuto():
         if not touching_object:
             c1.on_ground = False 
 
-        c1.update_animation(dt)
-        screen.blit(c1.idle_pose, (c1.x, c1.y))
+        
         if c1.y + char_height >= floor_y:
             c1.y = floor_y - char_height  
             c1.speed_y = 0                
-            c1.on_ground = True 
+            c1.on_ground = True
+        
+
         for chimney in chimneys:
-            screen.blit(chimney.image, chimney.rect)  
+            screen.blit(chimney.image, chimney.rect) 
+        
+        c1.update_animation(dt)
+        screen.blit(c1.idle_pose, (c1.x, c1.y))
 
         pygame.display.flip()
 
@@ -241,7 +254,6 @@ def game_tuto():
                     endscreen = False
                 if event.key == pygame.K_SPACE:
                     endscreen = False
-        klok.tick(60)
         pygame.display.flip()
 
 
@@ -254,5 +266,6 @@ def game_tuto():
                     running = False
         klok.tick(60)
     pygame.quit()
-
+    if again:
+        game_tuto()
 game_tuto()
