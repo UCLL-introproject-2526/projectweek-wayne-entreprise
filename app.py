@@ -47,6 +47,12 @@ def main():
                 if event.key == pygame.K_6:
                     game_loop(6) 
                     start = False
+                if event.key == pygame.K_7:
+                    game_loop(7) 
+                    start = False
+                if event.key == pygame.K_8:
+                    game_loop(8) 
+                    start = False
                 if event.key == pygame.K_p:
                     running = False
                     Tutorial.game_tuto()
@@ -140,9 +146,20 @@ def game_loop(start_level):
             Platform.Platform(600, 150, 64, 32)
             ]
         if level == 6:
-            flag_coordinates = flag_x, flag_y = (650, screen.get_height()*3/4-85)
+            flag_coordinates = flag_x, flag_y = (660, screen.get_height()*3/4-85)
             start_coordinates = start_x, start_y = (20, 400)
             packages = 1
+            chimneys=[Chimney.Chimney(150,screen.get_height()*3/4-170,100,140),
+                      Chimney.Chimney(500,screen.get_height()*3/4-230,130,200)
+                ]
+            platforms = [
+            Platform.Platform(80, 440, 64, 32),
+            Platform.Platform(250, 350, 64, 32),
+            ]
+        if level == 7:
+            flag_coordinates = flag_x, flag_y = (660, screen.get_height()*3/4-85)
+            start_coordinates = start_x, start_y = (20, 400)
+            packages = 0
             chimneys=[Chimney.Chimney(150,screen.get_height()*3/4-170,100,140),
                       Chimney.Chimney(500,screen.get_height()*3/4-230,130,200)
                 ]
@@ -313,8 +330,8 @@ def game_loop(start_level):
             pygame.display.flip()
             
         
-        level += 1
-        if level == 7:
+        
+        if level == 10:
             g1.win()
             while running and loop3:
                 for event in pygame.event.get():
@@ -327,6 +344,7 @@ def game_loop(start_level):
                             end_game = True
                 klok.tick(60)
             end_game = True 
+        level += 1
 
 
 main()
