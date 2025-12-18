@@ -50,13 +50,13 @@ def game_loop(start_level):
 
         #reset level values
         platforms = []
-        print(platforms)
-        print("Starting level = ", level)
+
 
         start_image = pygame.image.load('Assets/affiche.webp')
         start_image = pygame.transform.scale_by(start_image, 0.5357142857)
 
         if level == 1:
+            flag_coordinates = flag_x, flag_y = (600, 470)
             start_coordinates = start_x, start_y = (20, 400)
             packages = 10
             platforms = [
@@ -73,11 +73,13 @@ def game_loop(start_level):
             Platform.Platform(470, 400, 64, 32),
             Platform.Platform(540, 400, 64, 32)
             ]
-        print(platforms)
 
 
         background = pygame.image.load('Assets/dak.png')
         background = pygame.transform.scale_by(background, 0.351568)
+
+        flag=pygame.image.load('Assets/flag/Flag_18x32.png')
+        flag=pygame.transform.scale_by(flag,1.5)
 
         c1 = character.Character(start_coordinates, packages)
         c1.on_ground = False
@@ -85,6 +87,8 @@ def game_loop(start_level):
         g1 = goal.Goal(screen)
         move_left = False
         move_right = False
+
+        flag_hitbox = pygame.Rect(flag_x, flag_y, flag.get_width(),flag.get_height())
 
         while running and loop2:
             dt = klok.tick(60) 
@@ -107,6 +111,8 @@ def game_loop(start_level):
                         c1.set_direction(True)
                     if event.key == pygame.K_SPACE:
                         c1.place_package()
+                        if c1_hitbox.colliderect(flag_hitbox) and c1.get_total_packages()>0:
+                            loop2 = g1.win()
                     if event.key == pygame.K_UP:
                         c1.jump()
                     if event.key == pygame.K_r:
@@ -136,13 +142,11 @@ def game_loop(start_level):
 
 
             screen.blit(background, (0,0))
+            screen.blit(flag, flag_coordinates)
 
-            win_rectangle = pygame.rect.Rect(600, 160, 32, 32)
-            pygame.draw.rect(screen, (0, 255, 0), win_rectangle)
 
             floor_y = screen.get_height() * 3//4 - 30
-            if c1_hitbox.colliderect(win_rectangle):
-                loop2 = g1.win()
+                
             
             char_height = c1.idle_pose.get_height()
                 
@@ -205,7 +209,6 @@ def game_loop(start_level):
             
         
         level += 1
-        print(level)
         if level == 7:
             while running and loop3:
                 for event in pygame.event.get():
