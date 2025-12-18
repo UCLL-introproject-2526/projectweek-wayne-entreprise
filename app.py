@@ -113,10 +113,7 @@ def game_loop(start_level):
                         c1.x = start_x
                         c1.y = start_y
                         c1.clean_packages()
-                    if event.key == pygame.K_f:
-                        music.set_volume(0)
-                    if event.key == pygame.K_g:
-                        music.set_volume(0.1)
+                    
                     
 
                 if event.type == pygame.KEYUP:
