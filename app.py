@@ -210,6 +210,7 @@ def game_loop(start_level):
         
         level += 1
         if level == 7:
+            g1.win()
             while running and loop3:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
