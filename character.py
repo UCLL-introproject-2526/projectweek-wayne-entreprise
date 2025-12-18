@@ -126,12 +126,15 @@ class Character:
     def get_total_packages(self):
         return self.total_packages_left
     
+    def set_total_packages_left(self, amount):
+        self.total_packages_left = amount
+    
 
     def place_package(self):
         #for pkg in self.package_list:
             #if not pkg.position[1] < self.get_pos_x() + 31 and pkg.position[1] > self.get_pos_x():
                 placed_packages = len(self.package_list)
-                if placed_packages < self.total_packages:
+                if self.total_packages_left > 0:
                     self.box_place_sound.play()
                     if self.facing_right:
                         self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y()]))
