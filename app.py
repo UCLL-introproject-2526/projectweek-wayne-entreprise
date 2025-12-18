@@ -140,7 +140,7 @@ def game_loop(start_level):
                         c1.set_direction(True)
                         c1.set_direction(True)
                     if event.key == pygame.K_SPACE:
-                        c1.place_package()
+                        c1.place_package(all_objects)
                         print(c1.get_total_packages())
                         if c1_hitbox.colliderect(flag_hitbox) and c1.get_total_packages()>0:
                                 loop2 = g1.win()

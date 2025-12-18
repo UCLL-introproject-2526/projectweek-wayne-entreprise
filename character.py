@@ -130,17 +130,37 @@ class Character:
     def set_total_packages_left(self, amount):
         self.total_packages_left = amount
     
+    def place_package(self, object_list):
+        space_check_rect_right = pygame.rect.Rect(self.get_pos_x() + 30 , self.get_pos_y(), 50, 48)    
+        space_check_rect_left = pygame.rect.Rect(self.get_pos_x() - 50 , self.get_pos_y(), 50, 48)
+        placeable_left = True
+        placeable_right = True  
+        placed_packages = len(self.package_list)
 
-    def place_package(self):
-        #for pkg in self.package_list:
-            #if not pkg.position[1] < self.get_pos_x() + 31 and pkg.position[1] > self.get_pos_x():
-                placed_packages = len(self.package_list)
-                if self.total_packages_left > 0:
-                    self.box_place_sound.play()
-                    if self.facing_right:
-                        self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y()]))
-                    else:
-                        self.package_list.append(package.Package([self.get_pos_x() - 30, self.get_pos_y()]))
-                else:
-                    self.error_sound.play()
-        # print(len(self.package_list))
+        for objects in object_list: 
+            if space_check_rect_right.colliderect(objects):
+                placeable_right = False
+            if space_check_rect_left.colliderect(objects):
+                placeable_left= False
+        
+        
+        if placeable_right and self.facing_right:
+            if placed_packages < self.total_packages:
+                self.box_place_sound.play()
+                self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y()]))
+            else:
+                self.error_sound.play()
+        if not placeable_right and self.facing_right:
+            self.error_sound.play()
+        
+        if placeable_left and not self.facing_right:
+            if placed_packages < self.total_packages:
+                self.box_place_sound.play()
+                self.package_list.append(package.Package([self.get_pos_x() - 50, self.get_pos_y()]))
+            else:
+                 self.error_sound.play()
+        if not placeable_left and not self.facing_right:
+            self.error_sound.play()
+
+
+            
