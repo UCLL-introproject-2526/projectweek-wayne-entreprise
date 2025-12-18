@@ -113,14 +113,17 @@ def game_loop(start_level):
                         c1.set_direction(True)
                     if event.key == pygame.K_SPACE:
                         c1.place_package()
+                        print(c1.get_total_packages())
                         if c1_hitbox.colliderect(flag_hitbox) and c1.get_total_packages()>0:
-                            loop2 = g1.win()
+                                loop2 = g1.win()
+                        c1.amount_left()
                     if event.key == pygame.K_UP:
                         c1.jump()
                     if event.key == pygame.K_r:
                         c1.x = start_x
                         c1.y = start_y
                         c1.clean_packages()
+                        c1.set_total_packages_left(packages)
                     
                     
 
