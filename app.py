@@ -75,10 +75,10 @@ def game_loop(start_level):
             Platform.Platform(250, 150, 64, 32),
             ]
         if level == 3:
+            flag_coordinates = flag_x, flag_y = (380, 55)
             start_coordinates = start_x, start_y = (20, 400)
-            packages = 3
-            chimneys=[
-                Chimney.Chimney(200,screen.get_height()*3/4-170,100,140),
+            packages = 4
+            chimneys=[Chimney.Chimney(200,screen.get_height()*3/4-170,100,140),
                 Chimney.Chimney(400,screen.get_height()*3/4-180,100,150),
                 Chimney.Chimney(610,screen.get_height()*3/4-180,100,150)
                 ]
@@ -104,9 +104,11 @@ def game_loop(start_level):
         move_right = False
 
         flag_hitbox = pygame.Rect(flag_x, flag_y, flag.get_width(),flag.get_height())
+        font=pygame.font.Font(None,size=30)
+        text=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
 
         while running and loop2:
-            dt = klok.tick(60) 
+            dt = klok.tick(60)    
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -130,6 +132,7 @@ def game_loop(start_level):
                         if c1_hitbox.colliderect(flag_hitbox) and c1.get_total_packages()>0:
                                 loop2 = g1.win()
                         c1.amount_left()
+                        text=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
                     if event.key == pygame.K_UP:
                         c1.jump()
                     if event.key == pygame.K_r:
@@ -146,9 +149,9 @@ def game_loop(start_level):
                     if event.key == pygame.K_RIGHT:
                         move_right = False
 
-            if move_left:
+            if move_left and c1.x>0:
                 c1.move_left()
-            if move_right:
+            if move_right and c1.x<screen.get_width()-char_width:
                 c1.move_right()
             else:
                 ...
@@ -161,6 +164,7 @@ def game_loop(start_level):
 
             screen.blit(background, (0,0))
             screen.blit(flag, flag_coordinates)
+            screen.blit(text,(300,20))
 
 
             floor_y = screen.get_height() * 3//4 - 30
