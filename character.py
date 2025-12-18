@@ -35,7 +35,7 @@ class Character:
         
         self.idle_pose = self.frames[0]
         
-
+        self.total_packages_left=self.total_packages
 
         self.speed_y = 0
         self.facing_right = True
@@ -119,13 +119,13 @@ class Character:
         self.package_list = []
     
     def get_total_packages(self):
-        return self.total_packages
+        return self.total_packages_left
     
 
-    def place_package(self):
-        self.total_packages-=1
+    def place_package(self):       
         placed_packages = len(self.package_list)
         if placed_packages < self.total_packages:
+            self.total_packages_left-=1
             if self.facing_right:
                 self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y() + self.idle_pose.get_height()]))
             else:

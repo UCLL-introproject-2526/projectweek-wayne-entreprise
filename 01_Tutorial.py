@@ -96,14 +96,24 @@ def game_tuto():
                         text_explain2=font_expl.render('Try to deliver the package to the flag',True,(255,255,255))
                 if event.key == pygame.K_SPACE:
                     c1.place_package()
-                    packages_left=font.render(f'Total amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
-                    if c1_hitbox.colliderect(flag_hitbox):
+                    
+                    if c1.get_total_packages()>0:
+                        packages_left=font.render(f'Total amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
+                    else:
+                        packages_left=font.render(f'Not enough packages left',True,(255,255,255))
+                        text_explain=font_expl.render('',True,(255,255,255))
+                        text_explain2=font_expl.render('Press R to restart',True,(255,255,255))
+
+                    if c1_hitbox.colliderect(flag_hitbox) and c1.get_total_packages()>0:
                         text_explain=font_expl.render('',True,(255,255,255))
                         text_explain2=font_expl.render('',True,(255,255,255))
                         screen.blit(text_explain,(20,50))
                         screen.blit(text_explain2,(20,80))
                         print("check this")
                         running = g1.win()
+                if event.key == pygame.K_r:
+                    running=False
+                    game_tuto()
 
 
 
@@ -137,7 +147,7 @@ def game_tuto():
             messageshow2=False
             text_explain=font_expl.render('Place packages by pressing space to go up',True,(255,255,255))
             text_explain2=font_expl.render('',True,(255,255,255))
-        elif c1.x>500 and running:
+        elif c1.x>500 and running and c1.get_total_packages()>0:
             text_explain=font_expl.render('When close to the flag press space',True,(255,255,255))
             text_explain2=font_expl.render('to drop a package',True,(255,255,255))
 
@@ -152,14 +162,16 @@ def game_tuto():
                     c1.y = hitbox.rect.top - char_height 
                     c1.speed_y = 0                  
                     c1.on_ground = True
-                elif c1_hitbox.centerx < hitbox.rect.centerx:
-                    print("check1")
-                    c1.x = hitbox.rect.left-char_width
-                    #print(hitbox.right-char_width)
-                    #print(c1.x)
-                elif c1_hitbox.centerx > hitbox.rect.centerx:
-                    print("check2")
-                    c1.x = hitbox.rect.right
+                    print("check3")
+                elif c1_hitbox.bottom > hitbox.rect.top + 10:
+                    if c1_hitbox.centerx < hitbox.rect.centerx:
+                        print("check1")
+                        c1.x = hitbox.rect.left-char_width
+                        #print(hitbox.right-char_width)
+                        #print(c1.x)
+                    elif c1_hitbox.centerx > hitbox.rect.centerx:
+                        print("check2")
+                        c1.x = hitbox.rect.right
 
         for pkg in c1.package_list:
             screen.blit(pkg.image, (pkg.x, pkg.y))
@@ -192,7 +204,7 @@ def game_tuto():
         
         for platform in package_platforms:
             if c1_hitbox.colliderect(platform):
-                if c1.speed_y > 0 and c1_hitbox.bottom <= platform.top + 5:
+                if c1.speed_y > 0 and c1_hitbox.bottom <= platform.bottom+5:
                     c1.y = platform.top - char_height +1
                     c1.speed_y = 0
                     c1.on_ground = True
