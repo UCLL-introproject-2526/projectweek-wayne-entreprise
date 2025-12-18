@@ -112,7 +112,30 @@ def game_loop(start_level):
             Platform.Platform(450, 200, 64, 32),
             Platform.Platform(600, 250, 64, 32)
             ]
-
+        if level == 4:
+            flag_coordinates = flag_x, flag_y = (620, 315)
+            start_coordinates = start_x, start_y = (20, 400)
+            packages = 3
+            chimneys=[Chimney.Chimney(250,screen.get_height()*3/4-170,100,140),
+                Chimney.Chimney(600,screen.get_height()*3/4-180,130,160)
+                ]
+            platforms = [
+            Platform.Platform(200, 300, 64, 32),
+            Platform.Platform(350, 250, 64, 32),
+            Platform.Platform(500, 200, 64, 32)
+            ]
+        if level == 5:
+            flag_coordinates = flag_x, flag_y = (650, 105)
+            start_coordinates = start_x, start_y = (20, 400)
+            packages = 7
+            chimneys=[Chimney.Chimney(150,screen.get_height()*3/4-170,100,140),
+                Chimney.Chimney(350,screen.get_height()*3/4-180,130,160)
+                ]
+            platforms = [
+            Platform.Platform(200, 300, 64, 32),
+            Platform.Platform(400, 250, 64, 32),
+            Platform.Platform(600, 150, 64, 32)
+            ]
 
 
         background = pygame.image.load('Assets/dak.png')
