@@ -100,6 +100,7 @@ def game_loop(start_level):
 
         start_image = pygame.image.load('Assets/affiche.webp')
         start_image = pygame.transform.scale_by(start_image, 0.5357142857)
+        
 
         if level == 1:
             flag_coordinates = flag_x, flag_y = (330, 305)
@@ -133,7 +134,7 @@ def game_loop(start_level):
             Platform.Platform(450, 200, 64, 32),
             Platform.Platform(600, 250, 64, 32)
             ]
-            snowballs=[Snowball.Snowball(300,0,50,50)]
+            snowballs=[Snowball.Snowball(300,0,50,50,0.001)]
         if level == 4:
             flag_coordinates = flag_x, flag_y = (620, 315)
             start_coordinates = start_x, start_y = (20, 400)
@@ -170,16 +171,44 @@ def game_loop(start_level):
             Platform.Platform(250, 350, 64, 32),
             ]
         if level == 7:
-            flag_coordinates = flag_x, flag_y = (660, screen.get_height()*3/4-85)
+            flag_coordinates = flag_x, flag_y = (695, 55)
             start_coordinates = start_x, start_y = (20, 400)
-            packages = 0
-            chimneys=[Chimney.Chimney(150,screen.get_height()*3/4-170,100,140),
-                      Chimney.Chimney(500,screen.get_height()*3/4-230,130,200)
-                ]
-            platforms = [
-            Platform.Platform(80, 440, 64, 32),
-            Platform.Platform(250, 350, 64, 32),
+            packages = 2
+            chimneys=[Chimney.Chimney(100,screen.get_height()*3/4-150,100,120),
             ]
+            platforms = [
+            Platform.Platform(200, 350, 64, 32),
+            Platform.Platform(350, 350, 64, 32),
+            Platform.Platform(500, 350, 64, 32),
+            Platform.Platform(650, 350, 64, 32),
+            Platform.Platform(50, 200, 64, 32),
+            Platform.Platform(200, 200, 64, 32),
+            Platform.Platform(50, 100, 64, 32),
+            Platform.Platform(200, 100, 64, 32),
+            Platform.Platform(350, 100, 64, 32),
+            Platform.Platform(500, 100, 64, 32),
+            Platform.Platform(650, 100, 64, 32),
+            
+            ]
+            snowballs=[Snowball.Snowball(300,-50,50,50,0.010),
+                       Snowball.Snowball(425,-50,50,50,0.075),
+                       Snowball.Snowball(575,-50,50,50,0.125),
+                       Snowball.Snowball(425,-350,50,50,0.075),
+                       Snowball.Snowball(575,-800,50,50,0.5),
+                       Snowball.Snowball(425,-500,50,50,0.075),
+                       Snowball.Snowball(575,-1200,50,50,0.5),
+                       Snowball.Snowball(575,-1400,50,50,0.5),
+                       Snowball.Snowball(575,-1600,50,50,0.5),
+                       Snowball.Snowball(575,-1800,50,50,0.5),
+                       Snowball.Snowball(575,-2000,50,50,0.5),
+                       Snowball.Snowball(575,-2200,50,50,0.5),
+                       Snowball.Snowball(575,-2400,50,50,0.5),
+                       Snowball.Snowball(575,-2600,50,50,0.5),
+                       Snowball.Snowball(575,-2800,50,50,0.5),
+                       Snowball.Snowball(575,-3000,50,50,0.5),
+                       ]
+            sled_coordinates = (650, 325)
+            sled_packages = 4
 
 
         background = pygame.image.load('Assets/dak.png')
@@ -201,7 +230,10 @@ def game_loop(start_level):
 
         flag_hitbox = pygame.Rect(flag_x - 15, flag_y, flag.get_width() + 15, flag.get_height())
         font=pygame.font.Font(None,size=30)
-        text=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
+        font2=pygame.font.Font(None,size=60)       
+        text1=font.render(f'Level:{level}',True,(255,255,255))
+        text2=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
+        text3=font2.render('',True,(255,255,255))
 
         while running and loop2:
             dt = klok.tick(60)    
@@ -226,8 +258,10 @@ def game_loop(start_level):
                         #print(c1.get_total_packages())
                         if c1_hitbox.colliderect(flag_hitbox) and c1.get_total_packages()>0:
                                 loop2 = g1.win()
+                        if c1.get_total_packages()==0:
+                            text3=font.render(f'No more packages left press R to restart or use the sledge perhaps?',True,(255,255,255))
                         c1.place_package(all_objects)
-                        text=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
+                        text2=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
                         
                     if event.key == pygame.K_UP:
                         c1.jump()
@@ -237,7 +271,7 @@ def game_loop(start_level):
                         c1.clean_packages()
                         c1.set_total_packages_left(packages)
                         sled.reset()
-                        text=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
+                        text2=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
                     
                     
 
@@ -260,7 +294,9 @@ def game_loop(start_level):
 
             screen.blit(background, (0,0))
             screen.blit(flag, flag_coordinates)
-            screen.blit(text,(300,20))
+            screen.blit(text1,(50,20))
+            screen.blit(text2,(300,20))
+            screen.blit(text3,(50,150))
 
             floor_y = screen.get_height() * 3//4 - 30
             char_height = c1.idle_pose.get_height()
@@ -289,7 +325,7 @@ def game_loop(start_level):
                         c1.x = hitbox.rect.right
             for snowball in snowballs:
                 if c1_hitbox.colliderect(snowball.rect):
-                    c1.speed_y=0.1
+                    c1.speed_y=0.3
                     c1.on_ground = False
 
             
@@ -322,7 +358,7 @@ def game_loop(start_level):
             
             for platform in package_platforms:
                 if c1_hitbox.colliderect(platform):
-                    if c1.speed_y > 0 and c1_hitbox.bottom <= platform.bottom + 5:
+                    if c1.speed_y > 0 and c1_hitbox.bottom <= platform.top + 5:
                         c1.y = platform.top - char_height +1
                         c1.speed_y = 0
                         c1.on_ground = True
@@ -353,7 +389,8 @@ def game_loop(start_level):
             if c1_hitbox.colliderect(sled.rect):
                 if sled.used == False:
                     c1.set_total_packages_left(sled.refill())
-                    text=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
+                    text2=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
+                    text3=font.render(f'You just picked up:{sled.storage}',True,(255,255,255))
 
             pygame.display.flip()
             

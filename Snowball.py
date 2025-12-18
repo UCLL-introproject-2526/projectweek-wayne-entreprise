@@ -1,14 +1,15 @@
 import pygame
 class Snowball:
-    def __init__(self, x, y, width, height):
+    def __init__(self, x, y, width, height,speed_y):
         self.image=pygame.image.load("Assets/Snowball/Snowball14x14.png")
         self.image = pygame.transform.scale(self.image, (width, height))
         self.rect=self.image.get_rect()
+        self.startheight=y
         self.x=x
         self.y=y
         self.rect.topleft=(self.x, self.y)
         self.gravity = 0.001
-        self.speed_y = 0
+        self.speed_y = speed_y
         klok = pygame.time.Clock()
         dt = klok.tick(60)
         self.on_ground=False
@@ -21,6 +22,6 @@ class Snowball:
             increase = self.speed_y * dt
             self.y  += increase
             if self.y>=720:
-                 self.y=0
+                 self.y=self.startheight
                  self.speed_y=0
             self.rect.topleft=(self.x, self.y)    
