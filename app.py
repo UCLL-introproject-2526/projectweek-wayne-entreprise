@@ -54,7 +54,7 @@ def main():
                     klok = pygame.time.Clock()
                     pygame.display.set_caption("Kerst") 
                     screen = pygame.display.set_mode((720, 720), pygame.FULLSCREEN | pygame.SCALED)
-                    start_image = pygame.image.load('Assets/affiche.webp')
+                    start_image = pygame.image.load('Assets/start_background.png')
                     start_image = pygame.transform.scale_by(start_image, 0.5357142857)
                 
         klok.tick(60)
