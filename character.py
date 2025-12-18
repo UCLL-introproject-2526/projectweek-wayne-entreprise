@@ -24,6 +24,13 @@ class Character:
             frame = pygame.transform.scale_by(frame, 2.333333333)
             self.run_frames.append(frame)
 
+        jump_sheet = pygame.image.load("Assets/Character/16x25 Jump christmas.png").convert_alpha()
+        self.jump_frames = []
+        for i in range(5):
+            frame = jump_sheet.subsurface(pygame.Rect(i * 16, 0, 16, 25))
+            frame = pygame.transform.scale_by(frame, 2.333333333)
+            self.jump_frames.append(frame)
+
         self.current_frame = 0
         self.timer = 0
         
@@ -36,14 +43,18 @@ class Character:
         self.is_moving = False
 
     def update_animation(self, dt):
+        old_height = self.idle_pose.get_height()
+
         self.timer += dt
         if self.timer > 150:
             self.timer = 0
             self.current_frame += 1                
-            if self.current_frame >= 4:
+            if self.current_frame >= 5:
                 self.current_frame = 0
 
-        if self.is_moving:
+        if not self.on_ground:
+            animation_list = self.jump_frames
+        elif self.is_moving:
             animation_list = self.run_frames
         else:
             animation_list = self.frames
@@ -57,6 +68,12 @@ class Character:
             image = pygame.transform.flip(image, True, False)
                 
         self.idle_pose = image
+
+        new_height = self.idle_pose.get_height()
+        
+        if old_height != new_height:
+            self.y += (old_height - new_height)
+        
         self.is_moving = False 
 
 
