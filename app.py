@@ -5,6 +5,7 @@ import goal
 import Platform
 import Chimney
 import Tutorial 
+import sleigh
 
 
 def main():
@@ -77,6 +78,11 @@ def game_loop(start_level):
         #reset level values
         platforms = []
         chimneys = []
+        packages = 0
+        flag_coordinates = flag_x, flag_y = (-100,0)
+        start_coordinates = (0,0)
+        sled_coordinates = (-100,0)
+        sled_packages = 0
 
 
         start_image = pygame.image.load('Assets/affiche.webp')
@@ -90,6 +96,8 @@ def game_loop(start_level):
             Platform.Platform(230, 400, 64, 32),
             Platform.Platform(300, 350, 64, 32)
             ]
+            sled_coordinates = (600, 450)
+            sled_packages = 3
         if level == 2:
             flag_coordinates = flag_x, flag_y = (280, 105)
             start_coordinates = start_x, start_y = (20, 400)
@@ -123,6 +131,8 @@ def game_loop(start_level):
 
         c1 = character.Character(start_coordinates, packages)
         c1.on_ground = False
+
+        sled = sleigh.Sleigh(sled_packages, sled_coordinates)
         
         char_width = c1.idle_pose.get_width()
         
@@ -167,6 +177,8 @@ def game_loop(start_level):
                         c1.y = start_y
                         c1.clean_packages()
                         c1.set_total_packages_left(packages)
+                        sled.reset()
+                        text=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
                     
                     
 
@@ -180,10 +192,10 @@ def game_loop(start_level):
                 c1.move_left()
             if move_right and c1.x<screen.get_width()-char_width:
                 c1.move_right()
-            else:
-                ...
+
             
             c1.playerfalling(dt)
+
             if not c1.on_ground:
                 c1.on_ground = False
             c1_hitbox = pygame.Rect(c1.x+6, c1.y + c1.idle_pose.get_height()-3 , 18, 8)
@@ -255,6 +267,10 @@ def game_loop(start_level):
                         c1.speed_y = 0
                         c1.on_ground = True
             
+            
+
+
+
             touching_object = None
             for obj in all_objects:
                 if c1_hitbox.colliderect(obj):
@@ -273,8 +289,14 @@ def game_loop(start_level):
 
             c1.update_animation(dt)
             screen.blit(c1.idle_pose, (c1.x, c1.y))
+           
+            screen.blit(sled.image, sled.rect)
+            if c1_hitbox.colliderect(sled.rect):
+                if sled.used == False:
+                    c1.set_total_packages_left(sled.refill())
+                    text=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
+
             pygame.display.flip()
-            
         
         level += 1
         if level == 7:
