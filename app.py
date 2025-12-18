@@ -6,46 +6,82 @@ import Platform
 
 
 def main():
-    ...
+    pygame.init()
+    klok = pygame.time.Clock()
+    pygame.display.set_caption("Kerst") 
+    music = pygame.mixer.Sound('sound/Chill Pulse - Jingle Bell Rock (freetouse.com).MP3')
+    sound_effect = pygame.mixer.Sound('sound/open-package-box-parcel-100334.MP3') 
+    music.play(-1)
+    music.set_volume(0.2)
+    # stop music 
+    #pygame.mixer.music.stop()
+    screen = pygame.display.set_mode((720, 720), pygame.FULLSCREEN | pygame.SCALED)
+    start_image = pygame.image.load('Assets/affiche.webp')
+    start_image = pygame.transform.scale_by(start_image, 0.5357142857)
+    start = True
+    running = True
+    while start and running:
+        screen.blit(start_image, (0,154))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+                if event.key == pygame.K_SPACE:
+                    running = False
+                if event.key == pygame.K_1:
+                    game_loop(1) 
+                    start = False
+                 
+        klok.tick(60)
+        pygame.display.flip()
+    running = True
+    
+    if start: 
+        running = game_loop(1)
+        game_loop(2)
+        game_loop(3)
+        game_loop(4)
+        game_loop(5)
+        game_loop(6)
+        game_loop(7)
 
-def game_loop():
+def game_loop(level):
     pygame.init()
     klok = pygame.time.Clock()
     pygame.display.set_caption("Kerst") 
     screen = pygame.display.set_mode((720, 720), pygame.FULLSCREEN | pygame.SCALED)
     running = True
-    loop1 = True
     loop2 = True
     loop3 = True
 
     start_image = pygame.image.load('Assets/affiche.webp')
     start_image = pygame.transform.scale_by(start_image, 0.5357142857)
 
-    platforms = [
-    Platform.Platform(200, 450, 64, 32),
-    Platform.Platform(270, 450, 64, 32)
-    ]
+    if level == 1:
+        start_coordinates = start_x, start_y = (20, 400)
+        packages = 10
+        platforms = [
+        Platform.Platform(200, 450, 64, 32),
+        Platform.Platform(270, 450, 64, 32)
+        ]
+    if level == 2:
+        start_coordinates = start_x, start_y = (20, 400)
+        packages = 10
+        platforms = [
+        Platform.Platform(150, 500, 64, 32),
+        Platform.Platform(220, 500, 64, 32),
+        Platform.Platform(400, 400, 64, 32),
+        Platform.Platform(470, 400, 64, 32),
+        Platform.Platform(540, 400, 64, 32)
+        ]
 
-
-    while running and loop1:
-        screen.blit(start_image, (0,154))
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    running = False
-                if event.key == pygame.K_SPACE:
-                    loop1 = False
-        klok.tick(60)
-        pygame.display.flip()
 
     background = pygame.image.load('Assets/dak.png')
     background = pygame.transform.scale_by(background, 0.351568)
-    
-    screen_height = screen.get_height()
-    c1 = character.Character((0, 400), 40)
+
+    c1 = character.Character(start_coordinates, packages)
     c1.on_ground = False
     
     g1 = goal.Goal(screen)
@@ -73,6 +109,14 @@ def game_loop():
                     c1.place_package()
                 if event.key == pygame.K_UP:
                     c1.jump()
+                if event.key == pygame.K_r:
+                    c1.x = start_x
+                    c1.y = start_y
+                    c1.clean_packages()
+                if event.key == pygame.K_f:
+                    music.set_volume(0)
+                if event.key == pygame.K_g:
+                    music.set_volume(0.2)
                 
 
             if event.type == pygame.KEYUP:
@@ -139,11 +183,11 @@ def game_loop():
         
         for platform in package_platforms:
             if c1_hitbox.colliderect(platform):
-                if c1.speed_y > 0 and c1_hitbox.bottom <= platform.top + 5:
+                if c1.speed_y > 0 and c1_hitbox.bottom <= platform.bottom + 5:
                     c1.y = platform.top - char_height +1
                     c1.speed_y = 0
                     c1.on_ground = True
-                # print("touching")
+                    print("touching")
         
         touching_object = None
         for obj in all_objects:
@@ -151,9 +195,6 @@ def game_loop():
                 touching_object = True
         if not touching_object:
             c1.on_ground = False
-        
-        
-            
 
         if c1.y + char_height >= floor_y:
             c1.y = floor_y - char_height  
@@ -179,4 +220,4 @@ def game_loop():
         klok.tick(60)
     pygame.quit()
 
-game_loop()
+main()

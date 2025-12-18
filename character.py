@@ -7,8 +7,9 @@ class Character:
         self.package_list = []
         self.x = position[0]
         self.y = position[1]
-
+        self.packages_left = amount_of_packages
         sprite_sheet = pygame.image.load("Assets/Character/14x23 Idle christmas.png").convert_alpha()
+        self.sound_effect = pygame.mixer.Sound('Assets/sound/open-package-box-parcel-100334.MP3')
         
         self.frames = [] 
         for i in range(4):
@@ -105,13 +106,14 @@ class Character:
         return self.total_packages_left
     
 
-    def place_package(self):       
-        placed_packages = len(self.package_list)
-        if placed_packages < self.total_packages:
-            self.total_packages_left-=1
-            if self.facing_right:
-                self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y() + self.idle_pose.get_height()]))
-            else:
-                self.package_list.append(package.Package([self.get_pos_x() - 30, self.get_pos_y() + self.idle_pose.get_height()]))
-        print(len(self.package_list))
-        # print((self.package_list))
+    def place_package(self):
+        # for package in self.package_list:
+        #     if package:
+        #     self.total_packages-=1
+            placed_packages = len(self.package_list)
+            if placed_packages < self.total_packages:
+                if self.facing_right:
+                    self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y()]))
+                else:
+                    self.package_list.append(package.Package([self.get_pos_x() - 30, self.get_pos_y()]))
+        # print(len(self.package_list))
