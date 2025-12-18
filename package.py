@@ -47,10 +47,12 @@ class Package:
     
     
     
-    def package_falling(self, dt, platforms=None):
+    def package_falling(self, dt, platforms=None, Chimneys=None):
         if platforms is None:
             platforms = []
-            
+        if Chimneys is None:
+            Chimneys = []
+
         gravity = 0.001
         self.speed_y += gravity * dt
         increase = self.speed_y * dt
@@ -74,3 +76,9 @@ class Package:
                 self.freeze = True
                 self.stopped = True
                 self.speed_y = 0
+            for c in Chimneys:
+                if full_rect.colliderect(c.rect):
+                    self.y = c.rect.top - 48
+                    self.freeze = True
+                    self.speed_y = 0
+                    return
