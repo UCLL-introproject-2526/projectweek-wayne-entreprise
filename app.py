@@ -5,6 +5,7 @@ import goal
 import Platform
 import Chimney
 import Tutorial 
+import Snowball
 
 
 def main():
@@ -77,6 +78,7 @@ def game_loop(start_level):
         #reset level values
         platforms = []
         chimneys = []
+        snowballs = []
 
 
         start_image = pygame.image.load('Assets/affiche.webp')
@@ -112,6 +114,7 @@ def game_loop(start_level):
             Platform.Platform(450, 200, 64, 32),
             Platform.Platform(600, 250, 64, 32)
             ]
+            snowballs=[Snowball.Snowball(300,0,50,50)]
 
 
 
@@ -220,6 +223,10 @@ def game_loop(start_level):
 
                     elif c1_hitbox.centerx > hitbox.rect.centerx:
                         c1.x = hitbox.rect.right
+            for snowball in snowballs:
+                if c1_hitbox.colliderect(snowball.rect):
+                    c1.speed_y=0.1
+                    c1.on_ground = False
 
             
 
@@ -269,7 +276,10 @@ def game_loop(start_level):
             for p in platforms:
                 screen.blit(p.image, p.rect)
             for chimney in chimneys:
-                screen.blit(chimney.image, chimney.rect)  
+                screen.blit(chimney.image, chimney.rect) 
+            for snowball in snowballs:
+                snowball.Snowball_fall(dt) 
+                screen.blit(snowball.image, snowball.rect)   
 
             c1.update_animation(dt)
             screen.blit(c1.idle_pose, (c1.x, c1.y))
