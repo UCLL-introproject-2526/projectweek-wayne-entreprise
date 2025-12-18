@@ -103,9 +103,11 @@ def game_loop(start_level):
         move_right = False
 
         flag_hitbox = pygame.Rect(flag_x, flag_y, flag.get_width(),flag.get_height())
+        font=pygame.font.Font(None,size=30)
+        text=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
 
         while running and loop2:
-            dt = klok.tick(60) 
+            dt = klok.tick(60)    
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -129,6 +131,7 @@ def game_loop(start_level):
                         if c1_hitbox.colliderect(flag_hitbox) and c1.get_total_packages()>0:
                                 loop2 = g1.win()
                         c1.amount_left()
+                        text=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
                     if event.key == pygame.K_UP:
                         c1.jump()
                     if event.key == pygame.K_r:
@@ -160,6 +163,7 @@ def game_loop(start_level):
 
             screen.blit(background, (0,0))
             screen.blit(flag, flag_coordinates)
+            screen.blit(text,(300,20))
 
 
             floor_y = screen.get_height() * 3//4 - 30
