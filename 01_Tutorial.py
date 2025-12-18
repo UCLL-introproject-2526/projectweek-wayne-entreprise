@@ -102,7 +102,7 @@ def game_tuto():
                         text_explain2=font_expl.render('Try to deliver the package to the flag',True,(255,255,255))
                 if event.key == pygame.K_SPACE:
                     c1.place_package()
-                    
+                    c1.amount_left()
                     if c1.get_total_packages()>0:
                         packages_left=font.render(f'Total amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
                     else:
@@ -145,7 +145,6 @@ def game_tuto():
             c1.on_ground = False
         #hitboxen
         flag_hitbox=pygame.Rect(655,320,flag.get_width(),flag.get_height())
-        #c1_hitbox = pygame.Rect(c1.x, c1.y, 15, 24)
         c1_hitbox = pygame.Rect(c1.x+6, c1.y + c1.idle_pose.get_height()-3 , 18, 8)
         #collision1=c1_hitbox.colliderect(shimney1_hitbox)
         hitbox_floor=pygame.Rect(0,screen.get_height()*3/4,screen.get_width(),screen.get_height()*1/4)
@@ -167,7 +166,7 @@ def game_tuto():
             if c1_hitbox.colliderect(hitbox.rect):
                 #print(f"c1:{c1_hitbox.right}")
                 #print(f"hitbox:{hitbox.left}")
-                if c1.speed_y > 0 and c1_hitbox.bottom < hitbox.rect.top+20:
+                if c1.speed_y >= 0 and c1_hitbox.bottom < hitbox.rect.top+20:
                     c1.y = hitbox.rect.top - char_height 
                     c1.speed_y = 0                  
                     c1.on_ground = True
@@ -234,7 +233,7 @@ def game_tuto():
         
 
         for chimney in chimneys:
-            screen.blit(chimney.image, chimney.rect) 
+            screen.blit(chimney.image, chimney.rect)  
         
         c1.update_animation(dt)
         screen.blit(c1.idle_pose, (c1.x, c1.y))
