@@ -193,22 +193,18 @@ def game_loop(start_level):
             if move_right and c1.x<screen.get_width()-char_width:
                 c1.move_right()
 
-            
             c1.playerfalling(dt)
 
             if not c1.on_ground:
                 c1.on_ground = False
             c1_hitbox = pygame.Rect(c1.x+6, c1.y + c1.idle_pose.get_height()-3 , 18, 8)
 
-
             screen.blit(background, (0,0))
             screen.blit(flag, flag_coordinates)
             screen.blit(text,(300,20))
 
-
             floor_y = screen.get_height() * 3//4 - 30
             char_height = c1.idle_pose.get_height()
-            
             
             for p in platforms:
                 if c1_hitbox.colliderect(p.rect):
@@ -232,9 +228,7 @@ def game_loop(start_level):
 
                     elif c1_hitbox.centerx > hitbox.rect.centerx:
                         c1.x = hitbox.rect.right
-
             
-
             # Package collision detection
             for pkg in c1.package_list:
                 screen.blit(pkg.image, (pkg.x, pkg.y))
@@ -266,10 +260,6 @@ def game_loop(start_level):
                         c1.y = platform.top - char_height +1
                         c1.speed_y = 0
                         c1.on_ground = True
-            
-            
-
-
 
             touching_object = None
             for obj in all_objects:
