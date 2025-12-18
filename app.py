@@ -157,7 +157,7 @@ def game_loop(start_level):
             Platform.Platform(600, 150, 64, 32)
             ]
         if level == 6:
-            flag_coordinates = flag_x, flag_y = (660, screen.get_height()*3/4-85)
+            flag_coordinates = flag_x, flag_y = (660, screen.get_height()*3/4-80)
             start_coordinates = start_x, start_y = (20, 400)
             packages = 1
             chimneys=[Chimney.Chimney(150,screen.get_height()*3/4-170,100,140),
@@ -356,8 +356,7 @@ def game_loop(start_level):
             pygame.display.flip()
             
         
-        level += 1
-        if level == 7:
+        if level == 10:
             g1.win()
             while running and loop3:
                 for event in pygame.event.get():
