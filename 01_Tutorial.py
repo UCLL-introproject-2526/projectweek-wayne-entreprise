@@ -14,8 +14,8 @@ def game_tuto():
     start = pygame.transform.scale_by(start, 0.5357142857)
     background = pygame.image.load('Assets/dak.png')
     background = pygame.transform.scale_by(background, 0.351568)
-    #shimney1=pygame.image.load('Assets/Chimney/chimney_26x31.png')
-    #shimney1=pygame.transform.scale_by(shimney1,2)
+    shimney1=pygame.image.load('Assets/Chimney/chimney_26x31.png')
+    shimney1=pygame.transform.scale_by(shimney1,2)
     shimney2=pygame.image.load('Assets/Chimney/chimney_26x31.png')
     shimney2=pygame.transform.scale_by(shimney2,4)
     shimney3=pygame.image.load('Assets/Chimney/chimney_26x31.png')
@@ -43,7 +43,7 @@ def game_tuto():
         pygame.display.flip()
         
 
-    c1 = character.Character((0, 160), 10)
+    c1 = character.Character((0, 400), 40)
     move_left = False
     move_right = False
     aantal_packages=1
@@ -63,7 +63,7 @@ def game_tuto():
     while running:
         dt = klok.tick(60)  
         screen.blit(background,(0,0))
-        #screen.blit(shimney1,(350,floor-shimney1.get_height()))
+        screen.blit(shimney1,(350,floor-shimney1.get_height()))
         screen.blit(shimney2,(400,floor-shimney2.get_height()))
         screen.blit(shimney3,(610,floor-shimney3.get_height()))
         screen.blit(flag,(630,floor-shimney3.get_height()-flag.get_height()))
@@ -129,10 +129,10 @@ def game_tuto():
         c1.playerfalling(dt)
         #hitboxen
         hitboxen=[]
-        #shimney1_hitbox=pygame.Rect(350,floor-shimney1.get_height(),shimney1.get_width(),shimney1.get_height())
+        shimney1_hitbox=pygame.Rect(350,floor-shimney1.get_height(),shimney1.get_width(),shimney1.get_height())
         shimney2_hitbox=pygame.Rect(400,floor-shimney2.get_height(),shimney2.get_width(),shimney2.get_height())
         shimney3_hitbox=pygame.Rect(610,floor-shimney3.get_height(),shimney3.get_width(),shimney3.get_height())
-        #hitboxen.append(shimney1_hitbox)
+        hitboxen.append(shimney1_hitbox)
         hitboxen.append(shimney2_hitbox)
         hitboxen.append(shimney3_hitbox)
         flag_hitbox=pygame.Rect(630,floor-shimney3.get_height()-flag.get_height(),flag.get_width(),flag.get_height())
@@ -160,16 +160,16 @@ def game_tuto():
             if c1_hitbox.colliderect(hitbox):
                 #print(f"c1:{c1_hitbox.right}")
                 #print(f"hitbox:{hitbox.left}")
-                if c1.speed_y > 0 and c1_hitbox.bottom < hitbox.bottom:
+                if c1.speed_y > 0 and c1_hitbox.bottom < hitbox.top+20:
                     c1.y = hitbox.top - char_height 
                     c1.speed_y = 0                  
                     c1.on_ground = True
-                elif c1_hitbox.right>hitbox.left and c1_hitbox.right<hitbox.right-char_width:
+                elif c1_hitbox.centerx < hitbox.centerx:
                     print("check1")
                     c1.x = hitbox.left-char_width
                     print(hitbox.right-char_width)
                     print(c1.x)
-                elif c1_hitbox.left<hitbox.right  and c1_hitbox.left>hitbox.left:
+                elif c1_hitbox.centerx > hitbox.centerx:
                     print("check2")
                     c1.x = hitbox.right
         for pkg in c1.package_list:

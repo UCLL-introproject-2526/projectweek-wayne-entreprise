@@ -87,7 +87,7 @@ def game_loop():
             ...
         c1.on_ground = False
         c1.playerfalling(dt)
-        c1_hitbox = pygame.Rect(c1.x+6, c1.y + c1.idle_pose.get_height()-3 , 18, 8)
+        c1_hitbox = pygame.Rect(c1.x, c1.y + c1.idle_pose.get_height()-3 , c1.idle_pose.get_width(), 8)
 
         screen.blit(background, (0,0))
 
