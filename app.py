@@ -51,6 +51,7 @@ def game_loop(start_level):
 
         #reset level values
         platforms = []
+        chimneys = []
 
 
         start_image = pygame.image.load('Assets/affiche.webp')
@@ -73,6 +74,17 @@ def game_loop(start_level):
             Platform.Platform(400, 400, 64, 32),
             Platform.Platform(470, 400, 64, 32),
             Platform.Platform(540, 400, 64, 32)
+            ]
+        if level == 3:
+            start_coordinates = start_x, start_y = (20, 400)
+            packages = 3
+            chimneys=[Chimney.Chimney(200,screen.get_height()*3/4-180,100,150),
+                Chimney.Chimney(400,screen.get_height()*3/4-180,100,150),
+              Chimney.Chimney(610,screen.get_height()*3/4-180,100,150)]
+            platforms = [
+            Platform.Platform(350, 100, 64, 32),
+            Platform.Platform(450, 200, 64, 32),
+            Platform.Platform(600, 250, 64, 32)
             ]
 
 
@@ -151,13 +163,32 @@ def game_loop(start_level):
                 
             
             char_height = c1.idle_pose.get_height()
-                
+            char_width = c1.idle_pose.get_width()
             for p in platforms:
                 if c1_hitbox.colliderect(p.rect):
                     if c1.speed_y > 0 and c1_hitbox.bottom < p.rect.bottom:
                         c1.y = p.rect.top - char_height 
                         c1.speed_y = 0                  
                         c1.on_ground = True
+            for hitbox in chimneys:
+                if c1_hitbox.colliderect(hitbox.rect):
+                #print(f"c1:{c1_hitbox.right}")
+                #print(f"hitbox:{hitbox.left}")
+                    if c1.speed_y >= 0 and c1_hitbox.bottom < hitbox.rect.top+20:
+                        c1.y = hitbox.rect.top - char_height 
+                        c1.speed_y = 0                  
+                        c1.on_ground = True
+                        print("check1")
+
+                    elif c1_hitbox.centerx < hitbox.rect.centerx:
+                        c1.x = hitbox.rect.left-char_width
+                        #print(hitbox.right-char_width)
+                        #print(c1.x)
+                        print("check2")
+                    elif c1_hitbox.centerx > hitbox.rect.centerx:
+                        c1.x = hitbox.rect.right
+                        print("check")
+            
 
             # Package collision detection
             for pkg in c1.package_list:
@@ -182,7 +213,7 @@ def game_loop(start_level):
                     package_platforms.append(pkg_rect_upper_own)
             
             
-            all_objects = [*package_platforms,*platforms]
+            all_objects = [*package_platforms,*platforms,*chimneys]
             
             for platform in package_platforms:
                 if c1_hitbox.colliderect(platform):
@@ -204,6 +235,8 @@ def game_loop(start_level):
                 c1.on_ground = True
             for p in platforms:
                 screen.blit(p.image, p.rect)
+            for chimney in chimneys:
+                screen.blit(chimney.image, chimney.rect)  
 
             c1.update_animation(dt)
             screen.blit(c1.idle_pose, (c1.x, c1.y))
