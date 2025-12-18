@@ -154,7 +154,7 @@ def game_loop(start_level):
                         c1.set_direction(True)
                         c1.set_direction(True)
                     if event.key == pygame.K_SPACE:
-                        print(c1.get_total_packages())
+                        #print(c1.get_total_packages())
                         if c1_hitbox.colliderect(flag_hitbox) and c1.get_total_packages()>0:
                                 loop2 = g1.win()
                         c1.place_package(all_objects)
@@ -212,16 +212,15 @@ def game_loop(start_level):
                         c1.y = hitbox.rect.top - char_height 
                         c1.speed_y = 0                  
                         c1.on_ground = True
-                        print("check1")
 
                     elif c1_hitbox.centerx < hitbox.rect.centerx:
                         c1.x = hitbox.rect.left-char_width
                         #print(hitbox.right-char_width)
                         #print(c1.x)
-                        print("check2")
+
                     elif c1_hitbox.centerx > hitbox.rect.centerx:
                         c1.x = hitbox.rect.right
-                        print("check")
+
             
 
             # Package collision detection
