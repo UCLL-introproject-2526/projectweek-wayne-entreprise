@@ -17,8 +17,8 @@ def main():
     klok = pygame.time.Clock()
     pygame.display.set_caption("Kerst") 
     screen = pygame.display.set_mode((720, 720), pygame.FULLSCREEN | pygame.SCALED)
-    start_image = pygame.image.load('Assets/affiche.webp')
-    start_image = pygame.transform.scale_by(start_image, 0.5357142857)
+    start_image = pygame.image.load('Assets/start_background.png')
+    start_image = pygame.transform.scale_by(start_image, 0.26470588235294117647058823529412)
     start = True
     running = True
     while start and running:
@@ -26,9 +26,11 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+                start = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
+                    start = False
                 if event.key == pygame.K_SPACE:
                     running = False
                 if event.key == pygame.K_1:
