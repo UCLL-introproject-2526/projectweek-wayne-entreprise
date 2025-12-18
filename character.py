@@ -145,18 +145,20 @@ class Character:
         
         
         if placeable_right and self.facing_right:
-            if placed_packages < self.total_packages:
+            if self.total_packages_left > 0:
                 self.box_place_sound.play()
                 self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y()]))
+                self.amount_left()
             else:
                 self.error_sound.play()
         if not placeable_right and self.facing_right:
             self.error_sound.play()
         
         if placeable_left and not self.facing_right:
-            if placed_packages < self.total_packages:
+            if self.total_packages_left > 0:
                 self.box_place_sound.play()
                 self.package_list.append(package.Package([self.get_pos_x() - 50, self.get_pos_y()]))
+                self.amount_left()
             else:
                  self.error_sound.play()
         if not placeable_left and not self.facing_right:

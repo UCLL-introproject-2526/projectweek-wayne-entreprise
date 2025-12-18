@@ -32,6 +32,18 @@ def main():
                 if event.key == pygame.K_1:
                     game_loop(1) 
                     start = False
+                if event.key == pygame.K_2:
+                    game_loop(2) 
+                    start = False
+                if event.key == pygame.K_3:
+                    game_loop(3) 
+                    start = False
+                if event.key == pygame.K_4:
+                    game_loop(4) 
+                    start = False
+                if event.key == pygame.K_5:
+                    game_loop(5) 
+                    start = False
                 if event.key == pygame.K_p:
                     running = False
                     Tutorial.game_tuto()
@@ -111,7 +123,7 @@ def game_loop(start_level):
 
         c1 = character.Character(start_coordinates, packages)
         c1.on_ground = False
-        char_height = c1.idle_pose.get_height()
+        
         char_width = c1.idle_pose.get_width()
         
         g1 = goal.Goal(screen)
@@ -142,12 +154,11 @@ def game_loop(start_level):
                         c1.set_direction(True)
                         c1.set_direction(True)
                     if event.key == pygame.K_SPACE:
-                        c1.place_package(all_objects)
                         print(c1.get_total_packages())
                         if c1_hitbox.colliderect(flag_hitbox) and c1.get_total_packages()>0:
                                 loop2 = g1.win()
-                        c1.amount_left()
                         text=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
+                        c1.place_package(all_objects)
                     if event.key == pygame.K_UP:
                         c1.jump()
                     if event.key == pygame.K_r:
@@ -183,7 +194,7 @@ def game_loop(start_level):
 
 
             floor_y = screen.get_height() * 3//4 - 30
-                
+            char_height = c1.idle_pose.get_height()
             
             
             for p in platforms:
