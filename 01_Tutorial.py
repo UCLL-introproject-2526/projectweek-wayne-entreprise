@@ -67,8 +67,7 @@ def game_tuto():
         screen.blit(packages_left,(300,20))
         screen.blit(text_explain,(15,50))
         screen.blit(text_explain2,(15,80))
-        c1.update_animation(dt)
-        screen.blit(c1.idle_pose, (c1.x, c1.y))
+
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -161,6 +160,7 @@ def game_tuto():
                 elif c1_hitbox.centerx > hitbox.rect.centerx:
                     print("check2")
                     c1.x = hitbox.rect.right
+
         for pkg in c1.package_list:
             screen.blit(pkg.image, (pkg.x, pkg.y))
             pkg.package_falling(dt)
@@ -202,8 +202,11 @@ def game_tuto():
         for obj in all_objects:
             if c1_hitbox.colliderect(obj):
                 touching_object = True
+        if not touching_object:
+            c1.on_ground = False 
 
-
+        c1.update_animation(dt)
+        screen.blit(c1.idle_pose, (c1.x, c1.y))
         if c1.y + char_height >= floor_y:
             c1.y = floor_y - char_height  
             c1.speed_y = 0                
@@ -211,7 +214,6 @@ def game_tuto():
         for chimney in chimneys:
             screen.blit(chimney.image, chimney.rect)  
 
-        klok.tick(60)
         pygame.display.flip()
 
     while endscreen:
