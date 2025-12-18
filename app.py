@@ -196,7 +196,7 @@ def game_loop(start_level):
             for pkg in c1.package_list:
                 screen.blit(pkg.image, (pkg.x, pkg.y))
                 if not pkg.freeze:
-                    pkg.package_falling(dt, platforms=platforms)
+                    pkg.package_falling(dt, platforms=platforms, Chimneys=chimneys)
             
             package_platforms = []
 
