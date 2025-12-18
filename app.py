@@ -78,7 +78,7 @@ def game_loop(start_level):
             flag_coordinates = flag_x, flag_y = (380, 55)
             start_coordinates = start_x, start_y = (20, 400)
             packages = 4
-            chimneys=[Chimney.Chimney(200,screen.get_height()*3/4-180,100,150),
+            chimneys=[Chimney.Chimney(200,screen.get_height()*3/4-170,100,140),
                 Chimney.Chimney(400,screen.get_height()*3/4-180,100,150),
               Chimney.Chimney(610,screen.get_height()*3/4-180,100,150)]
             platforms = [
@@ -145,9 +145,9 @@ def game_loop(start_level):
                     if event.key == pygame.K_RIGHT:
                         move_right = False
 
-            if move_left:
+            if move_left and c1.x>0:
                 c1.move_left()
-            if move_right:
+            if move_right and c1.x<screen.get_width()-char_width:
                 c1.move_right()
             else:
                 ...
