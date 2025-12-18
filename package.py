@@ -3,7 +3,7 @@ import pygame
 from random import randint
 
 class Package:
-    def __init__(self, position, screen_height=720):
+    def __init__(self, position, type=0, screen_height=720):
         self.x = position[0]
         self.y = position[1]
         self.screen_height = screen_height
@@ -12,9 +12,10 @@ class Package:
         self.speed_y = 0
         self.stopped = False
         self.freeze = False
+        self.type = type
 
     def __repr__(self):
-        return f"Package(x={self.x}, y={self.y})"
+        return f"Package(x={self.x}, y={self.y}, type={self.type})"
     
     def set_image(self):
         rand = randint(1,3)
@@ -27,10 +28,7 @@ class Package:
         else:
             self.image = pygame.image.load("Assets/Presents/present_yellow25x24.png").convert_alpha()
         self.image = pygame.transform.scale(self.image, (50,48))
-    
-    def check_for_collission(self, place_coördinates):
-        ...
-    
+
     def get_rect_lower(self):
         #Return the collision rectangle for this package
         h = self.image.get_height()

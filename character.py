@@ -11,6 +11,8 @@ class Character:
         sprite_sheet = pygame.image.load("Assets/Character/14x23 Idle christmas.png").convert_alpha()
         self.box_place_sound = pygame.mixer.Sound('Assets/sound/open-package-box-parcel-100334.mp3')
         self.error_sound = pygame.mixer.Sound('Assets/sound/error-mistake-sound-effect-incorrect-answer-437420.mp3')
+        self.place_type = 0
+        self.placeable_jump_pack = 0
         
         self.frames = [] 
         for i in range(4):
@@ -77,6 +79,12 @@ class Character:
         
         self.is_moving = False 
 
+    def jump_pack_counter(self):
+        jump_pack_amount = 0
+        for pkg in self.package_list:
+            if pkg.type == 1:
+                jump_pack_amount +=1
+        return jump_pack_amount
 
 
     def set_height(self, position_y_platform):
@@ -130,12 +138,18 @@ class Character:
     def set_total_packages_left(self, amount):
         self.total_packages_left = amount
     
+    def change_package_type(self):
+        if self.place_type == 0 and self.placeable_jump_pack > 0:
+            self.place_type = 1
+        if self.place_type == 1:
+            self.place_type = 0
+
+
     def place_package(self, object_list):
         space_check_rect_right = pygame.rect.Rect(self.get_pos_x() + 30 , self.get_pos_y(), 50, 48)    
         space_check_rect_left = pygame.rect.Rect(self.get_pos_x() - 50 , self.get_pos_y(), 50, 48)
         placeable_left = True
         placeable_right = True  
-        placed_packages = len(self.package_list)
 
         for objects in object_list: 
             if space_check_rect_right.colliderect(objects):
@@ -145,20 +159,28 @@ class Character:
         
         
         if placeable_right and self.facing_right:
-            if self.total_packages_left > 0:
+            if self.total_packages_left > 0 and self.place_type == 0:
                 self.box_place_sound.play()
-                self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y()]))
+                self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y()],))
                 self.amount_left()
+            elif self.placeable_jump_pack > 0 and self.place_type == 1:
+                self.box_place_sound.play()
+                self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y()],1))
+                self.jump_pack_counter()
             else:
                 self.error_sound.play()
         if not placeable_right and self.facing_right:
             self.error_sound.play()
         
         if placeable_left and not self.facing_right:
-            if self.total_packages_left > 0:
+            if self.total_packages_left > 0 and self.place_type == 0:
                 self.box_place_sound.play()
                 self.package_list.append(package.Package([self.get_pos_x() - 50, self.get_pos_y()]))
                 self.amount_left()
+            elif self.placeable_jump_pack > 0 and self.place_type == 1:
+                self.box_place_sound.play()
+                self.package_list.append(package.Package([self.get_pos_x() - 50, self.get_pos_y()], 1))
+                self.jump_pack_counter()
             else:
                  self.error_sound.play()
         if not placeable_left and not self.facing_right:

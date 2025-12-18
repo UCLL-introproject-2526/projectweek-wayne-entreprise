@@ -86,6 +86,7 @@ def game_loop(start_level):
             flag_coordinates = flag_x, flag_y = (330, 305)
             start_coordinates = start_x, start_y = (20, 400)
             packages = 2
+            jump_packages = 2
             platforms = [
             Platform.Platform(230, 400, 64, 32),
             Platform.Platform(300, 350, 64, 32)
@@ -135,6 +136,8 @@ def game_loop(start_level):
         text=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
 
         while running and loop2:
+            print(c1.package_list)
+            c1.placeable_jump_pack = jump_packages
             dt = klok.tick(60)    
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -148,10 +151,8 @@ def game_loop(start_level):
                     if event.key == pygame.K_LEFT:
                         move_left = True
                         c1.set_direction(False)
-                        c1.set_direction(False)
                     if event.key == pygame.K_RIGHT:
                         move_right = True
-                        c1.set_direction(True)
                         c1.set_direction(True)
                     if event.key == pygame.K_SPACE:
                         #print(c1.get_total_packages())
@@ -159,7 +160,9 @@ def game_loop(start_level):
                                 loop2 = g1.win()
                         c1.place_package(all_objects)
                         text=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
-                        
+                    if event.key == pygame.K_c:
+                        c1.change_package_type()
+
                     if event.key == pygame.K_UP:
                         c1.jump()
                     if event.key == pygame.K_r:
@@ -273,8 +276,7 @@ def game_loop(start_level):
 
             c1.update_animation(dt)
             screen.blit(c1.idle_pose, (c1.x, c1.y))
-            pygame.display.flip()
-            
+            pygame.display.flip()  
         
         level += 1
         if level == 7:
