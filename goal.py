@@ -7,7 +7,7 @@ class Goal:
         self.screen = scherm
         
     def win(self):
-        winsound = pygame.mixer.Sound('Assets/sound/win-176035.mp3') 
+        winsound = pygame.mixer.Sound('Assets/sound/win.mp3') 
         winsound.play(0)
         font = pygame.font.Font('freesansbold.ttf', 16)
         text = font.render("You delivered all the presents!!!", True, (0, 255, 0))
