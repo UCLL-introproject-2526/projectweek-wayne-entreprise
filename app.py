@@ -65,14 +65,13 @@ def game_loop(start_level):
             Platform.Platform(300, 350, 64, 32)
             ]
         if level == 2:
+            flag_coordinates = flag_x, flag_y = (280, 105)
             start_coordinates = start_x, start_y = (20, 400)
-            packages = 10
+            packages = 5
             platforms = [
-            Platform.Platform(150, 500, 64, 32),
-            Platform.Platform(220, 500, 64, 32),
-            Platform.Platform(400, 400, 64, 32),
-            Platform.Platform(470, 400, 64, 32),
-            Platform.Platform(540, 400, 64, 32)
+            Platform.Platform(250, 400, 64, 32),
+            Platform.Platform(320, 300, 64, 32),
+            Platform.Platform(250, 150, 64, 32),
             ]
 
 
