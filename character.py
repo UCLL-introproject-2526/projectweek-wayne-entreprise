@@ -121,7 +121,8 @@ class Character:
         self.package_list = []
         
     def amount_left(self):
-        self.total_packages_left-=1
+        if self.total_packages_left > 0:
+            self.total_packages_left-=1
 
     def get_total_packages(self):
         return self.total_packages_left

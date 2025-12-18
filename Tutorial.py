@@ -27,21 +27,7 @@ def game_tuto():
     #empty list of obsticles
     obstacles=[]
 
-    ###
-    while startscreen:
-        screen.blit(start, (0,154))
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
 
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    startscreen = False
-                if event.key == pygame.K_SPACE:
-                    startscreen = False
-        klok.tick(60)
-        pygame.display.flip()
-        
 
     c1 = character.Character((0, 400), 6)
     c1.on_ground=False
@@ -256,15 +242,7 @@ def game_tuto():
         pygame.display.flip()
 
 
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    running = False
-        klok.tick(60)
     pygame.quit()
     if again:
         game_tuto()
-game_tuto()
+#game_tuto()

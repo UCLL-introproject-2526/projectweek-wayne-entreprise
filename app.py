@@ -4,6 +4,7 @@ import package
 import goal
 import Platform
 import Chimney
+import Tutorial 
 
 
 def main():
@@ -31,6 +32,18 @@ def main():
                 if event.key == pygame.K_1:
                     game_loop(1) 
                     start = False
+                if event.key == pygame.K_p:
+                    running = False
+                    Tutorial.game_tuto()
+                    pygame.init()
+                    music = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3') 
+                    music.play(-1)
+                    music.set_volume(0.1)
+                    klok = pygame.time.Clock()
+                    pygame.display.set_caption("Kerst") 
+                    screen = pygame.display.set_mode((720, 720), pygame.FULLSCREEN | pygame.SCALED)
+                    start_image = pygame.image.load('Assets/affiche.webp')
+                    start_image = pygame.transform.scale_by(start_image, 0.5357142857)
                 
         klok.tick(60)
         pygame.display.flip()
@@ -103,7 +116,7 @@ def game_loop(start_level):
         move_left = False
         move_right = False
 
-        flag_hitbox = pygame.Rect(flag_x, flag_y, flag.get_width(),flag.get_height())
+        flag_hitbox = pygame.Rect(flag_x - 15, flag_y, flag.get_width() + 15, flag.get_height())
         font=pygame.font.Font(None,size=30)
         text=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
 
