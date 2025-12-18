@@ -3,6 +3,7 @@ import character
 import package
 import goal
 import Platform
+import Chimney
 
 
 def main():
@@ -30,7 +31,7 @@ def main():
                 if event.key == pygame.K_1:
                     game_loop(1) 
                     start = False
-                 
+                
         klok.tick(60)
         pygame.display.flip()
     running = True
@@ -56,12 +57,12 @@ def game_loop(start_level):
         start_image = pygame.transform.scale_by(start_image, 0.5357142857)
 
         if level == 1:
-            flag_coordinates = flag_x, flag_y = (600, 470)
+            flag_coordinates = flag_x, flag_y = (330, 305)
             start_coordinates = start_x, start_y = (20, 400)
-            packages = 10
+            packages = 2
             platforms = [
-            Platform.Platform(200, 450, 64, 32),
-            Platform.Platform(270, 450, 64, 32)
+            Platform.Platform(230, 400, 64, 32),
+            Platform.Platform(300, 350, 64, 32)
             ]
         if level == 2:
             start_coordinates = start_x, start_y = (20, 400)
@@ -73,6 +74,7 @@ def game_loop(start_level):
             Platform.Platform(470, 400, 64, 32),
             Platform.Platform(540, 400, 64, 32)
             ]
+
 
 
         background = pygame.image.load('Assets/dak.png')
