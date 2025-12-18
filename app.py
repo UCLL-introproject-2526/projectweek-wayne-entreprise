@@ -111,6 +111,8 @@ def game_loop(start_level):
 
         c1 = character.Character(start_coordinates, packages)
         c1.on_ground = False
+        char_height = c1.idle_pose.get_height()
+        char_width = c1.idle_pose.get_width()
         
         g1 = goal.Goal(screen)
         move_left = False
@@ -183,8 +185,7 @@ def game_loop(start_level):
             floor_y = screen.get_height() * 3//4 - 30
                 
             
-            char_height = c1.idle_pose.get_height()
-            char_width = c1.idle_pose.get_width()
+            
             for p in platforms:
                 if c1_hitbox.colliderect(p.rect):
                     if c1.speed_y > 0 and c1_hitbox.bottom < p.rect.bottom:

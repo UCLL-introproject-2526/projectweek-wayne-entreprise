@@ -87,7 +87,7 @@ def game_tuto():
                         text_explain=font_expl.render('The Goal of this game is simple',True,(255,255,255))
                         text_explain2=font_expl.render('Try to deliver the package to the flag',True,(255,255,255))
                 if event.key == pygame.K_SPACE:
-                    c1.place_package()
+                    c1.place_package(all_objects)
                     c1.amount_left()
                     if c1.get_total_packages()>0:
                         packages_left=font.render(f'Total amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
