@@ -125,8 +125,8 @@ class Character:
     
 
     def place_package(self):
-        for pkg in self.package_list:
-            if not pkg.position[1] < self.get_pos_x() + 31 and pkg.position[1] > self.get_pos_x():
+        #for pkg in self.package_list:
+            #if not pkg.position[1] < self.get_pos_x() + 31 and pkg.position[1] > self.get_pos_x():
                 placed_packages = len(self.package_list)
                 if placed_packages < self.total_packages:
                     self.box_place_sound.play()
