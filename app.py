@@ -9,8 +9,8 @@ def main():
     pygame.init()
     klok = pygame.time.Clock()
     pygame.display.set_caption("Kerst") 
-    music = pygame.mixer.Sound('sound/Chill Pulse - Jingle Bell Rock (freetouse.com).MP3')
-    sound_effect = pygame.mixer.Sound('sound/open-package-box-parcel-100334.MP3') 
+    music = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).MP3')
+     
     music.play(-1)
     music.set_volume(0.2)
     # stop music 
