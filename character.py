@@ -9,7 +9,8 @@ class Character:
         self.y = position[1]
         self.packages_left = amount_of_packages
         sprite_sheet = pygame.image.load("Assets/Character/14x23 Idle christmas.png").convert_alpha()
-        self.sound_effect = pygame.mixer.Sound('Assets/sound/open-package-box-parcel-100334.MP3')
+        self.box_place_sound = pygame.mixer.Sound('Assets/sound/open-package-box-parcel-100334.mp3')
+        self.error_sound = pygame.mixer.Sound('Assets/sound/error-mistake-sound-effect-incorrect-answer-437420.mp3')
         
         self.frames = [] 
         for i in range(4):
@@ -124,13 +125,15 @@ class Character:
     
 
     def place_package(self):
-        # for package in self.package_list:
-        #     if package:
-        #     self.total_packages-=1
-            placed_packages = len(self.package_list)
-            if placed_packages < self.total_packages:
-                if self.facing_right:
-                    self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y()]))
+        for pkg in self.package_list:
+            if not pkg.position[1] < self.get_pos_x() + 31 and pkg.position[1] > self.get_pos_x():
+                placed_packages = len(self.package_list)
+                if placed_packages < self.total_packages:
+                    self.box_place_sound.play()
+                    if self.facing_right:
+                        self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y()]))
+                    else:
+                        self.package_list.append(package.Package([self.get_pos_x() - 30, self.get_pos_y()]))
                 else:
-                    self.package_list.append(package.Package([self.get_pos_x() - 30, self.get_pos_y()]))
+                    self.error_sound.play()
         # print(len(self.package_list))

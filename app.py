@@ -9,12 +9,6 @@ def main():
     pygame.init()
     klok = pygame.time.Clock()
     pygame.display.set_caption("Kerst") 
-    music = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).MP3')
-     
-    music.play(-1)
-    music.set_volume(0.2)
-    # stop music 
-    #pygame.mixer.music.stop()
     screen = pygame.display.set_mode((720, 720), pygame.FULLSCREEN | pygame.SCALED)
     start_image = pygame.image.load('Assets/affiche.webp')
     start_image = pygame.transform.scale_by(start_image, 0.5357142857)
@@ -50,7 +44,10 @@ def main():
 def game_loop(level):
     pygame.init()
     klok = pygame.time.Clock()
-    pygame.display.set_caption("Kerst") 
+    pygame.display.set_caption("Kerst")
+    
+    # stop music 
+    #pygame.mixer.music.stop() 
     screen = pygame.display.set_mode((720, 720), pygame.FULLSCREEN | pygame.SCALED)
     running = True
     loop2 = True
@@ -116,7 +113,7 @@ def game_loop(level):
                 if event.key == pygame.K_f:
                     music.set_volume(0)
                 if event.key == pygame.K_g:
-                    music.set_volume(0.2)
+                    music.set_volume(0.1)
                 
 
             if event.type == pygame.KEYUP:
@@ -220,4 +217,8 @@ def game_loop(level):
         klok.tick(60)
     pygame.quit()
 
+pygame.init()
+music = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3') 
+music.play(-1)
+music.set_volume(0.1)
 main()
