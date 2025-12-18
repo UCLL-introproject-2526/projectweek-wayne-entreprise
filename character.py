@@ -77,14 +77,17 @@ class Character:
 
     def set_total_packages(self,amount):
         self.total_packages = amount
+        
                 
     def clean_packages(self):
         self.package_list = []
     
     def get_total_packages(self):
         return self.total_packages
+    
 
     def place_package(self):
+        self.total_packages-=1
         placed_packages = len(self.package_list)
         if placed_packages < self.total_packages:
             if self.facing_right:
