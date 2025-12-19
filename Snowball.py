@@ -17,12 +17,13 @@ class Snowball:
         
     
     def Snowball_fall(self, dt):
-            print("check125")
             self.gravity = 0.001
-            self.speed_y += self.gravity
-            increase = self.speed_y * dt
-            self.y  += increase
-            if self.y>=720:
-                 self.y=self.startheight
-                 self.speed_y=self.startspeed
-            self.rect.topleft=(self.x, self.y)    
+            if self.startspeed>0:
+                self.speed_y += self.gravity
+                increase = self.speed_y * dt
+                self.y  += increase
+                if self.y>=720:
+                    self.y=self.startheight
+                    self.speed_y=self.startspeed
+                self.rect.topleft=(self.x, self.y)
+                   
