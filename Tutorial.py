@@ -107,9 +107,6 @@ def game_tuto():
                     endscreen=False
                     again=True
 
-
-
-
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
                     move_left = False
