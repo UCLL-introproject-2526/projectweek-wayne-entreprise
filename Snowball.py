@@ -17,7 +17,6 @@ class Snowball:
         
     
     def Snowball_fall(self, dt):
-            print("check125")
             self.gravity = 0.001
             self.speed_y += self.gravity
             increase = self.speed_y * dt

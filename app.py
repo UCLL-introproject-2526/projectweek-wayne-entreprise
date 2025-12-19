@@ -17,7 +17,6 @@ def main():
     song4 = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3')
     music = [song1, song2, song3, song4]
     mn = random.randint(0,3)
-    print(mn)
     music[mn].play(-1)
     if mn == 3:
         music[mn].set_volume(0.1)
@@ -331,6 +330,7 @@ def game_loop(start_level):
                     if event.key == pygame.K_r:
                         c1.x = start_x
                         c1.y = start_y
+                        c1.speed_y = 0
                         c1.clean_packages()
                         c1.set_total_packages_left(packages)
                         c1.set_jump_pack(jump_packages)
