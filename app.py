@@ -309,7 +309,7 @@ def game_loop(start_level):
 
             screen.blit(background, (0,0))
             screen.blit(flag, flag_coordinates)
-            screen.blit(text,(300,20))
+            screen.blit(text1,(300,20))
             if c1.placeable_jump_pack > 0:
                 screen.blit(text_jump_pack,(300,40))
 
