@@ -100,7 +100,7 @@ def game_loop(start_level):
 
         start_image = pygame.image.load('Assets/affiche.webp')
         start_image = pygame.transform.scale_by(start_image, 0.5357142857)
-        
+        sleigh_is_there=False
 
         if level == 1:
             flag_coordinates = flag_x, flag_y = (330, 305)
@@ -112,6 +112,7 @@ def game_loop(start_level):
             ]
             sled_coordinates = (600, 450)
             sled_packages = 3
+            sleigh_is_there=True
         if level == 2:
             flag_coordinates = flag_x, flag_y = (280, 105)
             start_coordinates = start_x, start_y = (20, 400)
@@ -121,6 +122,7 @@ def game_loop(start_level):
             Platform.Platform(320, 300, 64, 32),
             Platform.Platform(250, 150, 64, 32),
             ]
+            sleigh_is_there=False
         if level == 3:
             flag_coordinates = flag_x, flag_y = (380, 55)
             start_coordinates = start_x, start_y = (20, 400)
@@ -209,6 +211,7 @@ def game_loop(start_level):
                        ]
             sled_coordinates = (650, 325)
             sled_packages = 4
+            sleigh_is_there=True
 
 
         background = pygame.image.load('Assets/dak.png')
@@ -259,7 +262,10 @@ def game_loop(start_level):
                         if c1_hitbox.colliderect(flag_hitbox) and c1.get_total_packages()>0:
                                 loop2 = g1.win()
                         if c1.get_total_packages()==0:
-                            text3=font.render(f'No more packages left press R to restart or use the sledge perhaps?',True,(255,255,255))
+                            if sleigh_is_there:
+                                text3=font.render(f'No more packages left press R to restart or use the sledge perhaps?',True,(255,255,255))
+                            else:
+                                text3=font.render(f'No more packages left press R to restart',True,(255,255,255))
                         c1.place_package(all_objects)
                         text2=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
                         
