@@ -8,7 +8,7 @@ class Package:
         self.y = position[1]
         self.screen_height = screen_height
         self.floor_y = screen_height * 3 // 4 - 30
-        self.set_image()
+        self.set_image(type)
         self.speed_y = 0
         self.stopped = False
         self.freeze = False
@@ -17,17 +17,21 @@ class Package:
     def __repr__(self):
         return f"Package(x={self.x}, y={self.y}, type={self.type})"
     
-    def set_image(self):
-        rand = randint(1,3)
-        
-        if rand == 1:
-            self.image = pygame.image.load("Assets/Presents/present_blue_25x24.png").convert_alpha()
-            
-        elif rand == 2:
-            self.image = pygame.image.load("Assets/Presents/present_green_25x24.png").convert_alpha()
+    def set_image(self, type):
+        if type == 0:
+            rand = randint(1,3)
+
+            if rand == 1:
+                self.image = pygame.image.load("Assets/Presents/present_blue_25x24.png").convert_alpha()
+
+            elif rand == 2:
+                self.image = pygame.image.load("Assets/Presents/present_green_25x24.png").convert_alpha()
+            else:
+                self.image = pygame.image.load("Assets/Presents/present_yellow25x24.png").convert_alpha()
+            self.image = pygame.transform.scale(self.image, (50,48))
         else:
-            self.image = pygame.image.load("Assets/Presents/present_yellow25x24.png").convert_alpha()
-        self.image = pygame.transform.scale(self.image, (50,48))
+            self.image = pygame.image.load("Assets/Presents/present_jump_25x24.png").convert_alpha()
+            self.image = pygame.transform.scale(self.image, (50,48))
 
     def get_rect_lower(self):
         #Return the collision rectangle for this package
