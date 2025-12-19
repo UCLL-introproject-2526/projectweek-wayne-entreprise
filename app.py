@@ -285,11 +285,11 @@ def game_loop(start_level):
         flag_hitbox = pygame.Rect(flag_x - 15, flag_y, flag.get_width() + 15, flag.get_height())
         font = pygame.font.Font(None,size=30)
         font2 = pygame.font.Font(None,size=60)       
-        text1 = font.render(f'Level:{level}',True,(255,255,255))
-        text2 = font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
+        text1 = font.render(f'Level:{level}',True,(0,191,255))
+        text2 = font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(0,100,0))
         text3 = font2.render('',True,(255,255,255))
         text_jump_pack = font.render(f'Boost Packages left:{c1.placeable_jump_pack}',True,(255,0,0))
-        text_change_pkg1 = font.render(f'\'C\' to switch',True,(255,255,0))
+        text_change_pkg1 = font.render(f'\'S\' to switch',True,(255,255,0))
         text_placing_normal = font.render(f'Now placing: Normal',True,(255,255,0))
         text_placing_jump = font.render(f'Now placing: Jump',True,(255,255,0))
 
@@ -323,8 +323,8 @@ def game_loop(start_level):
                         c1.place_package(all_objects)
                         if c1.placeable_jump_pack == 0:
                             c1.place_type = 0
-                        text2 = font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
-                    if event.key == pygame.K_c:
+                        text2 = font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(0,100,0))
+                    if event.key == pygame.K_s:
                         c1.change_place_type()
 
                     if event.key == pygame.K_UP:
@@ -368,6 +368,7 @@ def game_loop(start_level):
             screen.blit(flag, flag_coordinates)
             screen.blit(text1,(40,20))
             screen.blit(text2,(420,20))
+            screen.blit(text3,(40,130))
             if c1.placeable_jump_pack > 0:
                 screen.blit(text_jump_pack,(420,40))
                 screen.blit(text_change_pkg1, (40, 40))
@@ -486,7 +487,7 @@ def game_loop(start_level):
                 if sled.used == False:
                     c1.set_total_packages_left(sled.refill())
                     c1.set_jump_pack(sled.refill_special())
-            text2 = font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
+            text2 = font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(0,100,0))
                     
 
             pygame.display.flip()
