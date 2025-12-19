@@ -12,10 +12,11 @@ import random
 
 def main():
     pygame.init()
-    song1 = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3') 
-    song2 = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3')
-    song3 = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3')
-    music = [song1, song2, song3]
+    song1 = pygame.mixer.Sound('Assets/sound/Epic Spectrum - Feliz Navidad (freetouse.com).mp3') 
+    song2 = pygame.mixer.Sound('Assets/sound/Epic Spectrum - Happy New Year (freetouse.com).mp3')
+    song3 = pygame.mixer.Sound('Assets/sound/Epic Spectrum - Last Christmas (freetouse.com).mp3')
+    song4 = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3')
+    music = [song1, song2, song3, song4]
     mn = random.randint(0,2)
     print(mn)
     music[mn].play(-1)
