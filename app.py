@@ -252,12 +252,20 @@ def game_loop(start_level):
                          Platform.Platform(400, 250, 64, 32),
                          Platform.Platform(500, 350, 64, 32),
                          Platform.Platform(125, 150, 32, 16),
-                         Platform.Platform(50, 100, 32, 16)
+                         Platform.Platform(50, 100, 32, 16),
+                         Platform.Platform(125, 50, 32, 16),
+                         Platform.Platform(250, 50, 32, 16),
+                         Platform.Platform(400, 100, 32, 16),
+                         Platform.Platform(550, 100, 32, 16),
+                         Platform.Platform(670, 100, 32, 16)
             ]
             chimneys=[Chimney.Chimney(80,screen.get_height()*3/4-175,100,145)
             ]
             jump_packages = 2
-            snowballs = [Snowball.Snowball(180,-5,50,50,2)
+            snowballs = [Snowball.Snowball(180,-5,50,50,2),
+                         Snowball.Snowball(300,-5,50,50,1),
+                         Snowball.Snowball(350,-5,50,50,1)
+                         
             ]
             sled_coordinates = (100, screen.get_height()*3/4-200)
             sled_packages = 2
