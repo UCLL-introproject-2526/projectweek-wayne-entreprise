@@ -225,10 +225,17 @@ def game_loop(start_level):
         if level==8:
             flag_coordinates = flag_x, flag_y = (695, 55)
             start_coordinates = start_x, start_y = (200, 400)
-            packages = 2
+            packages = 0
             chimneys=[Chimney.Chimney(100,screen.get_height()*3/4-300,150,300),
                       Chimney.Chimney(350,screen.get_height()*3/4-350,150,350)
             ]
+            jump_packages = 2
+            platforms = [
+            Platform.Platform(200, 350, 64, 32),
+            Platform.Platform(-25, 325, 64, 32)]
+            snowballs=[Snowball.Snowball(50,-200,50,50,0.9)]
+            sled_coordinates = (5, 300)
+            sled_packages = 3
             
 
 

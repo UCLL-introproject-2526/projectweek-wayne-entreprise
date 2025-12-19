@@ -5,6 +5,7 @@ class Snowball:
         self.image = pygame.transform.scale(self.image, (width, height))
         self.rect=self.image.get_rect()
         self.startheight=y
+        self.startspeed=speed_y
         self.x=x
         self.y=y
         self.rect.topleft=(self.x, self.y)
@@ -23,5 +24,5 @@ class Snowball:
             self.y  += increase
             if self.y>=720:
                  self.y=self.startheight
-                 self.speed_y=0
+                 self.speed_y=self.startspeed
             self.rect.topleft=(self.x, self.y)    
