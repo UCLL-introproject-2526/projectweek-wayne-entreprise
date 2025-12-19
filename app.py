@@ -91,10 +91,12 @@ def game_loop(start_level):
         platforms = []
         chimneys = []
         packages = 0
+        jump_packages = 0
         flag_coordinates = flag_x, flag_y = (-100,0)
         start_coordinates = (0,0)
         sled_coordinates = (-100,0)
         sled_packages = 0
+        sled_special_packages = 0
         snowballs = []
 
 
@@ -113,6 +115,7 @@ def game_loop(start_level):
             ]
             sled_coordinates = (600, 450)
             sled_packages = 3
+            sled_special_packages = 2
             sleigh_is_there=True
         if level == 2:
             flag_coordinates = flag_x, flag_y = (280, 105)
@@ -172,7 +175,7 @@ def game_loop(start_level):
                 ]
             platforms = [
             Platform.Platform(80, 440, 64, 32),
-            Platform.Platform(250, 350, 64, 32),
+            Platform.Platform(280, 350, 64, 32),
             ]
         if level == 7:
             flag_coordinates = flag_x, flag_y = (695, 55)
@@ -192,7 +195,6 @@ def game_loop(start_level):
             Platform.Platform(350, 100, 64, 20),
             Platform.Platform(500, 100, 64, 20),
             Platform.Platform(650, 100, 64, 32),
-            
             ]
             snowballs=[Snowball.Snowball(300,-50,50,50,0.010),
                        Snowball.Snowball(425,-50,50,50,0.075),
@@ -225,7 +227,7 @@ def game_loop(start_level):
         c1 = character.Character(start_coordinates, packages)
         c1.on_ground = False
 
-        sled = sleigh.Sleigh(sled_packages, sled_coordinates)
+        sled = sleigh.Sleigh(sled_packages,sled_special_packages, sled_coordinates)
         
         #set jump packages
         c1.set_jump_pack(jump_packages)
@@ -253,7 +255,6 @@ def game_loop(start_level):
                 if event.type == pygame.QUIT:
                     running = False
                     end_game = True
-            
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         running = False
@@ -309,7 +310,8 @@ def game_loop(start_level):
 
             screen.blit(background, (0,0))
             screen.blit(flag, flag_coordinates)
-            screen.blit(text1,(300,20))
+            screen.blit(text1,(80,20))
+            screen.blit(text2,(300,20))
             if c1.placeable_jump_pack > 0:
                 screen.blit(text_jump_pack,(300,40))
 
@@ -422,8 +424,9 @@ def game_loop(start_level):
             if c1_hitbox.colliderect(sled.rect):
                 if sled.used == False:
                     c1.set_total_packages_left(sled.refill())
-                    text2=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
-                    text3=font.render(f'You just picked up:{sled.storage}',True,(255,255,255))
+                    c1.set_jump_pack(sled.refill_special())
+            text2=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
+                    
 
             pygame.display.flip()
             
