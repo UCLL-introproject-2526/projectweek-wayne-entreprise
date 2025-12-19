@@ -278,7 +278,7 @@ def game_loop(start_level):
         if level == 10:
             flag_coordinates = flag_x, flag_y = (150, 55)
             start_coordinates = start_x, start_y = (20, 270)
-            jump_packages = 3 
+            jump_packages = 1 
             packages = 2
             platforms =[Platform.Platform(310, 400, 64, 32),
                          Platform.Platform(100, 100, 64, 32)
@@ -291,10 +291,12 @@ def game_loop(start_level):
             ]
             snowballs = [
                 Snowball.Snowball(500,-50,200,200,0.2),
-                Snowball.Snowball(150,-150,50,50,0.3)
+                Snowball.Snowball(200,90,90,90,0),
+                Snowball.Snowball(200,0,90,90,0)
+
             ]
             sled_coordinates = (500, 180)
-            sled_packages = 2
+            sled_packages = 3
             sled_special_packages = 1
             sleigh_is_there=True
         background = pygame.image.load('Assets/dak.png')
