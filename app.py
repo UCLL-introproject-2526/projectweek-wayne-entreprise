@@ -85,7 +85,7 @@ def main():
         pygame.display.flip()
     running = True
     if start: 
-        game_loop(10)
+        game_loop(1)
 
 def game_loop(start_level):
     end_game = False
