@@ -7,6 +7,7 @@ import Tutorial
 import Snowball
 import sleigh
 import random
+import Star
 
 def main():
     pygame.init()
@@ -100,6 +101,13 @@ def game_loop(start_level):
         platforms = []
         chimneys = []
         packages = 0
+
+        stars = []
+        for i in range(20):
+            sx = random.randint(0, 720)
+            sy = random.randint(0, 400) 
+            stars.append(Star.Star(sx, sy))
+
         jump_packages = 0
         flag_coordinates = flag_x, flag_y = (-100,0)
         start_coordinates = (0,0)
@@ -254,6 +262,7 @@ def game_loop(start_level):
             ]
 
 
+
         background = pygame.image.load('Assets/dak.png')
         background = pygame.transform.scale_by(background, 0.351568)
 
@@ -354,6 +363,11 @@ def game_loop(start_level):
                 text3 = font.render(f'',True,(255,255,255))
                             
             screen.blit(background, (0,0))
+
+            for s in stars:
+                s.update(dt)
+                s.draw(screen)
+
             screen.blit(flag, flag_coordinates)
             screen.blit(text1,(40,20))
             screen.blit(text2,(420,20))
@@ -484,6 +498,10 @@ def game_loop(start_level):
         
         if level == 10:
             g1.win()
+            win_screen = pygame.image.load('Assets/victory.png')
+            screen.fill((0,0,0))
+            win_screen = pygame.transform.scale_by(win_screen, 0.55172413793103448275862068965517)
+            screen.blit(win_screen, (0,203))
             while running and loop3:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -493,7 +511,9 @@ def game_loop(start_level):
                         if event.key == pygame.K_ESCAPE:
                             running = False
                             end_game = True
+                
                 klok.tick(60)
+                pygame.display.flip()
             end_game = True 
         level += 1
 
