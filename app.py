@@ -376,15 +376,12 @@ def game_loop(start_level):
             screen.blit(text2,(420,20))
             screen.blit(text3,(40,130))
             if c1.placeable_jump_pack > 0:
-                print("specials available")
                 screen.blit(text_jump_pack,(420,40))
                 screen.blit(text_change_pkg1, (40, 40))
                 if c1.place_type == 0 :
                     screen.blit(text_placing_normal,(40,60))
                 else:
                     screen.blit(text_placing_jump,(40,60))
-            else:
-                print("no specials")
 
 
             floor_y = screen.get_height() * 3//4 - 30
