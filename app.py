@@ -84,7 +84,7 @@ def main():
         pygame.display.flip()
     running = True
     if start: 
-        game_loop(1)
+        game_loop(10)
 
 def game_loop(start_level):
     end_game = False
@@ -252,6 +252,7 @@ def game_loop(start_level):
             ]
             snowballs = [Snowball.Snowball(180,-5,50,50,2)
             ]
+
 
 
         background = pygame.image.load('Assets/dak.png')
@@ -482,6 +483,10 @@ def game_loop(start_level):
         
         if level == 10:
             g1.win()
+            win_screen = pygame.image.load('Assets/victory.png')
+            screen.fill((0,0,0))
+            win_screen = pygame.transform.scale_by(win_screen, 0.55172413793103448275862068965517)
+            screen.blit(win_screen, (0,203))
             while running and loop3:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -491,7 +496,9 @@ def game_loop(start_level):
                         if event.key == pygame.K_ESCAPE:
                             running = False
                             end_game = True
+                
                 klok.tick(60)
+                pygame.display.flip()
             end_game = True 
         level += 1
 
