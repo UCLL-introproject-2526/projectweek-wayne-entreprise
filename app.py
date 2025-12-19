@@ -251,15 +251,20 @@ def game_loop(start_level):
             
         if level == 9:
             flag_coordinates = flag_x, flag_y = (695, 55)
-            start_coordinates = start_x, start_y = (5, 400)
+            start_coordinates = start_x, start_y = (680, 400)
             jump_packages = 1
-
-            platforms = [Platform.Platform(200, 350, 64, 32)
+            packages = 2
+            platforms = [Platform.Platform(200, 150, 64, 32),
+                         Platform.Platform(400, 250, 64, 32),
+                         Platform.Platform(500, 350, 64, 32),
             ]
             chimneys=[Chimney.Chimney(80,screen.get_height()*3/4-175,100,145)
             ]
             snowballs = [Snowball.Snowball(180,-5,50,50,2)
             ]
+            sled_coordinates = (-5, 300)
+            led_packages = 4
+            sleigh_is_there=True
 
 
 
@@ -356,7 +361,7 @@ def game_loop(start_level):
             text_jump_pack = font.render(f'Boost Packages left:{c1.placeable_jump_pack}',True,(255,0,0))
             if c1.get_total_packages() == 0 and loop2==True:
                 if sleigh_is_there:
-                    text3 = font.render(f'No more packages left press R to restart or use the sledge perhaps?',True,(255,255,255))
+                    text3 = font.render(f'No more packages left press R to restart or use the sleigh perhaps?',True,(255,255,255))
                 else:
                     text3 = font.render(f'No more packages left press R to restart',True,(255,255,255))
             else:
