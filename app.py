@@ -307,11 +307,6 @@ def game_loop(start_level):
                         #print(c1.get_total_packages())
                         if c1_hitbox.colliderect(flag_hitbox) and c1.get_total_packages()>0:
                                 loop2 = g1.win()
-                        if c1.get_total_packages() == 0:
-                            if sleigh_is_there:
-                                text3 = font.render(f'No more packages left press R to restart or use the sledge perhaps?',True,(255,255,255))
-                            else:
-                                text3 = font.render(f'No more packages left press R to restart',True,(255,255,255))
                         c1.place_package(all_objects)
                         if c1.placeable_jump_pack == 0:
                             c1.place_type = 0
@@ -350,7 +345,14 @@ def game_loop(start_level):
 
 
             text_jump_pack = font.render(f'Boost Packages left:{c1.placeable_jump_pack}',True,(255,0,0))
-
+            if c1.get_total_packages() == 0 and loop2==True:
+                if sleigh_is_there:
+                    text3 = font.render(f'No more packages left press R to restart or use the sledge perhaps?',True,(255,255,255))
+                else:
+                    text3 = font.render(f'No more packages left press R to restart',True,(255,255,255))
+            else:
+                text3 = font.render(f'',True,(255,255,255))
+                            
             screen.blit(background, (0,0))
             screen.blit(flag, flag_coordinates)
             screen.blit(text1,(40,20))
