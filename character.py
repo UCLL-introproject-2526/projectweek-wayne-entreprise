@@ -147,6 +147,9 @@ class Character:
     
     def set_jump_pack(self, amount):
         self.placeable_jump_pack = amount
+    
+    def add_jump_pack(self, amount):
+        self.placeable_jump_pack += amount
 
 
     def place_package(self, object_list):
