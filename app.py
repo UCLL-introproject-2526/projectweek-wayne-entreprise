@@ -280,7 +280,7 @@ def game_loop(start_level):
             flag_coordinates = flag_x, flag_y = (150, 55)
             start_coordinates = start_x, start_y = (20, 270)
             jump_packages = 1 
-            packages = 2
+            packages = 1
             platforms =[Platform.Platform(310, 400, 64, 32),
                          Platform.Platform(100, 100, 64, 32)
                          ,Platform.Platform(340, 170, 64, 32)
