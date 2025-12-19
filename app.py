@@ -277,7 +277,7 @@ def game_loop(start_level):
         flag_hitbox = pygame.Rect(flag_x - 15, flag_y, flag.get_width() + 15, flag.get_height())
         font = pygame.font.Font(None,size=30)
         font2 = pygame.font.Font(None,size=60)       
-        text1 = font.render(f'Level:{level}',True,(255,255,255))
+        text1 = font.render(f'Level:{level}',True,(0,191,255))
         text2 = font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(0,100,0))
         text3 = font2.render('',True,(255,255,255))
         text_jump_pack = font.render(f'Boost Packages left:{c1.placeable_jump_pack}',True,(255,0,0))
