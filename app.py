@@ -321,7 +321,7 @@ def game_loop(start_level):
             
             for p in platforms:
                 if c1_hitbox.colliderect(p.rect):
-                    if c1.speed_y > 0 and c1_hitbox.bottom < p.rect.bottom:
+                    if c1.speed_y > 0 and c1_hitbox.bottom < p.rect.top:
                         c1.y = p.rect.top - char_height 
                         c1.speed_y = 0                  
                         c1.on_ground = True
