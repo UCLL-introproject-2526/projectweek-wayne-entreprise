@@ -151,7 +151,8 @@ def game_loop(start_level):
             Platform.Platform(450, 200, 64, 32),
             Platform.Platform(600, 250, 64, 32)
             ]
-            snowballs=[Snowball.Snowball(300,0,50,50,0.001)]
+            snowballs=[Snowball.Snowball(300,0,50,50,0.001),
+                       Snowball.Snowball(500,0,50,50,0.001)]
         if level == 4:
             flag_coordinates = flag_x, flag_y = (620, 315)
             start_coordinates = start_x, start_y = (20, 400)
