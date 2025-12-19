@@ -92,6 +92,7 @@ def main():
 def game_loop(start_level):
     end_game = False
     level = start_level
+    timer = 0
     while not end_game:
         klok = pygame.time.Clock()
         screen = pygame.display.set_mode((720, 720), pygame.FULLSCREEN | pygame.SCALED)
@@ -271,8 +272,7 @@ def game_loop(start_level):
                          
             ]
             sled_coordinates = (100, screen.get_height()*3/4-225)
-            sled_special_packages=1
-            sled_packages = 2
+            sled_packages = 1
             sleigh_is_there=True
 
 
@@ -291,7 +291,7 @@ def game_loop(start_level):
                 Chimney.Chimney(600,screen.get_height()*3/4-270,140,240)
             ]
             snowballs = [
-                Snowball.Snowball(500,-50,200,200,0.2),
+                Snowball.Snowball(430,-50,200,190,0.2),
                 Snowball.Snowball(200,90,90,90,0),
                 Snowball.Snowball(200,0,90,90,0)
 
@@ -334,7 +334,8 @@ def game_loop(start_level):
         
 
         while running and loop2:
-            dt = klok.tick(60)    
+            dt = klok.tick(60) 
+            timer += 1   
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -538,8 +539,11 @@ def game_loop(start_level):
             g1.win()
             win_screen = pygame.image.load('Assets/victory.png')
             screen.fill((0,0,0))
+            timer = timer // 60
             win_screen = pygame.transform.scale_by(win_screen, 0.55172413793103448275862068965517)
-            screen.blit(win_screen, (0,203))
+            screen.blit(win_screen, (0,203))            
+            text2 = font.render(f'Time:{timer}',True,(0,255,0))
+            screen.blit(text2,(320,40))
             while running and loop3:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
