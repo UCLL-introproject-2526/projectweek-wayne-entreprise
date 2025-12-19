@@ -181,7 +181,7 @@ def game_loop(start_level):
             flag_coordinates = flag_x, flag_y = (695, 55)
             start_coordinates = start_x, start_y = (20, 400)
             packages = 2
-            chimneys=[Chimney.Chimney(100,screen.get_height()*3/4-150,100,120),
+            chimneys=[Chimney.Chimney(100,screen.get_height()*3/4-125,100,120),
             ]
             platforms = [
             Platform.Platform(200, 350, 64, 32),
@@ -216,6 +216,14 @@ def game_loop(start_level):
             sled_coordinates = (650, 325)
             sled_packages = 4
             sleigh_is_there=True
+        if level==8:
+            flag_coordinates = flag_x, flag_y = (695, 55)
+            start_coordinates = start_x, start_y = (200, 400)
+            packages = 2
+            chimneys=[Chimney.Chimney(100,screen.get_height()*3/4-300,150,300),
+                      Chimney.Chimney(350,screen.get_height()*3/4-350,150,350)
+            ]
+            
 
 
         background = pygame.image.load('Assets/dak.png')
