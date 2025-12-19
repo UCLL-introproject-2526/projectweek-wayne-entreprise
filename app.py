@@ -406,7 +406,7 @@ def game_loop(start_level):
             for platform in package_platforms:
                 if c1_hitbox.colliderect(platform):
                     if platform in booster_list:
-                        print("Check")
+                        c1.speed_y = 0
                         c1.speed_y = -0.5
                         c1.on_ground = False
                     if platform in all_objects and not platform in booster_list:

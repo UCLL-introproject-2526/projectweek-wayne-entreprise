@@ -107,9 +107,8 @@ class Character:
         self.facing_right = True
         self.is_moving = True
         
-    def jump(self, jump_velocity):
+    def jump(self):
         if self.on_ground:
-            self.speed_y = jump_velocity
             self.on_ground = False
 
     def get_pos_x(self):
