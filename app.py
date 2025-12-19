@@ -7,13 +7,19 @@ import Chimney
 import Tutorial 
 import Snowball
 import sleigh
+import random
 
 
 def main():
     pygame.init()
-    music = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3') 
-    music.play(-1)
-    music.set_volume(0.1)
+    song1 = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3') 
+    song2 = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3')
+    song3 = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3')
+    music = [song1, song2, song3]
+    mn = random.randint(0,2)
+    print(mn)
+    music[mn].play(-1)
+    music[mn].set_volume(0.1)
     klok = pygame.time.Clock()
     pygame.display.set_caption("Kerst") 
     screen = pygame.display.set_mode((720, 720), pygame.FULLSCREEN | pygame.SCALED)
@@ -249,7 +255,6 @@ def game_loop(start_level):
         
 
         while running and loop2:
-            print(c1.place_type)
             dt = klok.tick(60)    
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -288,6 +293,7 @@ def game_loop(start_level):
                         c1.set_total_packages_left(packages)
                         c1.set_jump_pack(jump_packages)
                         c1.place_type = 0
+                        sleigh.reset()
                     
                     
 
