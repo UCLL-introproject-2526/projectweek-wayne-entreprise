@@ -82,7 +82,7 @@ def game_tuto():
                         text_explain2=font_expl.render('',True,(255,255,255))
                         messageshow1=False
                 if event.key == pygame.K_UP:
-                    c1.jump()
+                    c1.jump(-0.35)
                     if messageshow2:
                         text_explain=font_expl.render('The Goal of this game is simple',True,(255,255,255))
                         text_explain2=font_expl.render('Try to deliver the package to the flag',True,(255,255,255))

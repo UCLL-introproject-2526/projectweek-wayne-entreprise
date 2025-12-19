@@ -13,11 +13,10 @@ import random
 def main():
     pygame.init()
     song1 = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3') 
-    song2 = pygame.mixer.Sound('Assets/sound/Epic Spectrum - Feliz Navidad (freetouse.com).mp3')
-    song3 = pygame.mixer.Sound('Assets/sound/Epic Spectrum - Happy New Year (freetouse.com).mp3')
-    song4 = pygame.mixer.Sound('Assets/sound/Epic Spectrum - Last Christmas (freetouse.com).mp3')
-    music = [song1, song2, song3, song4]
-    mn = random.randint(0,3)
+    song2 = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3')
+    song3 = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3')
+    music = [song1, song2, song3]
+    mn = random.randint(0,2)
     print(mn)
     music[mn].play(-1)
     music[mn].set_volume(0.1)
@@ -188,7 +187,7 @@ def game_loop(start_level):
             flag_coordinates = flag_x, flag_y = (695, 55)
             start_coordinates = start_x, start_y = (20, 400)
             packages = 2
-            chimneys=[Chimney.Chimney(100,screen.get_height()*3/4-125,100,120),
+            chimneys=[Chimney.Chimney(100,screen.get_height()*3/4-150,100,120),
             ]
             platforms = [
             Platform.Platform(200, 350, 64, 32),
@@ -223,21 +222,6 @@ def game_loop(start_level):
             sled_coordinates = (650, 325)
             sled_packages = 4
             sleigh_is_there=True
-        if level==8:
-            flag_coordinates = flag_x, flag_y = (695, 55)
-            start_coordinates = start_x, start_y = (200, 400)
-            packages = 0
-            chimneys=[Chimney.Chimney(100,screen.get_height()*3/4-300,150,300),
-                      Chimney.Chimney(350,screen.get_height()*3/4-350,150,350)
-            ]
-            jump_packages = 2
-            platforms = [
-            Platform.Platform(200, 350, 64, 32),
-            Platform.Platform(-25, 325, 64, 32)]
-            snowballs=[Snowball.Snowball(50,-200,50,50,0.9)]
-            sled_coordinates = (5, 300)
-            sled_packages = 3
-            
 
 
         background = pygame.image.load('Assets/dak.png')
@@ -314,8 +298,7 @@ def game_loop(start_level):
                         c1.set_total_packages_left(packages)
                         c1.set_jump_pack(jump_packages)
                         c1.place_type = 0
-                        sled.reset()
-                    
+                        sleigh.reset()
                     
 
                 if event.type == pygame.KEYUP:
@@ -458,8 +441,8 @@ def game_loop(start_level):
             screen.blit(sled.image, sled.rect)
             if c1_hitbox.colliderect(sled.rect):
                 if sled.used == False:
-                    c1.total_packages_left += sled.refill()
-                    c1.placeable_jump_pack += sled.refill_special()
+                    c1.set_total_packages_left(sled.refill())
+                    c1.set_jump_pack(sled.refill_special())
             text2=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
                     
 
