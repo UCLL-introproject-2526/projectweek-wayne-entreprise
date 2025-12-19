@@ -314,7 +314,7 @@ def game_loop(start_level):
                         c1.set_total_packages_left(packages)
                         c1.set_jump_pack(jump_packages)
                         c1.place_type = 0
-                        sleigh.reset()
+                        sled.reset()
                     
 
                 if event.type == pygame.KEYUP:
