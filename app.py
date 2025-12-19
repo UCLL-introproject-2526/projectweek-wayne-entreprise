@@ -64,6 +64,9 @@ def main():
                 if event.key == pygame.K_8:
                     game_loop(8) 
                     start = False
+                if event.key == pygame.K_9:
+                    game_loop(9) 
+                    start = False
                 if event.key == pygame.K_p:
                     running = False
                     Tutorial.game_tuto()
@@ -239,6 +242,14 @@ def game_loop(start_level):
             sled_packages = 4
             sleigh_is_there=True
             
+        if level == 9:
+            flag_coordinates = flag_x, flag_y = (695, 55)
+            start_coordinates = start_x, start_y = (5, 400)
+            jump_packages = 1
+
+            chimneys=[Chimney.Chimney(80,screen.get_height()*3/4-175,100,145)
+            ]
+            snowballs = [Snowball.Snowball(180,-5,50,50,2)]
 
 
         background = pygame.image.load('Assets/dak.png')
