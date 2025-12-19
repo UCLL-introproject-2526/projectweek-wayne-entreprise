@@ -278,7 +278,7 @@ def game_loop(start_level):
         font = pygame.font.Font(None,size=30)
         font2 = pygame.font.Font(None,size=60)       
         text1 = font.render(f'Level:{level}',True,(255,255,255))
-        text2 = font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
+        text2 = font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(0,100,0))
         text3 = font2.render('',True,(255,255,255))
         text_jump_pack = font.render(f'Boost Packages left:{c1.placeable_jump_pack}',True,(255,0,0))
         text_change_pkg1 = font.render(f'\'S\' to switch',True,(255,255,0))
@@ -315,7 +315,7 @@ def game_loop(start_level):
                         c1.place_package(all_objects)
                         if c1.placeable_jump_pack == 0:
                             c1.place_type = 0
-                        text2 = font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
+                        text2 = font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(0,100,0))
                     if event.key == pygame.K_s:
                         c1.change_place_type()
 
@@ -474,7 +474,7 @@ def game_loop(start_level):
                 if sled.used == False:
                     c1.set_total_packages_left(sled.refill())
                     c1.set_jump_pack(sled.refill_special())
-            text2 = font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
+            text2 = font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(0,100,0))
                     
 
             pygame.display.flip()
