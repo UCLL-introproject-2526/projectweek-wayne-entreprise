@@ -7,3 +7,4 @@ class Platform:
     
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
+        self.hitbox=self.rect

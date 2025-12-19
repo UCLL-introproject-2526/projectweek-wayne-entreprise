@@ -178,15 +178,15 @@ def game_loop(start_level):
             ]
             platforms = [
             Platform.Platform(200, 350, 64, 32),
-            Platform.Platform(350, 350, 64, 32),
-            Platform.Platform(500, 350, 64, 32),
+            Platform.Platform(350, 350, 64, 20),
+            Platform.Platform(500, 350, 64, 20),
             Platform.Platform(650, 350, 64, 32),
             Platform.Platform(50, 200, 64, 32),
             Platform.Platform(200, 200, 64, 32),
             Platform.Platform(50, 100, 64, 32),
             Platform.Platform(200, 100, 64, 32),
-            Platform.Platform(350, 100, 64, 32),
-            Platform.Platform(500, 100, 64, 32),
+            Platform.Platform(350, 100, 64, 20),
+            Platform.Platform(500, 100, 64, 20),
             Platform.Platform(650, 100, 64, 32),
             
             ]
@@ -307,22 +307,22 @@ def game_loop(start_level):
                         c1.y = p.rect.top - char_height 
                         c1.speed_y = 0                  
                         c1.on_ground = True
-            for hitbox in chimneys:
-                if c1_hitbox.colliderect(hitbox.rect):
+            for chimney in chimneys:
+                if c1_hitbox.colliderect(chimney.hitbox):
                 #print(f"c1:{c1_hitbox.right}")
                 #print(f"hitbox:{hitbox.left}")
-                    if c1.speed_y >= 0 and c1_hitbox.bottom < hitbox.rect.top+20:
-                        c1.y = hitbox.rect.top - char_height 
+                    if c1.speed_y >= 0 and c1_hitbox.bottom < chimney.hitbox.top+20:
+                        c1.y = chimney.hitbox.top - char_height 
                         c1.speed_y = 0                  
                         c1.on_ground = True
 
-                    elif c1_hitbox.centerx < hitbox.rect.centerx:
-                        c1.x = hitbox.rect.left-char_width
+                    elif c1_hitbox.centerx < chimney.hitbox.centerx:
+                        c1.x = chimney.hitbox.left-char_width
                         #print(hitbox.right-char_width)
                         #print(c1.x)
 
-                    elif c1_hitbox.centerx > hitbox.rect.centerx:
-                        c1.x = hitbox.rect.right
+                    elif c1_hitbox.centerx > chimney.hitbox.centerx:
+                        c1.x = chimney.hitbox.right
             for snowball in snowballs:
                 if c1_hitbox.colliderect(snowball.rect):
                     c1.speed_y=0.3
