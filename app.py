@@ -7,6 +7,7 @@ import Tutorial
 import Snowball
 import sleigh
 import random
+import Star
 
 def main():
     pygame.init()
@@ -100,6 +101,13 @@ def game_loop(start_level):
         platforms = []
         chimneys = []
         packages = 0
+
+        stars = []
+        for i in range(20):
+            sx = random.randint(0, 720)
+            sy = random.randint(0, 400) 
+            stars.append(Star.Star(sx, sy))
+
         jump_packages = 0
         flag_coordinates = flag_x, flag_y = (-100,0)
         start_coordinates = (0,0)
@@ -278,7 +286,7 @@ def game_loop(start_level):
         flag_hitbox = pygame.Rect(flag_x - 15, flag_y, flag.get_width() + 15, flag.get_height())
         font = pygame.font.Font(None,size=30)
         font2 = pygame.font.Font(None,size=60)       
-        text1 = font.render(f'Level:{level}',True,(255,255,255))
+        text1 = font.render(f'Level:{level}',True,(0,191,255))
         text2 = font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(0,100,0))
         text3 = font2.render('',True,(255,255,255))
         text_jump_pack = font.render(f'Boost Packages left:{c1.placeable_jump_pack}',True,(255,0,0))
@@ -353,6 +361,11 @@ def game_loop(start_level):
             text_jump_pack = font.render(f'Boost Packages left:{c1.placeable_jump_pack}',True,(255,0,0))
 
             screen.blit(background, (0,0))
+
+            for s in stars:
+                s.update(dt)
+                s.draw(screen)
+
             screen.blit(flag, flag_coordinates)
             screen.blit(text1,(40,20))
             screen.blit(text2,(420,20))
