@@ -188,19 +188,17 @@ def game_loop(start_level):
             flag_coordinates = flag_x, flag_y = (695, 55)
             start_coordinates = start_x, start_y = (20, 400)
             packages = 2
-            chimneys=[Chimney.Chimney(100,screen.get_height()*3/4-125,100,120),
+            chimneys=[Chimney.Chimney(100,screen.get_height()*3/4-175,100,145),
             ]
             platforms = [
-            Platform.Platform(200, 350, 64, 32),
-            Platform.Platform(350, 350, 64, 20),
-            Platform.Platform(500, 350, 64, 20),
+            Platform.Platform(350, 350, 50, 20),
+            Platform.Platform(500, 350, 50, 20),
             Platform.Platform(650, 350, 64, 32),
             Platform.Platform(50, 200, 64, 32),
-            Platform.Platform(200, 200, 64, 32),
             Platform.Platform(50, 100, 64, 32),
             Platform.Platform(200, 100, 64, 32),
-            Platform.Platform(350, 100, 64, 20),
-            Platform.Platform(500, 100, 64, 20),
+            Platform.Platform(350, 100, 50, 20),
+            Platform.Platform(500, 100, 50, 20),
             Platform.Platform(650, 100, 64, 32),
             ]
             snowballs=[Snowball.Snowball(300,-50,50,50,0.010),
@@ -225,7 +223,7 @@ def game_loop(start_level):
             sleigh_is_there=True
         if level==8:
             flag_coordinates = flag_x, flag_y = (695, 55)
-            start_coordinates = start_x, start_y = (200, 400)
+            start_coordinates = start_x, start_y = (250, 400)
             packages = 0
             chimneys=[Chimney.Chimney(100,screen.get_height()*3/4-300,150,300),
                       Chimney.Chimney(350,screen.get_height()*3/4-350,150,350)
@@ -233,10 +231,13 @@ def game_loop(start_level):
             jump_packages = 2
             platforms = [
             Platform.Platform(200, 350, 64, 32),
-            Platform.Platform(-25, 325, 64, 32)]
-            snowballs=[Snowball.Snowball(50,-200,50,50,0.9)]
-            sled_coordinates = (5, 300)
-            sled_packages = 3
+            Platform.Platform(-10, 325, 64, 32),
+            Platform.Platform(685, 100, 20, 15)]
+            snowballs=[Snowball.Snowball(50,-200,50,50,0.9),
+                       Snowball.Snowball(610,-225,50,50,0.9)]
+            sled_coordinates = (-5, 300)
+            sled_packages = 4
+            sleigh_is_there=True
             
 
 
