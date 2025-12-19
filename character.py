@@ -190,7 +190,4 @@ class Character:
             else:
                  self.error_sound.play()
         if not placeable_left and not self.facing_right:
-            self.error_sound.play()
-
-
-            
+            self.error_sound.play() 
