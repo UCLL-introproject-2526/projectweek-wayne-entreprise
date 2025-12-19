@@ -7,13 +7,19 @@ import Chimney
 import Tutorial 
 import Snowball
 import sleigh
+import random
 
 
 def main():
     pygame.init()
-    music = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3') 
-    music.play(-1)
-    music.set_volume(0.1)
+    song1 = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3') 
+    song2 = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3')
+    song3 = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3')
+    music = [song1, song2, song3]
+    mn = random.randint(0,2)
+    print(mn)
+    music[mn].play(-1)
+    music[mn].set_volume(0.1)
     klok = pygame.time.Clock()
     pygame.display.set_caption("Kerst") 
     screen = pygame.display.set_mode((720, 720), pygame.FULLSCREEN | pygame.SCALED)
@@ -252,12 +258,14 @@ def game_loop(start_level):
         text1=font.render(f'Level:{level}',True,(255,255,255))
         text2=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
         text3=font2.render('',True,(255,255,255))
-        text_jump_pack = text_jump_pack = font.render(f'Boost Packages left:{c1.jump_pack_counter()}',True,(255,0,0))
+        text_jump_pack = font.render(f'Boost Packages left:{c1.placeable_jump_pack}',True,(255,0,0))
+        text_change_pkg1 = font.render(f'\'C\' to switch',True,(255,255,0))
+        text_placing_normal = font.render(f'Now placing: Normal',True,(255,255,0))
+        text_placing_jump = font.render(f'Now placing: Jump',True,(255,255,0))
 
         
 
         while running and loop2:
-            print(c1.place_type)
             dt = klok.tick(60)    
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -283,6 +291,8 @@ def game_loop(start_level):
                             else:
                                 text3=font.render(f'No more packages left press R to restart',True,(255,255,255))
                         c1.place_package(all_objects)
+                        if c1.placeable_jump_pack == 0:
+                            c1.place_type = 0
                         text2=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
                     if event.key == pygame.K_c:
                         c1.change_place_type()
@@ -296,6 +306,7 @@ def game_loop(start_level):
                         c1.set_total_packages_left(packages)
                         c1.set_jump_pack(jump_packages)
                         c1.place_type = 0
+                        sleigh.reset()
                     
                     
 
@@ -316,12 +327,20 @@ def game_loop(start_level):
                 c1.on_ground = False
             c1_hitbox = pygame.Rect(c1.x+6, c1.y + c1.idle_pose.get_height()-3 , 18, 8)
 
+
+            text_jump_pack = font.render(f'Boost Packages left:{c1.placeable_jump_pack}',True,(255,0,0))
+
             screen.blit(background, (0,0))
             screen.blit(flag, flag_coordinates)
-            screen.blit(text1,(80,20))
-            screen.blit(text2,(300,20))
+            screen.blit(text1,(40,20))
+            screen.blit(text2,(420,20))
             if c1.placeable_jump_pack > 0:
-                screen.blit(text_jump_pack,(300,40))
+                screen.blit(text_jump_pack,(420,40))
+                screen.blit(text_change_pkg1, (40, 40))
+                if c1.place_type == 0 :
+                    screen.blit(text_placing_normal,(40,60))
+                else:
+                    screen.blit(text_placing_jump,(40,60))
 
 
             floor_y = screen.get_height() * 3//4 - 30
