@@ -13,10 +13,11 @@ import random
 def main():
     pygame.init()
     song1 = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3') 
-    song2 = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3')
-    song3 = pygame.mixer.Sound('Assets/sound/Chill Pulse - Jingle Bell Rock (freetouse.com).mp3')
-    music = [song1, song2, song3]
-    mn = random.randint(0,2)
+    song2 = pygame.mixer.Sound('Assets/sound/Epic Spectrum - Feliz Navidad (freetouse.com).mp3')
+    song3 = pygame.mixer.Sound('Assets/sound/Epic Spectrum - Happy New Year (freetouse.com).mp3')
+    song4 = pygame.mixer.Sound('Assets/sound/Epic Spectrum - Last Christmas (freetouse.com).mp3')
+    music = [song1, song2, song3, song4]
+    mn = random.randint(0,3)
     print(mn)
     music[mn].play(-1)
     music[mn].set_volume(0.1)
@@ -313,7 +314,7 @@ def game_loop(start_level):
                         c1.set_total_packages_left(packages)
                         c1.set_jump_pack(jump_packages)
                         c1.place_type = 0
-                        sleigh.reset()
+                        sled.reset()
                     
                     
 
@@ -457,8 +458,8 @@ def game_loop(start_level):
             screen.blit(sled.image, sled.rect)
             if c1_hitbox.colliderect(sled.rect):
                 if sled.used == False:
-                    c1.set_total_packages_left(sled.refill())
-                    c1.set_jump_pack(sled.refill_special())
+                    c1.total_packages_left += sled.refill()
+                    c1.placeable_jump_pack += sled.refill_special()
             text2=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
                     
 
