@@ -5,6 +5,7 @@ import goal
 import Platform
 import Chimney
 import Tutorial 
+import Snowball
 
 
 def main():
@@ -44,6 +45,15 @@ def main():
                 if event.key == pygame.K_5:
                     game_loop(5) 
                     start = False
+                if event.key == pygame.K_6:
+                    game_loop(6) 
+                    start = False
+                if event.key == pygame.K_7:
+                    game_loop(7) 
+                    start = False
+                if event.key == pygame.K_8:
+                    game_loop(8) 
+                    start = False
                 if event.key == pygame.K_p:
                     running = False
                     Tutorial.game_tuto()
@@ -77,6 +87,7 @@ def game_loop(start_level):
         #reset level values
         platforms = []
         chimneys = []
+        snowballs = []
 
 
         start_image = pygame.image.load('Assets/affiche.webp')
@@ -95,6 +106,7 @@ def game_loop(start_level):
             flag_coordinates = flag_x, flag_y = (280, 105)
             start_coordinates = start_x, start_y = (20, 400)
             packages = 5
+            jump_packages = 4
             platforms = [
             Platform.Platform(250, 400, 64, 32),
             Platform.Platform(320, 300, 64, 32),
@@ -113,7 +125,53 @@ def game_loop(start_level):
             Platform.Platform(450, 200, 64, 32),
             Platform.Platform(600, 250, 64, 32)
             ]
-
+            snowballs=[Snowball.Snowball(300,0,50,50)]
+        if level == 4:
+            flag_coordinates = flag_x, flag_y = (620, 315)
+            start_coordinates = start_x, start_y = (20, 400)
+            packages = 3
+            chimneys=[Chimney.Chimney(250,screen.get_height()*3/4-170,100,140),
+                Chimney.Chimney(600,screen.get_height()*3/4-180,130,160)
+                ]
+            platforms = [
+            Platform.Platform(200, 300, 64, 32),
+            Platform.Platform(350, 250, 64, 32),
+            Platform.Platform(500, 200, 64, 32)
+            ]
+        if level == 5:
+            flag_coordinates = flag_x, flag_y = (650, 105)
+            start_coordinates = start_x, start_y = (20, 400)
+            packages = 4
+            chimneys=[Chimney.Chimney(150,screen.get_height()*3/4-170,100,140),
+                Chimney.Chimney(350,screen.get_height()*3/4-180,130,160)
+                ]
+            platforms = [
+            Platform.Platform(200, 300, 64, 32),
+            Platform.Platform(400, 250, 64, 32),
+            Platform.Platform(600, 150, 64, 32)
+            ]
+        if level == 6:
+            flag_coordinates = flag_x, flag_y = (660, screen.get_height()*3/4-85)
+            start_coordinates = start_x, start_y = (20, 400)
+            packages = 1
+            chimneys=[Chimney.Chimney(150,screen.get_height()*3/4-170,100,140),
+                      Chimney.Chimney(500,screen.get_height()*3/4-230,130,200)
+                ]
+            platforms = [
+            Platform.Platform(80, 440, 64, 32),
+            Platform.Platform(250, 350, 64, 32),
+            ]
+        if level == 7:
+            flag_coordinates = flag_x, flag_y = (660, screen.get_height()*3/4-85)
+            start_coordinates = start_x, start_y = (20, 400)
+            packages = 0
+            chimneys=[Chimney.Chimney(150,screen.get_height()*3/4-170,100,140),
+                      Chimney.Chimney(500,screen.get_height()*3/4-230,130,200)
+                ]
+            platforms = [
+            Platform.Platform(80, 440, 64, 32),
+            Platform.Platform(250, 350, 64, 32),
+            ]
 
 
         background = pygame.image.load('Assets/dak.png')
@@ -125,6 +183,9 @@ def game_loop(start_level):
         c1 = character.Character(start_coordinates, packages)
         c1.on_ground = False
         
+        #set jump packages
+        c1.set_jump_pack(jump_packages)
+
         char_width = c1.idle_pose.get_width()
         
         g1 = goal.Goal(screen)
@@ -134,10 +195,12 @@ def game_loop(start_level):
         flag_hitbox = pygame.Rect(flag_x - 15, flag_y, flag.get_width() + 15, flag.get_height())
         font=pygame.font.Font(None,size=30)
         text=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
+        text_jump_pack = text_jump_pack = font.render(f'Boost Packages left:{c1.jump_pack_counter()}',True,(255,0,0))
+
+        
 
         while running and loop2:
-            print(c1.package_list)
-            c1.placeable_jump_pack = jump_packages
+            print(c1.place_type)
             dt = klok.tick(60)    
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -161,15 +224,17 @@ def game_loop(start_level):
                         c1.place_package(all_objects)
                         text=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
                     if event.key == pygame.K_c:
-                        c1.change_package_type()
+                        c1.change_place_type()
 
                     if event.key == pygame.K_UP:
-                        c1.jump()
+                        c1.jump(-0.35)
                     if event.key == pygame.K_r:
                         c1.x = start_x
                         c1.y = start_y
                         c1.clean_packages()
                         c1.set_total_packages_left(packages)
+                        c1.set_jump_pack(jump_packages)
+                        c1.place_type = 0
                     
                     
 
@@ -195,6 +260,8 @@ def game_loop(start_level):
             screen.blit(background, (0,0))
             screen.blit(flag, flag_coordinates)
             screen.blit(text,(300,20))
+            if c1.placeable_jump_pack > 0:
+                screen.blit(text_jump_pack,(300,40))
 
 
             floor_y = screen.get_height() * 3//4 - 30
@@ -223,6 +290,10 @@ def game_loop(start_level):
 
                     elif c1_hitbox.centerx > hitbox.rect.centerx:
                         c1.x = hitbox.rect.right
+            for snowball in snowballs:
+                if c1_hitbox.colliderect(snowball.rect):
+                    c1.speed_y=0.1
+                    c1.on_ground = False
 
             
 
@@ -231,12 +302,18 @@ def game_loop(start_level):
                 screen.blit(pkg.image, (pkg.x, pkg.y))
                 if not pkg.freeze:
                     pkg.package_falling(dt, platforms=platforms, Chimneys=chimneys)
+                
             
             package_platforms = []
+            booster_list = []
 
             for pkg1 in c1.package_list:
+                pkg_rect_upper_own = None
                 pkg_rect_lower_own = pkg1.get_rect_lower()
-                pkg_rect_upper_own = pkg1.get_rect_upper()
+                if pkg1.type == 1:
+                    pkg_rect_boost = pkg1.get_rect_upper()
+                else:
+                    pkg_rect_upper_own = pkg1.get_rect_upper()
 
                 for pkg2 in c1.package_list:
                     if pkg1 is pkg2:
@@ -246,17 +323,26 @@ def game_loop(start_level):
                         pkg1.y = pkg_rect_upper.top - 48
                         pkg1.freeze = True
                 if pkg1.freeze:
-                    package_platforms.append(pkg_rect_upper_own)
+                    if pkg1.type == 1:
+                        package_platforms.append(pkg_rect_boost)
+                        booster_list.append(pkg_rect_boost)
+                    else:
+                        package_platforms.append(pkg_rect_upper_own)
             
             
             all_objects = [*package_platforms,*platforms,*chimneys]
             
             for platform in package_platforms:
                 if c1_hitbox.colliderect(platform):
-                    if c1.speed_y > 0 and c1_hitbox.bottom <= platform.bottom + 5:
-                        c1.y = platform.top - char_height +1
-                        c1.speed_y = 0
-                        c1.on_ground = True
+                    if platform in booster_list:
+                        print("Check")
+                        c1.speed_y = -0.5
+                        c1.on_ground = False
+                    if platform in all_objects and not platform in booster_list:
+                        if c1.speed_y > 0 and c1_hitbox.bottom <= platform.bottom + 5:
+                            c1.y = platform.top - char_height +1
+                            c1.speed_y = 0
+                            c1.on_ground = True
             
             touching_object = None
             for obj in all_objects:
@@ -272,14 +358,17 @@ def game_loop(start_level):
             for p in platforms:
                 screen.blit(p.image, p.rect)
             for chimney in chimneys:
-                screen.blit(chimney.image, chimney.rect)  
+                screen.blit(chimney.image, chimney.rect) 
+            for snowball in snowballs:
+                snowball.Snowball_fall(dt) 
+                screen.blit(snowball.image, snowball.rect)   
 
             c1.update_animation(dt)
             screen.blit(c1.idle_pose, (c1.x, c1.y))
             pygame.display.flip()  
         
-        level += 1
-        if level == 7:
+        
+        if level == 10:
             g1.win()
             while running and loop3:
                 for event in pygame.event.get():
@@ -292,6 +381,7 @@ def game_loop(start_level):
                             end_game = True
                 klok.tick(60)
             end_game = True 
+        level += 1
 
 
 main()

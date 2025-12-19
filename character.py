@@ -107,9 +107,9 @@ class Character:
         self.facing_right = True
         self.is_moving = True
         
-    def jump(self):
+    def jump(self, jump_velocity):
         if self.on_ground:
-            self.speed_y = -0.35
+            self.speed_y = jump_velocity
             self.on_ground = False
 
     def get_pos_x(self):
@@ -138,11 +138,15 @@ class Character:
     def set_total_packages_left(self, amount):
         self.total_packages_left = amount
     
-    def change_package_type(self):
+    def change_place_type(self):
         if self.place_type == 0 and self.placeable_jump_pack > 0:
+            print("kaka")
             self.place_type = 1
-        if self.place_type == 1:
+        elif self.place_type == 1:
             self.place_type = 0
+    
+    def set_jump_pack(self, amount):
+        self.placeable_jump_pack = amount
 
 
     def place_package(self, object_list):
@@ -165,8 +169,9 @@ class Character:
                 self.amount_left()
             elif self.placeable_jump_pack > 0 and self.place_type == 1:
                 self.box_place_sound.play()
-                self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y()],1))
+                self.package_list.append(package.Package([self.get_pos_x() + 30, self.get_pos_y()], 1))
                 self.jump_pack_counter()
+                self.placeable_jump_pack -= 1
             else:
                 self.error_sound.play()
         if not placeable_right and self.facing_right:
@@ -181,6 +186,7 @@ class Character:
                 self.box_place_sound.play()
                 self.package_list.append(package.Package([self.get_pos_x() - 50, self.get_pos_y()], 1))
                 self.jump_pack_counter()
+                self.placeable_jump_pack -=1
             else:
                  self.error_sound.play()
         if not placeable_left and not self.facing_right:
