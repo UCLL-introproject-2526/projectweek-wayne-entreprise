@@ -106,6 +106,7 @@ def game_loop(start_level):
             flag_coordinates = flag_x, flag_y = (330, 305)
             start_coordinates = start_x, start_y = (20, 400)
             packages = 2
+            jump_packages = 2
             platforms = [
             Platform.Platform(230, 400, 64, 32),
             Platform.Platform(300, 350, 64, 32)
@@ -117,6 +118,7 @@ def game_loop(start_level):
             flag_coordinates = flag_x, flag_y = (280, 105)
             start_coordinates = start_x, start_y = (20, 400)
             packages = 5
+            jump_packages = 4
             platforms = [
             Platform.Platform(250, 400, 64, 32),
             Platform.Platform(320, 300, 64, 32),
@@ -225,6 +227,9 @@ def game_loop(start_level):
 
         sled = sleigh.Sleigh(sled_packages, sled_coordinates)
         
+        #set jump packages
+        c1.set_jump_pack(jump_packages)
+
         char_width = c1.idle_pose.get_width()
         
         g1 = goal.Goal(screen)
@@ -237,8 +242,12 @@ def game_loop(start_level):
         text1=font.render(f'Level:{level}',True,(255,255,255))
         text2=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
         text3=font2.render('',True,(255,255,255))
+        text_jump_pack = text_jump_pack = font.render(f'Boost Packages left:{c1.jump_pack_counter()}',True,(255,0,0))
+
+        
 
         while running and loop2:
+            print(c1.place_type)
             dt = klok.tick(60)    
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -252,10 +261,8 @@ def game_loop(start_level):
                     if event.key == pygame.K_LEFT:
                         move_left = True
                         c1.set_direction(False)
-                        c1.set_direction(False)
                     if event.key == pygame.K_RIGHT:
                         move_right = True
-                        c1.set_direction(True)
                         c1.set_direction(True)
                     if event.key == pygame.K_SPACE:
                         #print(c1.get_total_packages())
@@ -268,16 +275,18 @@ def game_loop(start_level):
                                 text3=font.render(f'No more packages left press R to restart',True,(255,255,255))
                         c1.place_package(all_objects)
                         text2=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
-                        
+                    if event.key == pygame.K_c:
+                        c1.change_place_type()
+
                     if event.key == pygame.K_UP:
-                        c1.jump()
+                        c1.jump(-0.35)
                     if event.key == pygame.K_r:
                         c1.x = start_x
                         c1.y = start_y
                         c1.clean_packages()
                         c1.set_total_packages_left(packages)
-                        sled.reset()
-                        text2=font.render(f'Amount of packages left:{c1.get_total_packages()}',True,(255,255,255))
+                        c1.set_jump_pack(jump_packages)
+                        c1.place_type = 0
                     
                     
 
@@ -300,9 +309,10 @@ def game_loop(start_level):
 
             screen.blit(background, (0,0))
             screen.blit(flag, flag_coordinates)
-            screen.blit(text1,(50,20))
-            screen.blit(text2,(300,20))
-            screen.blit(text3,(50,150))
+            screen.blit(text1,(300,20))
+            if c1.placeable_jump_pack > 0:
+                screen.blit(text_jump_pack,(300,40))
+
 
             floor_y = screen.get_height() * 3//4 - 30
             char_height = c1.idle_pose.get_height()
@@ -342,12 +352,18 @@ def game_loop(start_level):
                 screen.blit(pkg.image, (pkg.x, pkg.y))
                 if not pkg.freeze:
                     pkg.package_falling(dt, platforms=platforms, Chimneys=chimneys)
+                
             
             package_platforms = []
+            booster_list = []
 
             for pkg1 in c1.package_list:
+                pkg_rect_upper_own = None
                 pkg_rect_lower_own = pkg1.get_rect_lower()
-                pkg_rect_upper_own = pkg1.get_rect_upper()
+                if pkg1.type == 1:
+                    pkg_rect_boost = pkg1.get_rect_upper()
+                else:
+                    pkg_rect_upper_own = pkg1.get_rect_upper()
 
                 for pkg2 in c1.package_list:
                     if pkg1 is pkg2:
@@ -357,18 +373,27 @@ def game_loop(start_level):
                         pkg1.y = pkg_rect_upper.top - 48
                         pkg1.freeze = True
                 if pkg1.freeze:
-                    package_platforms.append(pkg_rect_upper_own)
+                    if pkg1.type == 1:
+                        package_platforms.append(pkg_rect_boost)
+                        booster_list.append(pkg_rect_boost)
+                    else:
+                        package_platforms.append(pkg_rect_upper_own)
             
             
             all_objects = [*package_platforms,*platforms,*chimneys]
             
             for platform in package_platforms:
                 if c1_hitbox.colliderect(platform):
-                    if c1.speed_y > 0 and c1_hitbox.bottom <= platform.top                                                           + 5:
-                        c1.y = platform.top - char_height +1
-                        c1.speed_y = 0
-                        c1.on_ground = True
-
+                    if platform in booster_list:
+                        print("Check")
+                        c1.speed_y = -0.5
+                        c1.on_ground = False
+                    if platform in all_objects and not platform in booster_list:
+                        if c1.speed_y > 0 and c1_hitbox.bottom <= platform.bottom + 5:
+                            c1.y = platform.top - char_height +1
+                            c1.speed_y = 0
+                            c1.on_ground = True
+            
             touching_object = None
             for obj in all_objects:
                 if c1_hitbox.colliderect(obj):
@@ -390,6 +415,8 @@ def game_loop(start_level):
 
             c1.update_animation(dt)
             screen.blit(c1.idle_pose, (c1.x, c1.y))
+            pygame.display.flip()  
+        
            
             screen.blit(sled.image, sled.rect)
             if c1_hitbox.colliderect(sled.rect):
